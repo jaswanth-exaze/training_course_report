@@ -138,5 +138,142 @@ The echo command is extremly simple. it takes the arguments we provide to it and
 $ ncal 2021       -> it gives entire year calender all 12 months of year 2021
 $ ncal july 1969  -> it gives only july month of 1969 year
 
+===================================================================================================================================
+
+📘 man stands for manual
+		It is used to display documentation for Linux commands, programs, system functions, and more.
+
+🧠 Man Page Structure (What You’ll See Inside)
+
+Most manual pages follow this structure:
+-----------------------------------------
+Section Title		Meaning
+NAME				Command or function name + short description
+SYNOPSIS			How to use it (syntax, options, parameters)
+DESCRIPTION			Detailed explanation
+OPTIONS	All	 		flags/switches (ex: -l, --help)
+EXAMPLES			How to use it practically
+FILES				Related system/config files
+SEE ALSO			Similar commands or references
+AUTHOR / BUGS		Author details & bug info
+
+✅ Useful Man Page Commands (while reading)
+---------------------------------------------
+Key	                Action
+Space / Page Down	Scroll down
+b	                Scroll up
+q	                Quit
+/ word	            Search for a word
+n					Next search match
+Shift + g			Go to end
+1 + g				Go to start
 
 
+📚 Linux Manual Sections (1 to 9)
+		Manual pages are divided into 9 sections, each category containing specific types of documentation.
+		Section	                  			Description
+		1 – User Commands					Regular commands for users (like ls, cp, mkdir).
+		2 – System Calls					Functions provided by the kernel (open, read, write).
+		3 – Library Functions				C library functions (printf, scanf, malloc).
+		4 – Special Files / Devices			Describes device files in /dev (like /dev/sda, /dev/null).
+		5 – File Formats & Configuration    Files	Explains config files and formats (/etc/passwd, crontab syntax).
+		6 – Games & Screensavers			Games available on the system (less important today).
+		7 – Miscellaneous					Conventions, protocols, standards, etc. (like man 7 signal).
+		8 – System Administration Commands	Commands for admin/root (mount, useradd, iptables).
+		9 – Kernel Routines (Linux-specific)	Internal kernel functions used by developers.
+
+==================================================================================================================================
+
+🧠 What Is a Command in Linux?
+--------------------------------
+	A command in Linux is any instruction you type into the shell (terminal) that tells the operating system to perform a specific task 
+		— such as listing files, copying data, or managing users.
+
+⚙️ Main Types of Linux Commands
+--------------------------------
+Linux commands can be divided into 5 main categories:
+
+Type	                            Description
+----								-----------	
+1. Internal (Built-in) Commands   	Commands built directly into the shell (no external program needed).	
+                                    examples:: cd, echo, pwd, exit, history
+2. External Commands	            Stored as separate executable files in system directories (like /bin, /usr/bin).	
+									examples:: ls, cp, mv, grep, cat
+3. Shell Scripts	                A file that contains a series of Linux commands written together.	
+									examples:: ./backup.sh, bash script.sh
+4. Alias Commands	                Shortcuts or custom names you create for longer commands.	
+									examples:: alias ll='ls -l'
+5. Functions	                    User-defined mini-programs inside the shell, similar to functions in programming languages.	
+									examples:: myfunc() { echo "Hello $1"; }
+
+🧭 How to Identify the Type of a Command
+----------------------------------------
+Use the type command:
+
+ ________________
+|                |
+|  type command  |
+|________________|
+
+type cd       #cd is a shell builtin
+type ls       #ls is aliased to 'ls --color=auto'
+type echo     #echo is a shell builtin
+type update   #
+===================================================================================================
++++++++++++++++++++++🧭 Navigation Commands in Linux (File System Travel)++++++++++++++++++++
+=============================================================================================
+
+These commands help you:
+	-> Move between folders
+	-> Know where you currently are
+	-> List files/folders
+	-> Go back, up, or to home directory
+
+1. pwd – Print Working Directory
+	--> Shows the current location of your terminal. 
+	example::
+		pwd  #/home/jaswanth/Documents
+
+2. ls – List Directory Contents
+	--> Used to list files and folders in the current location.
+
+	Command				Description
+	ls					List files and folders
+	ls -l				Long listing (details like permissions, size, owner, date)
+	ls -a				Show hidden files (that start with .)
+	ls -la				Long listing + hidden files
+	ls /path			List contents of another directory
+	  
+3. cd – Change Directory 
+	--> used to Move into folders from current directory.
+	Command				Meaning
+	cd foldername		Go inside a folder
+	cd ..				Go back/up one level
+	cd ../..			Go up two levels
+	cd ~ or just cd		Go to Home directory
+	cd /				Go to root directory (/)
+	cd /path/to/folder	Go to specific path
+	cd -				Switch to previous directory
+
+	example::
+		cd Documents         # Go into Documents
+		cd ..                # Go back
+		cd /etc              # Go to /etc directory
+		cd ~                 # Go to home
+		cd -                 # Toggle back to last directory
+4. tree – View Directory Structure (Optional)
+	-->Displays folders and files in a tree-like structure.
+	example::
+		tree /home/jaswanth/
+		  /home/jaswanth/
+    	  ├── Documents
+    	  │     └── Projects
+    	  └── Downloads
+
+	Directory Path Concepts (Very Important)
+	Type	      		Symbol						Meaning
+	Absolute Path		/home/user/docs/file.txt	Full path from the root /
+	Relative Path		../Pictures					Path from your current directory
+	Home directory		~							/home/username
+	Parent directory	..							One level up
+	Current directory	.							Present folder
