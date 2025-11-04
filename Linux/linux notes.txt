@@ -249,9 +249,9 @@ type cd       #cd is a shell builtin
 type ls       #ls is aliased to 'ls --color=auto'
 type echo     #echo is a shell builtin
 type update   #
-=============================================================================================
-+++++++++++++++++++++🧭 Navigation Commands in Linux (File System Travel)++++++++++++++++++++
-=============================================================================================
+==================================================================================================================================
++++++++++++++++++++++                    🧭 Navigation Commands in Linux (File System Travel)                ++++++++++++++++++++
+==================================================================================================================================
 
 These commands help you:
 	-> Move between folders
@@ -523,56 +523,186 @@ nano
 		-->You can view the file but not edit.
 
 
-		# Nano Exercise
+Nano Exercise
 
-[NanoExercise.zip](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cc6ee08f-2e6f-4fe9-b8f4-98ba8d963c6b/NanoExercise.zip)
+	[NanoExercise.zip](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cc6ee08f-2e6f-4fe9-b8f4-98ba8d963c6b/NanoExercise.zip)
 
-Download the above zip file.  Unzip it and then navigate to the resulting directory using the command line.
+	Download the above zip file.  Unzip it and then navigate to the resulting directory using the command line.
 
-## Part 1
+	## Part 1
 
-1. Open up the `recipe.txt` file using `nano`
-	cd NanoExercise
-	nano recipe.txt
-2. On line 3, add your own name after `Author:` so that it says `Author: Stevie Wonder` or whatever your name is
-	jaswanth kumar
-3. Whoever wrote this recipe didn't know how to spell "parmesan", so instead they wrote "parm".  Please update the two instances of "Parm" to "Parmesan".  You can do this manually or by using nano's replace feature.
-	Ctrl+\ --> parm -- enter --parmesan  --> y
-4. Write out your changes! Close the file.
-	ctrl+O
-	enter for file name
-	ctrl+x
+	1. Open up the `recipe.txt` file using `nano`
+		cd NanoExercise
+		nano recipe.txt
+	2. On line 3, add your own name after `Author:` so that it says `Author: Stevie Wonder` or whatever your name is
+		jaswanth kumar
+	3. Whoever wrote this recipe didn't know how to spell "parmesan", so instead they wrote "parm".  
+		Please update the two instances of "Parm" to "Parmesan".  
+		You can do this manually or by using nano's replace feature.
+		Ctrl+\ --> parm -- enter --parmesan  --> y
+	4. Write out your changes! Close the file.
+		ctrl+O
+		enter for file name
+		ctrl+x
 
-## Part 2
+	## Part 2
 
-1. Open up the `website.html` file with `nano`
-	nano website.html
-2. This html file contains a simple website for a fictional restaurant called "Ristorante Colt".  
-	You recently purchased the restaurant and have decided to change its name! Please replace all instance of "Ristorante Colt" with your new restaurant's name.  
-	Do this using a nano shortcut, rather than manually replacing each one.
+	1. Open up the `website.html` file with `nano`
+		nano website.html
+	2. This html file contains a simple website for a fictional restaurant called "Ristorante Colt".  
+		You recently purchased the restaurant and have decided to change its name! 
+		Please replace all instance of "Ristorante Colt" with your new restaurant's name.  
+		Do this using a nano shortcut, rather than manually replacing each one.
 
-	Ctrl+\ --> Ristorante Colt -- enter -- jaswanth jas  --> a
-	total 4 occurrences 
+		Ctrl+\ --> Ristorante Colt -- enter -- jaswanth jas  --> a
+		total 4 occurrences 
 
-3. Save your changes and close the file!
-	ctrl+O
-	enter for file name
-	ctrl+x
+	3. Save your changes and close the file!
+		ctrl+O
+		enter for file name
+		ctrl+x
 
-## Part 3
+	## Part 3
 
-1. The `country-data.json` file contains a large country dataset, with over 39,000 lines of json!
-	nano +15399 country-data.json
-2. Unfortunately, there is a typo on line **15399**.  It says "Hondras" but it should say "Honduras".  Please fix this!  Rather than scrolling for a decade, use a nano shortcut to jump to line **15399**.
-	Ctrl+\ --> Hondras -- enter -- jaswanth jas  --> a
-3. **Bonus:** Figure out how to tell `nano` to open the file at exactly **15399**.
-	nano +15399 country-data.json
-## Bonus
+	1. The `country-data.json` file contains a large country dataset, with over 39,000 lines of json!
+		nano +15399 country-data.json
+	2. Unfortunately, there is a typo on line **15399**.  It says "Hondras" but it should say "Honduras".  
+		Please fix this!  Rather than scrolling for a decade, use a nano shortcut to jump to line **15399**.
+		Ctrl+\ --> Hondras -- enter -- jaswanth jas  --> a
+	3. **Bonus:** Figure out how to tell `nano` to open the file at exactly **15399**.
+		nano +15399 country-data.json
+	## Bonus
 
-1. The `review.txt` file contains a text review of the Cacio E Pepe recipe from `recipe.txt`
+	1. The `review.txt` file contains a text review of the Cacio E Pepe recipe from `recipe.txt`
 
-2. Open up the `recipe.txt` file using `nano` and scroll to the bottom. 
+	2. Open up the `recipe.txt` file using `nano` and scroll to the bottom. 
 
-3. Using a nano shortcut we have not covered, insert the contents of `review.txt` at the bottom of `recipe.txt`.
+	3. Using a nano shortcut we have not covered, insert the contents of `review.txt` at the bottom of `recipe.txt`.
+
+
+=============================================================================================
++++++++++++++++++++++         DELETE/REMOVE COPYING MOVING               ++++++++++++++++++++
+=============================================================================================
+
+
+
+1. REMOVE
+	--> rm   remove files or directories
+			rm [OPTION]... [FILE]...
+			example::
+				rm app.js                # single file
+				rm index.html style.css  # multiple files
+
+		rm deletes files, there is no undo or recycling bin to retrive then from! they are gone!
+
+		rm -d foldername
+			--> remove empty directory
+	
+		Option		    Meaning
+		-r				Recursive delete
+		-f				Force delete (no warning)
+
+		⚠ WARNING: rm -rf / will erase the full system — never run this ❌
+
+			rm -r folder   		# Delete Folder + All Its Contents (Recursive)
+				--> removes everything inside the folder
+				
+			rm -rf foldername
+				--> Delete everything inside the folder without asking confirmation
+
+			rm -i file.txt      # for interactive safe delete files
+				--> Safe Delete Mode (Ask before deletion)
+
+			rm -ri file.txt      # for interactive safe delete folder
+				--> Safe Delete Mode (Ask before deletion every file and folder)
+
+
+2. MOVING
+	--> rv   movie (rename) files 
+			-->mv used to move files and directories from location to another.
+			rv [OPTION]... [-T] SOURCE DEST
+			rv [OPTION]... SOURCE... DEST...
+
+			example::
+				mv file1.txt /home/user/Documents/   		# move single file to another folder
+				mv file1 file2 folder/						# movie multiple files into another folder
+				mv oldname.txt newname.txt					# rename a file
+				mv oldfolder_name newfolder_name			# rename a folder
+				mv folder1 /home/user/Documents/            # moving folder to another folder
+
+
+3. COPYING
+	--> cp   copy files and directories
+			cp [OPTION]... [-T] SOURCE DEST
+			cp [OPTION]... SOURCE... DEST...
+
+			example::
+					cp file1.txt file2.txt					# file2.txt becomes a copy of file1.txt
+					cp file.txt /path/to/folder/			# Copy to a Folder
+					cp file1 file2 folder/					# Copy Multiple Files
+					cp -r folder1 folder2                   # Copy a Full Directory (FOLDER) - Recursively copies all subfolders & files
+
+
+
+			--> cp sheep.txt dolly.txt
+					to create a copy of sheep.txt called dolly.txt
+
+Deleting, Moving & Copying Exercise
+
+	## Part 1: Creating The Folders & Files
+
+	Before we can delete, move, or copy things...we need things! It's time to get some more practice using `touch` and `mkdir`
+
+	Please create a new directory somewhere on your machine called `Bootcamp`.  Inside of it, create the the folders and files indicated below:
+
+	```bash
+	**Bootcamp/**
+		**FallCohort/**
+			Italo.txt
+			Edgar.txt
+			Linus.txt
+			Sara.txt 
+			Silvio.txt
+			**Waitlist/**
+				Hanna.txt
+				Haris.txt
+				Netta.txt
+		**WinterCohort/**
+			Santiago.txt
+			Iris.txt
+			Naomi.txt
+	```
+
+	- Sadly `Edgar` had to drop out of the course.  Delete the `Edgar.txt` file in `FallCohort`
+		rm Bootcamp/fallcohort/edgar.txt
+
+	- This means we now have space in our Fall Cohort to move someone off of the waitlist.  Please move `Netta.txt` from the `Waitlist` folder into the `FallCohort` folder.
+		mv Bootcamp/fallcohort/waitlist/netta.txt Bootcamp/fallcohort/
+
+	- Please delete the `Waitlist` folder and its contents
+		m -r Bootcamp/fallcohort/waitlist/*
+	
+	- It turns out that I misspelled Sara.  She spells her name "Sarah" with an "h" at the end.  Please rename the `Sara.txt` file to `Sarah.txt`
+		mv fallcohort/sara.txt fallcohort/sarah.txt
+	
+	- Unfortunately Italo is having a bit of a personal emergency, and he would like to move to our WinterCohort.  Please move the `Italo.txt` file from `FallCohort` to the `WinterCohort` folder
+		mv italo.txt waitlist/
+	
+	- Oh no, our entire Winter Cohort had to be cancelled because of a worldwide pandemic :(   We decided to bump all of the scheduled winter students to spring. In the `Bootcamp` directory create a copy of the `WinterCohort` folder called `SpringCohort`
+		rm -r Bootcamp/fallcohort/waitlist
+	
+	- Please rename the WinterCohort folder to `WinterCohortCANCELLED`
+		mv Bootcamp/WinterCohort Bootcamp/WinterCohortCANCELLED
+
+	- Oh no! We're going out of business. Please delete the entire `Bootcamp` directory 😢
+		rm -r Bootcamp
+
+
+	
+
+
+
+
+
 
 
