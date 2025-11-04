@@ -61,89 +61,87 @@ But one big difference:
 
 Linux is everywhere!
 
-✔ 96% of Cloud servers run Linux
-✔ ALL supercomputers run Linux
-✔ Android OS is built on Linux
-✔ Websites, apps, databases — run on Linux servers
-✔ DevOps, Data Engineering → Linux skills required
-✔ Cybersecurity & Ethical Hacking → Linux mandatory
-✔ IoT Devices (routers, smart TVs, robots…)
+	✔ 96% of Cloud servers run Linux
+	✔ ALL supercomputers run Linux
+	✔ Android OS is built on Linux
+	✔ Websites, apps, databases — run on Linux servers
+	✔ DevOps, Data Engineering → Linux skills required
+	✔ Cybersecurity & Ethical Hacking → Linux mandatory
+	✔ IoT Devices (routers, smart TVs, robots…)
 
-So learning Linux = career power ✅
 
 ✅ Why should you learn Linux?
 
-Since you are learning backend + DB + DevOps tools like Git/GitHub:
 
-Linux is needed for:
-✔ Running servers (Node, Django, Java apps)
-✔ Managing PostgreSQL, MySQL databases
-✔ Using DevOps tools (Docker, Jenkins, CI/CD)
-✔ Cloud computing jobs (AWS, Azure)
+	Linux is needed for:
+	✔ Running servers (Node, Django, Java apps)
+	✔ Managing PostgreSQL, MySQL databases
+	✔ Using DevOps tools (Docker, Jenkins, CI/CD)
+	✔ Cloud computing jobs (AWS, Azure)
 
 Companies expect developers to deploy applications on Linux environments.
 
 
 ✅ How do we use Linux? (Very important 🔥)
 
-Linux can be used in 2 ways:
+	Linux can be used in 2 ways:
 
-1️⃣ GUI interface (like Windows)
+		1️⃣ GUI interface (like Windows)
 
-Click menus, open software visually
-Example: Ubuntu Desktop
+			Click menus, open software visually
+			Example: Ubuntu Desktop
 
-2️⃣ Command Line / Terminal (main focus for developers!)
+		2️⃣ Command Line / Terminal (main focus for developers!)
 
-You type commands to control the system
+			You type commands to control the system
 
-----------------------------------------------------------------------
-🔸 UNIX = The ancestor, closed-source, paid, old but stable.
-🔹 Linux = The child inspired by UNIX, open-source, free, and modern.
----------------------------------------------------------------------
-both share similar architecture:
-__________________________________
+	----------------------------------------------------------------------
+	🔸 UNIX = The ancestor, closed-source, paid, old but stable.
+	🔹 Linux = The child inspired by UNIX, open-source, free, and modern.
+	---------------------------------------------------------------------
+	both share similar architecture:
+	__________________________________
 
-User
-|
-│   type our commands in terminal
-│  (commands)
-▼
-Shell
-|
-│   interpreter that understands your commands
-│  (passes commands to karnel) (bash -- defalut)
-▼
-Kernel
-│
-|   engine that does the actual work
-│  (controls)
-▼
-Hardware
-______________________________________________________
+		User
+		|
+		│   type our commands in terminal
+		│  (commands)
+		▼
+		Shell
+		|
+		│   interpreter that understands your commands
+		│  (passes commands to karnel) (bash -- defalut)
+		▼
+		Kernel
+		│
+		|   engine that does the actual work
+		│  (controls)
+		▼
+		Hardware
+	______________________________________________________
 
------------------------------------------------------------------
-Part	        Role
-------------------------------------------------------------------
-Terminal	The screen where you type our commands
-Shell	        The interpreter that understands your commands(default BASH)
-Kernel	        The engine that does the actual work
-------------------------------------------------------------------
-Bash is the default SHELL in most Linux systems.
+	-----------------------------------------------------------------
+	Part	        Role
+	------------------------------------------------------------------
+	Terminal	The screen where you type our commands
+	Shell	        The interpreter that understands your commands(default BASH)
+	Kernel	        The engine that does the actual work
+	------------------------------------------------------------------
+	Bash is the default SHELL in most Linux systems.
 
 
 
-Practical Example:
- ________________________________
-|$ ls                            |
-|                                |
-|Documents  Downloads  Pictures  |
-|________________________________|
+	Practical Example:
+		 ________________________________
+		|$ ls                            |
+		|                                |
+		|Documents  Downloads  Pictures  |
+		|________________________________|
 
-Terminal:          The window you see
-Bash (Shell):      Reads ls, sends it to Kernel
-Kernel:            Gets folder list from hard drive
-Terminal:          Displays output on your screen
+		Terminal:          The window you see
+		Bash (Shell):      Reads ls, sends it to Kernel
+		Kernel:            Gets folder list from hard drive
+		Terminal:          Displays output on your screen
 --------------------------------------------------------------------------------------
 ++++++++++++++++++COMMANDS++++++++++++++++
 
@@ -172,10 +170,10 @@ $ ncal july 1969  -> it gives only july month of 1969 year
 
 ===================================================================================================================================
 
-📘 man stands for manual
+ man stands for manual
 		It is used to display documentation for Linux commands, programs, system functions, and more.
 
-🧠 Man Page Structure (What You’ll See Inside)
+Man Page Structure (What You’ll See Inside)
 
 Most manual pages follow this structure:
 -----------------------------------------
@@ -349,7 +347,8 @@ Farm/
 9. How many geese (files) are in the `Geese` directory?
 		ls
 		-->4
-10. One of the geese is sitting on a golden egg!  It's larger than the other geese. Which one is it?  (which file in the `Geese` folder is the largest?).  Use a command to figure it out!
+10. One of the geese is sitting on a golden egg!  It's larger than the other geese. Which one is it?  
+	(which file in the `Geese` folder is the largest?).  Use a command to figure it out!
 		ls -l --sort=size 
 		-->Muffin
 11. Navigate to the `Horses` directory.  Consult the folder structure written out above, if needed.
@@ -365,7 +364,31 @@ Farm/
 +++++++++++++++++++++         CREATING FILES AND FOLDERS                 ++++++++++++++++++++
 =============================================================================================
 
-1. Create a File
+1. Create a Folder (Directory)
+	mkdir --> make directories
+		mkdir [OPTION]... Directory...
+		--> Create the directory(ies), if they do not already exist.
+ 
+	Command								Description
+	mkdir folder_name					Creates a folder.
+	mkdir folder1 folder2				Creates multiple folders.
+	mkdir -p parent/child1/child2		Creates nested folders (also creates parent folder if it doesn't exist).
+
+		Examples::
+			mkdir my_folder                 
+			mkdir folderA folderB
+			mkdir -p projects/python/app
+
+2. Exploring file type
+	file --> determine file type
+			 file prints the type of that file
+		example::
+			file colors.txt
+				-->colors.txt: ASCII text
+			file Farm
+				-->Farm: directory
+
+3. Create a File
 
 	There are multiple ways to create a file:
 		TOUCH--> 
@@ -384,18 +407,172 @@ Farm/
 
 	Examples::
 		touch notes.txt
-		cat > todo.txt         		# Type text, then press Ctrl + D to save
-		nano report.txt       		# Write, then press Ctrl + O (save) and Ctrl + X (exit)
-		echo "Hello Linux" > 		file1.txt
-		echo "More content" >> 		file1.txt
+		touch app.js index.html style.css		# creating multiple files at a time
+		cat > todo.txt         		           	# Type text, then press Ctrl + D to save
+		nano report.txt       					# Write, then press Ctrl + O (save) and Ctrl + X (exit)
+		echo "Hello Linux" > file1.txt
+		echo "More content" >> file1.txt
 
-2. Create a Folder (Directory)
-	Command								Description
-	mkdir folder_name					Creates a folder.
-	mkdir folder1 folder2				Creates multiple folders.
-	mkdir -p parent/child1/child2		Creates nested folders (also creates parent folder if it doesn't exist).
+Making Files And Folders Exercise
+----------------------------------
+	1.Create a new folder called my-app
+		mkdir my-app
+	2.Navigate to my-app and inside create two new empty files called README.md and package.json
+		cd my-app
+		touch README.md package.json
+	3.Still inside of my-app create a new folder called public. Without cd-ing into public, create an index.html file inside of it.
+		mkdir public 
+		touch public/index.html
+	4.Create a new folder called src inside of my-app.  Navigate inside of it.
+		mkdir src 
+		cd src
+	5.Using a single line, create the following four files inside of src: App.css, App.js, index.css, and index.js
+		touch App.css App.js index.css index.js
+	Your folder structure should now look like this:
+		my-app/
+		  README.md
+		  package.json
+		  public/
+		    index.html
+		  src/
+		    App.css
+		    App.js
+		    index.css
+		    index.js
+	BONUS:
+💡 		Using a single command, create a new directory inside of `src` called `components`,
+		and inside of that new `components` directory create a new directory called `Navbar`.   
+		Do this using a single command, without first creating the `components` directory.
+			
+			mkdir -p components/Navbar
 
-		Examples::
-			mkdir my_folder                 
-			mkdir folderA folderB
-			mkdir -p projects/python/app
+---------------------    NANO    -------------------------------
+nano
+	nano is a simple text editor that we can access right from the terminal.
+	its far more accessible thean other papular command-line editiors like vim and emacs.
+
+	nano includes all basic text editing functionality
+	you would expect: search, spellcheck, syntax highlighting, etc.
+
+
+1. How to Open a File in Nano
+	Purpose	                                                Command
+	Open Nano with a new/existing file						nano filename
+	Open Nano in read-only mode								nano -v filename
+	example::
+		nano notes.txt
+		--> If the file doesn’t exist, Nano will create it once you save.
+2. Nano Interface Overview
+
+	When you open Nano, you'll see:
+
+		GNU nano 6.2                         notes.txt
+		---------------------------------------------
+		| Here is your file content...              |
+		|                                           |
+		---------------------------------------------
+		^G Help  ^O Write Out  ^W Where Is  ^K Cut  ^U Paste  ^X Exit
+		(Shortcuts are shown at bottom)
+		    ^ means Ctrl key (Example: ^X = Ctrl + X)
+
+3. Most Useful Nano Shortcuts
+
+			------------------------------------------------------------------
+			| Action               | Shortcut                                |
+			| -------------------- | --------------------------------------- |
+			| Save file            | **Ctrl + O** (then press Enter)         |
+			| Exit Nano            | **Ctrl + X**                            |
+			| Save & Exit directly | **Ctrl + X**, then press **Y**, Enter   |
+			| Cut a line           | **Ctrl + K**                            |
+			| Paste a line         | **Ctrl + U**                            |
+			| Undo                 | **Alt + U**                             |
+			| Redo                 | **Alt + E**                             |
+			| Search text          | **Ctrl + W**                            |
+			| Next Search          | **Alt + W**                             |
+			| replace (search)     | **Ctrl + \**                            |
+			| Go to a line number  | **Ctrl + _** (then type numer + Enter)  |
+			| Justify text (align) | **Ctrl + J**                            |
+			| Mark text (select)   | **Ctrl + Shift + 6**                    |
+			| Copy selected text   | **Alt + 6**                             |
+			| Delete a character   | Backspace or Ctrl + D                   |
+			| Spell check          | **Ctrl + O** then **Ctrl + S**          |
+			------------------------------------------------------------------
+
+4. Editing and Saving a File
+
+	✏️ To write content:
+		Just start typing.
+	💾 To Save:
+		Press Ctrl + O
+		Press Enter to confirm filename
+	🚪 To Exit:
+		Ctrl + X
+		If there are unsaved changes, it asks:
+			--------------------------------------------------------------
+			| Save modified buffer? (Answering "No" will DISCARD changes) |
+			| Y Yes   N No   ^C Cancel									  |
+			---------------------------------------------------------------
+5. Open a File in a Specific Line
+
+	nano +10 example.txt
+		--> This opens example.txt at line number 10
+
+6. Open Nano in Read-Only Mode
+
+	nano -v filename
+		-->You can view the file but not edit.
+
+
+		# Nano Exercise
+
+[NanoExercise.zip](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cc6ee08f-2e6f-4fe9-b8f4-98ba8d963c6b/NanoExercise.zip)
+
+Download the above zip file.  Unzip it and then navigate to the resulting directory using the command line.
+
+## Part 1
+
+1. Open up the `recipe.txt` file using `nano`
+	cd NanoExercise
+	nano recipe.txt
+2. On line 3, add your own name after `Author:` so that it says `Author: Stevie Wonder` or whatever your name is
+	jaswanth kumar
+3. Whoever wrote this recipe didn't know how to spell "parmesan", so instead they wrote "parm".  Please update the two instances of "Parm" to "Parmesan".  You can do this manually or by using nano's replace feature.
+	Ctrl+\ --> parm -- enter --parmesan  --> y
+4. Write out your changes! Close the file.
+	ctrl+O
+	enter for file name
+	ctrl+x
+
+## Part 2
+
+1. Open up the `website.html` file with `nano`
+	nano website.html
+2. This html file contains a simple website for a fictional restaurant called "Ristorante Colt".  
+	You recently purchased the restaurant and have decided to change its name! Please replace all instance of "Ristorante Colt" with your new restaurant's name.  
+	Do this using a nano shortcut, rather than manually replacing each one.
+
+	Ctrl+\ --> Ristorante Colt -- enter -- jaswanth jas  --> a
+	total 4 occurrences 
+
+3. Save your changes and close the file!
+	ctrl+O
+	enter for file name
+	ctrl+x
+
+## Part 3
+
+1. The `country-data.json` file contains a large country dataset, with over 39,000 lines of json!
+	nano +15399 country-data.json
+2. Unfortunately, there is a typo on line **15399**.  It says "Hondras" but it should say "Honduras".  Please fix this!  Rather than scrolling for a decade, use a nano shortcut to jump to line **15399**.
+	Ctrl+\ --> Hondras -- enter -- jaswanth jas  --> a
+3. **Bonus:** Figure out how to tell `nano` to open the file at exactly **15399**.
+	nano +15399 country-data.json
+## Bonus
+
+1. The `review.txt` file contains a text review of the Cacio E Pepe recipe from `recipe.txt`
+
+2. Open up the `recipe.txt` file using `nano` and scroll to the bottom. 
+
+3. Using a nano shortcut we have not covered, insert the contents of `review.txt` at the bottom of `recipe.txt`.
+
+
