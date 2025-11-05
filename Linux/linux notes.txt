@@ -696,9 +696,85 @@ Deleting, Moving & Copying Exercise
 
 	- Oh no! We're going out of business. Please delete the entire `Bootcamp` directory 😢
 		rm -r Bootcamp
+-------------------------------------------------------------------------------------------------
+-------------------------SHORTCUTS----------------------------------
+
+General Terminal Shortcuts
+
+____________________________________________________________________
+| Shortcut     | Action                                            |
+| ------------ | ------------------------------------------------- |
+| **Ctrl + L** | Clear screen (same as `clear`)                    |
+| **Ctrl + A** | Move cursor to start of line                      |
+| **Ctrl + E** | Move cursor to end of line                        |
+| **Ctrl + F** | Move cursor forword one step                      |
+| **Ctrl + B** | Move cursor backword one step                     |
+| **Ctrl + T** | Swap last two characters                          |
+| **Alt  + T** | Swap last two words                               |
+| **Ctrl + K** | Cut/delete everything from cursor to end          |
+| **Ctrl + U** | Cut/delete everything from cursor to start        |
+| **Ctrl + W** | Delete one word backwards                         |
+| **Alt  + D*  | Delete one word forword                           |
+| **Ctrl + H** | Delete one character backward                     |
+| **Ctrl + Y** | Paste text removed by Ctrl + U/W/K                |
+| **Ctrl + C** | Cancel/Stop current command                       |
+| **Ctrl + Z** | Suspend/stop running process (send to background) | 
+| **Ctrl + D** | Logout or exit terminal (similar to `exit`)       |
+| **Tab**      | Auto-complete command / file / directory name     |
+| **Ctrl + R** | Search through command history (reverse search)   |
+| **Ctrl + G** | Exit history search mode                          |
+--------------------------------------------------------------------
+
+Navigation Within Command Line
+______________________________________________________________
+| Shortcut               | Action                             |
+| ---------------------- | ---------------------------------- |
+| **Alt + B**            | Move cursor back one word          |
+| **Alt + F**            | Move cursor forward one word       |
+| **← / → (Arrow keys)** | Move left/right                    |
+| **Ctrl + P**           | Previous command (same as ↑ arrow) |
+| **Ctrl + N**           | Next command (same as ↓ arrow)     |
+|________________________|____________________________________|
+
+Command Editing
+____________________________________________________________
+| Shortcut             | Action                            |
+| -------------------- | --------------------------------- |
+| **Up Arrow**         | Browse previous commands          |
+| **Down Arrow**       | Browse next commands              |
+| **Ctrl + Shift + C** | Copy text (in terminal emulator)  |
+| **Ctrl + Shift + V** | Paste text (in terminal emulator) |
+| **Ctrl + Shift + T** | Open new tab in terminal          |
+| **Ctrl + Shift + N** | Open new terminal window          |
+| **Ctrl + Shift + W** | Close current tab                 |
+-------------------------------------------------------------
+
+Process Management
+_____________________________________________________________
+| Shortcut     | Action                                     |
+| ------------ | ------------------------------------------ |
+| **Ctrl + C** | Kill/stop process                          |
+| **Ctrl + Z** | Suspend process                            |
+| **fg**       | Bring suspended process back to foreground |
+| **bg**       | Run suspended job in background            |
+| **jobs**     | Show background/suspended processes        |
+-------------------------------------------------------------
+
+History & Reuse
+_____________________________________________________
+| Shortcut    | Action                              |
+| ----------- | ----------------------------------- |
+| **history** | Show all previously used commands   |
+| **!!**      | Run last command again              |
+| **!n**      | Run command number `n` in history   |
+| **!ls**     | Run last command starting with `ls` |
+-----------------------------------------------------
 
 
-	
+
+
+
+
 
 
 
