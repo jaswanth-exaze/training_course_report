@@ -721,8 +721,6 @@ ____________________________________________________________________
 | **Ctrl + Z** | Suspend/stop running process (send to background) | 
 | **Ctrl + D** | Logout or exit terminal (similar to `exit`)       |
 | **Tab**      | Auto-complete command / file / directory name     |
-| **Ctrl + R** | Search through command history (reverse search)   |
-| **Ctrl + G** | Exit history search mode                          |
 --------------------------------------------------------------------
 
 Navigation Within Command Line
@@ -761,24 +759,86 @@ _____________________________________________________________
 -------------------------------------------------------------
 
 History & Reuse
-_____________________________________________________
-| Shortcut    | Action                              |
-| ----------- | ----------------------------------- |
-| **history** | Show all previously used commands   |
-| **!!**      | Run last command again              |
-| **!n**      | Run command number `n` in history   |
-| **!ls**     | Run last command starting with `ls` |
------------------------------------------------------
+_________________________________________________________________
+| Shortcut    | Action                                 			|
+| ----------- | ------------------------------------------------|
+| **history** | Show all previously used commands   			|
+| **!!**      | Run last command again              			|
+| **!n**      | Run command number `n` in history   			|
+| **!ls**     | Run last command starting with `ls` 			|
+| **Ctrl + R**| Search through command history (reverse search) |
+| **Ctrl + G**| Exit history search mode                        |
+-----------------------------------------------------------------
+
+=============================================================================================
++++++++++++++++++++++             WORKING WITH FILES                    ++++++++++++++++++++
+=============================================================================================
+
+1. cat — Concatenate and View File Contents
+	Reads a file sequentially (line-by-line from start to end)
+	Displays output to STDOUT (screen)
+	Can create, append, or combine files
+		example::
+		--> cat filename.txt
+	Create a new file
+		cat > notes.txt
+		# write content
+		CTRL + D to save & exit
+	Append to existing file
+		cat >> notes.txt
+				# Adds content without deleting old content
+	Display with line numbers
+		cat -n filename.txt
+	Combine files
+		Cat part1.txt part2.txt > final.txt
+2. less — Page Viewer for Large Files
+	Loads files page-by-page instead of fully into memory
+	Doesn’t modify file — just for reading
+	Faster for large logs (e.g., GB files)
+	Example::
+	--> less filename.txt
+	navigation keys
+	-------------------------------------
+	| Key      | Action                 |
+	| -------- | ---------------------- |
+	| ↑ / ↓    | Scroll line            |
+	| Space    | Page down              |
+	| b        | Page up                |
+	| G        | End of file            |
+	| g        | Start of file          |
+	| /keyword | Search keyword forward |
+	| ?keyword | Search backward        |
+	| n / N    | next/previous search   |
+	| q        | Quit                   |
+    -------------------------------------
+	Real use case:
+		Read system logs in /var/log/
+		Read config files (/etc/hosts)
 
 
+3. tac — Reverse Display of File
+
+	Prints file from last line → first line
+	Useful when latest logs are at bottom
+		example::
+		--> tac logfile.txt
+	Real use: debug apps by checking latest log entry first
 
 
+4. rev — Reverse Characters Per Line
+    Reverses each line’s characters, not line order
+	Example:
+		echo "Linux" | rev
+	Output:
+		xuniL
 
+	$ cat jkf.txt                        rev jkf.txt
+	--> hello jk                          --> kj olleh
+		no worry							  no wory
+        this is part 2                        2 trap si siht
 
-
-
-
-
+	
+	Real use: formatting data received in reverse format (rare but helpful for challenges/ISO data)
 
 
 
