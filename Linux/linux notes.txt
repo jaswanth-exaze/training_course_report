@@ -685,10 +685,12 @@ Deleting, Moving & Copying Exercise
 	- It turns out that I misspelled Sara.  She spells her name "Sarah" with an "h" at the end.  Please rename the `Sara.txt` file to `Sarah.txt`
 		mv fallcohort/sara.txt fallcohort/sarah.txt
 	
-	- Unfortunately Italo is having a bit of a personal emergency, and he would like to move to our WinterCohort.  Please move the `Italo.txt` file from `FallCohort` to the `WinterCohort` folder
+	- Unfortunately Italo is having a bit of a personal emergency, and he would like to move to our WinterCohort.  
+		Please move the `Italo.txt` file from `FallCohort` to the `WinterCohort` folder
 		mv italo.txt waitlist/
 	
-	- Oh no, our entire Winter Cohort had to be cancelled because of a worldwide pandemic :(   We decided to bump all of the scheduled winter students to spring. In the `Bootcamp` directory create a copy of the `WinterCohort` folder called `SpringCohort`
+	- Oh no, our entire Winter Cohort had to be cancelled because of a worldwide pandemic :(   We decided to bump all of the scheduled winter students to spring. 
+		In the `Bootcamp` directory create a copy of the `WinterCohort` folder called `SpringCohort`
 		rm -r Bootcamp/fallcohort/waitlist
 	
 	- Please rename the WinterCohort folder to `WinterCohortCANCELLED`
@@ -696,9 +698,8 @@ Deleting, Moving & Copying Exercise
 
 	- Oh no! We're going out of business. Please delete the entire `Bootcamp` directory 😢
 		rm -r Bootcamp
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-	
 
 
 
