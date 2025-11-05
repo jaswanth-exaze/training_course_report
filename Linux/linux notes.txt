@@ -697,7 +697,7 @@ Deleting, Moving & Copying Exercise
 	- Oh no! We're going out of business. Please delete the entire `Bootcamp` directory 😢
 		rm -r Bootcamp
 
-hello world!.
+hello world!..
 
 
 
