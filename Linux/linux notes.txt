@@ -842,5 +842,104 @@ _________________________________________________________________
 	
 	Real use: formatting data received in reverse format (rare but helpful for challenges/ISO data)
 
+5. head — Show Top Lines of a File
+	Shows first 10 lines by default
+    Great for quick preview of content type
+		Examples
+		head file.txt
+		head -n 20 file.txt   # first 20 lines  or head -20 file.txt
+	Real use: preview CSV headers before processing
+
+6. tail — Show Bottom Lines of a File
+    Shows last 10 lines by default
+		Examlpe:
+		--> tail file.txt
+		--> tail -n 15 file.txt or tail -15 file.txt
+
+
+7. wc — Word, Line & Byte Count
+	Option		Meaning
+	-l			Number of lines
+	-w			Number of words
+	-c			Bytes used
+	-m			Characters count
+	Example
+	--> wc sample.txt
+	Output:
+		12 45 280 sample.txt
+		lines words bytes filename
+	Real use cases:
+    	Analytics on text files
+    	Count user entries, error lines
+
+8. sort — Sorting Text Data
+	Sorts text alphabetically or numerically
+    Supports field-based sorting (important for CSV, logs)
+
+	Basic sorting
+		sort names.txt
+🔹 Reverse sort
+		sort -r names.txt
+🔹 Sort unique items
+		sort -u names.txt
+
+
+
+Working With Files Exercise
+
+Once you have downloaded the above zip file, unzip it! It contains two files: `poem.txt` and `purchases.txt`
+
+## Part 1
+	1.Use a command to print out the entire contents of the poem.txt file. Use an option so that the output also Icludes
+		line numbers.
+		--> cat -n poem.txt 
+
+	2.That is a headache to read all at once! Read poem.txt using less instead. 
+		Scroll down one line at a time
+			--> less poem.txt 
+				down arrow
+		Scroll up one line at a time
+			--> less poem.txt 
+				up arrow	
+		Scroll down one "page" at a time
+			-->b
+		Scroll up one "page" at a time
+			-->G
+	3. Search within less for the term "Dog".  Can you find the line that contains it? 
+		--> less poem.txt
+			/Dog enter
+			-i enter
+			=        # for line number
+	4. Now it's time to do some research! Find the option to tell less to open with lines numbers displayed. Open 				poem.txt this way
+		--> less -N poem.txt
+	5. Then find the "command" you can type into less to go to exactly 50% of the way through the file.
+		--> less poem.txt
+			50%
+    6. Use a command to find the number of words in poem.txt
+		--> wc poem.txt
+	7. Run a command to print out the first 4 lines of poem.txt
+		--> head -4 poem.txt
+	8. Run a command to print out the last 8 lines of poem.txt
+		--> tail -8 poem.txt
+
+	9. Run a command to print out the lines in purchases.txt in reverse order (last line printed first)
+		--> tac purchases.txt
+	10. Run a command to print out the lines in purchases.txt, sorted alphabetically.
+		--> rev purchases.txt
+	11. Run a command to count the number of lines in purchases.txt
+		--> wc purchases.txt
+	12. Run a command to print out the lines in purchases.txt, sorted by the price (the final column) in the dataset in 		REVERSE order (highest price to lowest price)
+		--> sort -k3 purchases.txt -r
+
+
+
+
+
+
+
+
+
+
+
 
 
