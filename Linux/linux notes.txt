@@ -902,13 +902,13 @@ Once you have downloaded the above zip file, unzip it! It contains two files: `p
 			--> less poem.txt 
 				up arrow	
 		Scroll down one "page" at a time
-			-->b
+			--> b
 		Scroll up one "page" at a time
-			-->G
+			--> G
 	3. Search within less for the term "Dog".  Can you find the line that contains it? 
 		--> less poem.txt
 			/Dog enter
-			-i enter
+			-I enter
 			=        # for line number
 	4. Now it's time to do some research! Find the option to tell less to open with lines numbers displayed. Open 				poem.txt this way
 		--> less -N poem.txt
@@ -916,7 +916,7 @@ Once you have downloaded the above zip file, unzip it! It contains two files: `p
 		--> less poem.txt
 			50%
     6. Use a command to find the number of words in poem.txt
-		--> wc poem.txt
+		--> wc -w poem.txt
 	7. Run a command to print out the first 4 lines of poem.txt
 		--> head -4 poem.txt
 	8. Run a command to print out the last 8 lines of poem.txt
@@ -925,19 +925,162 @@ Once you have downloaded the above zip file, unzip it! It contains two files: `p
 	9. Run a command to print out the lines in purchases.txt in reverse order (last line printed first)
 		--> tac purchases.txt
 	10. Run a command to print out the lines in purchases.txt, sorted alphabetically.
-		--> rev purchases.txt
+		--> sort purchases.txt
 	11. Run a command to count the number of lines in purchases.txt
-		--> wc purchases.txt
+		--> wc -l purchases.txt
 	12. Run a command to print out the lines in purchases.txt, sorted by the price (the final column) in the dataset in 		REVERSE order (highest price to lowest price)
 		--> sort -k3 purchases.txt -r
 
+========================================================================================================================
+🎯 STANDARD STREAMS IN LINUX
+
+Whenever you run a command, Linux automatically opens 3 communication channels between the command and the terminal:
+
+| Stream Name         | Abbreviation | File Descriptor | Purpose                                     |
+| ------------------- | ------------ | --------------- | ------------------------------------------- |
+| **Standard Input**  | `stdin`      | `0`             | What the command **reads**                  |
+| **Standard Output** | `stdout`     | `1`             | What the command **prints** (normal output) |
+| **Standard Error**  | `stderr`     | `2`             | Where error messages are printed            |
 
 
 
+✅ 1️⃣ Standard Input — stdin (0)
+The input you type into a program.
+Example:
+cat
+Now type something → it is being fed to stdin
+Press CTRL + D to end.
+✅ 2️⃣ Standard Output — stdout (1)
+Normal command output goes to screen by default.
+Example:
+ls
+The file list printed → stdout
+✅ 3️⃣ Standard Error — stderr (2)
+Error messages also appear on screen, but they use a separate channel.
+Example:
+ls nofile
+Output:
+ls: cannot access 'nofile': No such file or directory
+This error comes from stderr
+📌 Why separate stdout and stderr?
+So we can redirect:
+    The correct output to a file ✅
+    The errors somewhere else ✅
+This gives more control and better scripting.
+Example: extract only valid results from a command.
 
 
 
+✅ REDIRECTION OPERATORS
 
+Redirection allows you to change the destination of a stream (instead of the terminal).
+
+✅ 1️⃣ Redirect Standard Output (stdout → file)
+ _____________________________________
+| Command | Meaning                   |
+| ------- | ------------------------- |
+| `>`     | Write to file (overwrite) |
+| `>>`    | Append to file            |
+|_________|___________________________|
+
+✅ Example (overwrite)
+ls > output.txt
+📌 Creates/overwrites output.txt
+Example (append)
+ls >> output.txt
+📌 Adds output to end of file
+✅ 2️⃣ Redirect Standard Error (stderr → file)
+ls nofile 2> error.txt
+✔ Errors go into error.txt
+❌ Normal output still appears on terminal
+✅ 3️⃣ Redirect stdout AND stderr together
+command > file 2>&1
+OR simpler version:
+command &> file
+✔ Both normal output & errors go into file
+Example:
+ls nofile /etc &> result.txt
+✅ 4️⃣ Redirect Standard Input (stdin)
+command < file
+Example:
+cat < notes.txt
+➡ Same as: cat notes.txt
+✅ But important for some commands that require stdin
+
+✅ 5️⃣ Using pipes (|) — Redirection to another command
+
+command1 | command2
+
+Output of first command → input of second command
+
+Example:
+
+ls | grep "test"
+
+✔ Show only filenames containing “test”
+✅ 6️⃣ Discard output using /dev/null
+
+Throw result into trash (delete it)
+
+ls nosuchfile 2>/dev/null
+
+📌 Hides errors completely
+✅ Practical Examples to Understand Everything
+🔹 Saving sorted list in a file
+
+sort names.txt > sorted.txt
+
+🔹 Save errors ONLY
+
+grep "dog" animals.txt 2> errors.log
+
+🔹 Save both errors & valid matches
+
+grep "dog" animals.txt > result.txt 2> errors.txt
+
+🔹 Save both into one file
+
+grep "dog" animals.txt &> all.log
+
+🔹 Count only valid entries, hide errors
+
+grep "apple" *.txt 2>/dev/null | wc -l
+
+====================================================================================
+| Stream               | FD    | Default Direction         | Redirection           |
+| -------------------- | ----- | ------------------------- | --------------------- |
+| `stdin`              | 0     | Keyboard → Program        | `<`                   |
+| `stdout`             | 1     | Program → Screen          | `>` or `>>`           |
+| `stderr`             | 2     | Program → Screen (errors) | `2>`                  |
+| both stdout + stderr | 1 & 2 |                           | `&>` or `> file 2>&1` |
+-----------------------------------------------------------------------------------
+| Task                              | Command               |           |
+| --------------------------------- | --------------------- | --------- |
+| Send output to file               | `ls > file.txt`       |           |
+| Append to file                    | `ls >> file.txt`      |           |
+| Send errors to file               | `ls x 2>err.txt`      |           |
+| Send both to file                 | `ls x &>all.txt`      |           |
+| Pipe (redirect output to command) | `ls                   | grep txt` |
+| Suppress errors                   | `command 2>/dev/null` |           |
+=========================================================================
+
+REDIRECTION EXERCISE
+## Your Task
+
+You are taking part in a wildlife survey in a remote portion of the Peruvian Amazon! This morning, three of your research assistants each went on transect walks where they recorded the individual species they observed.  
+Your (simple) job is to combine their findings into a new file that contains all the species that were observed!
+
+Create a new file called all-species.txt that contains the combined contents of angela-survey.txt, nico-survey.txt, and juan-survey.txt.  Do this using a single command!
+	--> cat angela-survey.txt juan-survey.txt nico-survey.txt>> all-species.txt
+The problem with the all-species.txt file is that it contains duplicate entries!  Use a single command to sort the lines in alphabetical order, only sorting uniques, and send the output to a new file called sorted-animals.txt
+	--> sort -u all-species.txt > sorted-animals.txt
+Now, you go out for a nice morning stroll and stumble upon a large anaconda sunning itself on a log.  You should add this observation to the list of species!!
+	Start by appending the current date to the end of the sorted-animals.txt file using a command (don't open the file manually!)
+		--> date >> sorted-animals.txt
+	Then append the text "Green Anaconda" to the end of sorted-animals.txt
+		--> echo "Green Anaconda" >> sorted-animals.txt
+Run the non-existent command ughhh and redirect any error messages so that they are appended to the sorted-animals.txt file.
+	--> ughhh 2>> sorted-animals.txt
 
 
 
