@@ -685,10 +685,12 @@ Deleting, Moving & Copying Exercise
 	- It turns out that I misspelled Sara.  She spells her name "Sarah" with an "h" at the end.  Please rename the `Sara.txt` file to `Sarah.txt`
 		mv fallcohort/sara.txt fallcohort/sarah.txt
 	
-	- Unfortunately Italo is having a bit of a personal emergency, and he would like to move to our WinterCohort.  Please move the `Italo.txt` file from `FallCohort` to the `WinterCohort` folder
+	- Unfortunately Italo is having a bit of a personal emergency, and he would like to move to our WinterCohort.  
+		Please move the `Italo.txt` file from `FallCohort` to the `WinterCohort` folder
 		mv italo.txt waitlist/
 	
-	- Oh no, our entire Winter Cohort had to be cancelled because of a worldwide pandemic :(   We decided to bump all of the scheduled winter students to spring. In the `Bootcamp` directory create a copy of the `WinterCohort` folder called `SpringCohort`
+	- Oh no, our entire Winter Cohort had to be cancelled because of a worldwide pandemic :(   We decided to bump all of the scheduled winter students to spring. 
+		In the `Bootcamp` directory create a copy of the `WinterCohort` folder called `SpringCohort`
 		rm -r Bootcamp/fallcohort/waitlist
 	
 	- Please rename the WinterCohort folder to `WinterCohortCANCELLED`
@@ -696,16 +698,147 @@ Deleting, Moving & Copying Exercise
 
 	- Oh no! We're going out of business. Please delete the entire `Bootcamp` directory 😢
 		rm -r Bootcamp
+-------------------------------------------------------------------------------------------------
+-------------------------SHORTCUTS----------------------------------
 
-hello world!..
+General Terminal Shortcuts
+
+____________________________________________________________________
+| Shortcut     | Action                                            |
+| ------------ | ------------------------------------------------- |
+| **Ctrl + L** | Clear screen (same as `clear`)                    |
+| **Ctrl + A** | Move cursor to start of line                      |
+| **Ctrl + E** | Move cursor to end of line                        |
+| **Ctrl + F** | Move cursor forword one step                      |
+| **Ctrl + B** | Move cursor backword one step                     |
+| **Ctrl + T** | Swap last two characters                          |
+| **Alt  + T** | Swap last two words                               |
+| **Ctrl + K** | Cut/delete everything from cursor to end          |
+| **Ctrl + U** | Cut/delete everything from cursor to start        |
+| **Ctrl + W** | Delete one word backwards                         |
+| **Alt  + D*  | Delete one word forword                           |
+| **Ctrl + H** | Delete one character backward                     |
+| **Ctrl + Y** | Paste text removed by Ctrl + U/W/K                |
+| **Ctrl + C** | Cancel/Stop current command                       |
+| **Ctrl + Z** | Suspend/stop running process (send to background) | 
+| **Ctrl + D** | Logout or exit terminal (similar to `exit`)       |
+| **Tab**      | Auto-complete command / file / directory name     |
+--------------------------------------------------------------------
+
+Navigation Within Command Line
+______________________________________________________________
+| Shortcut               | Action                             |
+| ---------------------- | ---------------------------------- |
+| **Alt + B**            | Move cursor back one word          |
+| **Alt + F**            | Move cursor forward one word       |
+| **← / → (Arrow keys)** | Move left/right                    |
+| **Ctrl + P**           | Previous command (same as ↑ arrow) |
+| **Ctrl + N**           | Next command (same as ↓ arrow)     |
+|________________________|____________________________________|
+
+Command Editing
+____________________________________________________________
+| Shortcut             | Action                            |
+| -------------------- | --------------------------------- |
+| **Up Arrow**         | Browse previous commands          |
+| **Down Arrow**       | Browse next commands              |
+| **Ctrl + Shift + C** | Copy text (in terminal emulator)  |
+| **Ctrl + Shift + V** | Paste text (in terminal emulator) |
+| **Ctrl + Shift + T** | Open new tab in terminal          |
+| **Ctrl + Shift + N** | Open new terminal window          |
+| **Ctrl + Shift + W** | Close current tab                 |
+-------------------------------------------------------------
+
+Process Management
+_____________________________________________________________
+| Shortcut     | Action                                     |
+| ------------ | ------------------------------------------ |
+| **Ctrl + C** | Kill/stop process                          |
+| **Ctrl + Z** | Suspend process                            |
+| **fg**       | Bring suspended process back to foreground |
+| **bg**       | Run suspended job in background            |
+| **jobs**     | Show background/suspended processes        |
+-------------------------------------------------------------
+
+History & Reuse
+_________________________________________________________________
+| Shortcut    | Action                                 			|
+| ----------- | ------------------------------------------------|
+| **history** | Show all previously used commands   			|
+| **!!**      | Run last command again              			|
+| **!n**      | Run command number `n` in history   			|
+| **!ls**     | Run last command starting with `ls` 			|
+| **Ctrl + R**| Search through command history (reverse search) |
+| **Ctrl + G**| Exit history search mode                        |
+-----------------------------------------------------------------
+
++++++++++++++++++++++             WORKING WITH FILES                    ++++++++++++++++++++
+
+1. cat — Concatenate and View File Contents
+	Reads a file sequentially (line-by-line from start to end)
+	Displays output to STDOUT (screen)
+	Can create, append, or combine files
+		example::
+		--> cat filename.txt
+	Create a new file
+		cat > notes.txt
+		# write content
+		CTRL + D to save & exit
+	Append to existing file
+		cat >> notes.txt
+				# Adds content without deleting old content
+	Display with line numbers
+		cat -n filename.txt
+	Combine files
+		Cat part1.txt part2.txt > final.txt
+2. less — Page Viewer for Large Files
+	Loads files page-by-page instead of fully into memory
+	Doesn’t modify file — just for reading
+	Faster for large logs (e.g., GB files)
+	Example::
+	--> less filename.txt
+	navigation keys
+	-------------------------------------
+	| Key      | Action                 |
+	| -------- | ---------------------- |
+	| ↑ / ↓    | Scroll line            |
+	| Space    | Page down              |
+	| b        | Page up                |
+	| G        | End of file            |
+	| g        | Start of file          |
+	| /keyword | Search keyword forward |
+	| ?keyword | Search backward        |
+	| n / N    | next/previous search   |
+	| q        | Quit                   |
+    -------------------------------------
+	Real use case:
+		Read system logs in /var/log/
+		Read config files (/etc/hosts)
 
 
+3. tac — Reverse Display of File
+
+	Prints file from last line → first line
+	Useful when latest logs are at bottom
+		example::
+		--> tac logfile.txt
+	Real use: debug apps by checking latest log entry first
+
+
+4. rev — Reverse Characters Per Line
+    Reverses each line’s characters, not line order
+	Example:
+		echo "Linux" | rev
+	Output:
+		xuniL
+
+	$ cat jkf.txt                        rev jkf.txt
+	--> hello jk                          --> kj olleh
+		no worry							  no wory
+        this is part 2                        2 trap si siht
 
 	
-
-
-
-
+	Real use: formatting data received in reverse format (rare but helpful for challenges/ISO data)
 
 
 
