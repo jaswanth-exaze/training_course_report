@@ -1083,6 +1083,226 @@ Run the non-existent command ughhh and redirect any error messages so that they 
 	--> ughhh 2>> sorted-animals.txt
 
 
+====================================================================
+PIPING IN LINUX
+====================================================================
+
+1. What is it?
+----------------------------------------------------
+Piping in Linux is a method to send the output of one command as the
+input to another command. It allows chaining multiple commands together
+without using temporary files.
+
+Pipe symbol:
+    |
+
+General Syntax:
+    command1 | command2
+
+2. Why is it used?
+----------------------------------------------------
+- To filter and refine data step-by-step.
+- To combine multiple commands into a single workflow.
+- To process output dynamically without saving to files.
+- To automate tasks efficiently in a command-line environment.
+- To build complex data-processing pipelines.
+
+3. How does it work?
+----------------------------------------------------
+Each command has standard streams: stdin (input) and stdout (output).
+A pipe redirects stdout of one command directly into stdin of the next.
+
+Conceptual flow:
+    stdout of command1 --> stdin of command2
+
+Multiple pipes can be chained:
+    command1 | command2 | command3 | ...
+
+4. Commands and Examples
+----------------------------------------------------
+Example 1:
+    ls | grep ".txt"
+Explanation:
+    Displays only files containing the ".txt" extension.
+
+Example 2:
+    ls | grep ".txt" | wc -l
+Explanation:
+    Counts the number of .txt files in the current directory.
+
+Example 3:
+    cat /etc/passwd | cut -d ':' -f1
+Explanation:
+    Extracts only the username field from the system user list.
+
+Example 4:
+    ls -lh | sort -k5 -n | tail -5
+Explanation:
+    Shows the largest 5 files in the current directory by sorting on size.
+
+Example 5:
+    grep "ERROR" app.log | tail -10 | sort
+Explanation:
+    Filters error entries from a log, shows latest 10, and sorts them.
+
+Example 6:
+    echo "HELLO" | tr A-Z a-z
+Explanation:
+    Converts text to lowercase using a pipe.
+
+5. Real-World Usage
+----------------------------------------------------
+- Log monitoring and filtering in DevOps
+- Extracting specific columns from CSV/System files
+- Sorting and counting results in analytics
+- Searching through configuration or code files
+- Automating tasks in scripts without temporary files
+
+====================================================================
+TR COMMAND IN LINUX
+====================================================================
+
+1. What is it?
+----------------------------------------------------
+The 'tr' command in Linux is used for translating, transforming, and
+deleting characters from the input data. It modifies characters as per
+the defined rules and outputs the result.
+
+2. Why is it used?
+----------------------------------------------------
+- Convert uppercase to lowercase and vice-versa
+- Remove unwanted characters from text
+- Replace characters with another set of characters
+- Compress repeated characters into a single occurrence
+- Helpful in data cleaning and preprocessing
+
+3. How does it work?
+----------------------------------------------------
+- Reads from standard input (stdin)
+- Applies translation/transformation rules
+- Outputs processed data to standard output (stdout)
+
+General Syntax:
+    tr [OPTION] SET1 [SET2]
+
+4. Commands and Examples
+----------------------------------------------------
+Example 1: Convert lowercase to uppercase
+    echo "linux" | tr a-z A-Z
+Output:
+    LINUX
+
+Example 2: Convert uppercase to lowercase
+    echo "HELLO" | tr A-Z a-z
+
+Example 3: Replace spaces with underscores
+    echo "Linux OS" | tr ' ' '_'
+Output:
+    Linux_OS
+
+Example 4: Delete digits (-d)
+    echo "abc123" | tr -d 0-9
+Output:
+    abc
+
+Example 5: Squeeze repeated characters (-s)
+    echo "aaabbccdd" | tr -s a-z
+Output:
+    abcd
+
+Example 6: Remove vowels
+    echo "hello world" | tr -d "aeiou"
+Output:
+    hll wrld
+
+Example 7: remove alphabets
+	echo "jaswanth.uppu@gmail.com" | tr -d [:alpha:]
+Output:
+	.@.
+Example 8: remove blank spaces
+	echo "uppu jaswanth kumar" | tr -d [:blank:]
+Output:
+	uppujaswanthkumar
+
+5. Real-World Usage
+----------------------------------------------------
+- Converting case for usernames or data entries
+- Formatting CSV/text before processing
+- Removing special characters in logs
+- Cleaning repeated whitespace
+- Used frequently with pipes
+
+====================================================================
+TEE COMMAND IN LINUX
+====================================================================
+
+1. What is it?
+----------------------------------------------------
+The 'tee' command is used to read input from stdin, display the output
+on the terminal, and write it to a file at the same time.
+
+2. Why is it used?
+----------------------------------------------------
+- To save command output to a file *while still seeing it* on screen
+- Useful in logging output of commands in pipelines
+- Helps verify stored data immediately
+
+3. How does it work?
+----------------------------------------------------
+Takes input → Prints to terminal → Writes to file
+
+General Syntax:
+    command | tee filename
+
+4. Commands and Examples
+----------------------------------------------------
+Example 1: Display and save output
+    ls | tee list.txt
+Explanation:
+    Shows output on screen AND saves to list.txt
+
+Example 2: Append instead of overwrite (-a)
+    ls | tee -a history.txt
+
+Example 3: Multiple output files
+    echo "Log Entry" | tee log1.txt log2.txt
+
+Example 4: Logging commands with grep
+    grep "error" app.log | tee errors.txt
+
+Example 5: Combine wc and record keeping
+    ls | wc -l | tee count.txt
+
+5. Real-World Usage
+----------------------------------------------------
+- Storing important logs during monitoring
+- Keeping record of script outputs
+- Debugging by checking stored data immediately
+- Useful in CI/CD pipelines (DevOps)
 
 
+====================  PIPING EXERCISE  ======================
+Unzip the file.  The resulting folder contains a subfolder called PokeDex/ which in turn contains a whole bunch of files, each named for a specific Pokemon like:
+PokemonExercise/
+	PokeDex/
+		100Voltorb
+		101Electrode
+	  619Mienfoo
+		...
+Complete the following challenges using the starter files.  Make sure that you navigate to the PokemonExercise/ directory, but do NOT run any of the following commands from inside the PokeDex/ folder.  I repeat: any files that you create for the exercise should live inside of PokemonExercise/ NOT PokeDex/
 
+Count the number of Pokemon files in the PokeDex/ folder.  You'll need to combine commands to make this work!
+		--> ls -lh  PokeDex/ | wc -l
+
+Next, create a new single file called all-pokemon.txt in the PokemonExercise folder (NOT the PokeDex folder)that contains the LOWERCASED name of every single Pokemon file in the directory, sorted in numerical order!  The end result should look like this: 
+		--> ls PokeDex/|tr A-Z a-z|sort -n > all-pokeman.txt
+
+Now that we have this file that includes all the Pokemon in numerical order, let's print out the three pigeon-related Pokemon: pidgey, pidgeotto, and pidgeot.  Using the command-line, print out lines 16-18.  It should look like this:
+		--> head -18 all-pokeman.txt | tail -3
+
+Next, up let's isolate the original 151 Pokemon.  Using a single pipeline...
+	output the first 151 lines of the all-pokemon.txt file
+	remove all digits 0-9 from the lines (using tr )
+	sort the now number-less lines alphabetically
+	store the new result in a file called original-151.txt in PokemonExercise
+		--> head -150 all-pokeman.txt | tr -d 0-9 | sort > PokemonExercise
