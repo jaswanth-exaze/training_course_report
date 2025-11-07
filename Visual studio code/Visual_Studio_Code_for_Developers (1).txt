@@ -1,0 +1,327 @@
+ Visual Studio Code for Developers
+
+ Table of Contents
+1. Welcome to the Course
+2. Working with Files and Folders
+3. How to Edit a Project in the Explorer
+4. Searching in VS Code
+5. Integrated Terminal and Command Prompt
+6. Customize VS Code + Settings
+7. Improve Your Productivity in VS Code
+8. Extensions in VS Code
+9. Code Snippets in VS Code
+10. Web Development in VS Code
+11. Python Development in VS Code
+12. Debugging in VS Code
+13. Jupyter Notebook in VS Code
+14. Markdown in VS Code
+15. Profiles in VS Code
+16. Git and GitHub in VS Code
+17. Top VS Code Shortcuts (Bonus)
+18. Most Useful Extensions for Beginners (Bonus)
+
+---
+
+ 1. Welcome to the Course
+Welcome to Visual Studio Code for Developers — a complete guide to mastering VS Code, a free and powerful code editor by Microsoft. You'll learn everything from setup and file management to debugging, Git, and productivity boosters.
+
+What is VS Code?
+Visual Studio Code (VS Code) is a source-code editor that supports syntax highlighting, IntelliSense (smart code completion), debugging, and extensions. It's lightweight yet highly customizable.
+
+Key Features:
+- Syntax highlighting & IntelliSense
+- Built-in terminal
+- Git integration
+- Extension marketplace
+- Custom themes and keyboard shortcuts
+
+Installation Steps:
+1. Visit [https://code.visualstudio.com](https://code.visualstudio.com)
+2. Download for your OS (Windows, macOS, or Linux)
+3. Follow on-screen instructions
+4. Launch VS Code
+
+UI Overview:
+- Activity Bar: Navigation panel (Explorer, Search, Source Control, etc.)
+- Side Bar: Displays file explorer or search results
+- Editor Area: Main code window
+- Status Bar: Shows information like line number, branch, etc.
+- Command Palette (Ctrl+Shift+P): Quick access to any command
+
+---
+
+ 2. Working with Files and Folders
+Creating and Opening Files/Folders:
+- New File: `Ctrl + N`
+- New Folder: Right-click in Explorer → New Folder
+- Open File/Folder: `Ctrl + O` or drag into VS Code
+
+Saving Files:
+- `Ctrl + S` – Save current file
+- `Ctrl + K S` – Save all files
+- Enable Auto Save: File → Auto Save
+
+Preview Mode:
+- Single-click opens files in preview.
+- Double-click to keep open.
+
+Pro Tip: Use “Hot Exit” to recover unsaved files after restart.
+
+---
+
+ 3. How to Edit a Project in the Explorer
+Create/Delete Files or Folders:
+Right-click → New File or Delete. Use `Del` to delete quickly.
+
+Move and Rename:
+- Drag & drop to move files
+- Rename: `F2`
+
+Collapsing Folders: Click the Collapse All icon or press `Ctrl + Shift + ←`.
+
+Pro Tip: Use multiple Explorer views to manage large projects.
+
+---
+
+ 4. Searching in VS Code
+VS Code’s search feature helps find text across your project.
+
+Basic Search:
+- Shortcut: `Ctrl + F`
+- Find Next/Previous: `F3` / `Shift + F3`
+
+Global Search:
+- Open via `Ctrl + Shift + F`
+- Enter keywords to search across all files
+
+Advanced Search Options:
+- Match Case (Aa icon)
+- Match Whole Word (ab icon)
+- Use Regular Expressions (. icon)
+
+Replace:
+- `Ctrl + H` for replace in file or project.
+
+Pro Tip: You can exclude directories in settings (`files.exclude`).
+
+---
+
+ 5. Integrated Terminal and Command Prompt
+The built-in terminal allows running commands without leaving VS Code.
+
+Open Terminal:
+- `Ctrl + `` (backtick)
+- Terminal → New Terminal
+
+Change Shell:
+- Dropdown arrow in terminal → Select Default Profile
+
+Run Commands:
+You can execute commands like:
+```bash
+python app.py
+git status
+npm start
+```
+
+Pro Tip: Split terminal with `Ctrl + \`` for running multiple sessions.
+
+---
+
+ 6. Customize VS Code + Settings
+Settings Panel: `Ctrl + ,` opens GUI settings.
+
+Examples:
+- Change theme: File → Preferences → Theme
+- Change font size: `"editor.fontSize": 16`
+- Enable word wrap: `"editor.wordWrap": "on"`
+
+Settings Sync:  
+Use your Microsoft or GitHub account to sync themes and keybindings.
+
+Pro Tip: Edit `settings.json` directly for full control.
+
+---
+
+ 7. Improve Your Productivity in VS Code
+Multi-Cursor Editing:
+- `Alt + Click` – Add new cursor
+- `Ctrl + Alt + Down` – Add line below
+
+Command Palette: Access any command (`Ctrl + Shift + P`)
+
+Zen Mode: Focus on code only – `Ctrl + K Z`
+
+Pro Tip: Use Emmet shortcuts for HTML/CSS (e.g., `div.container>ul>li3` + Tab)
+
+---
+
+ 8. Extensions in VS Code
+The Extensions view lets you install tools that enhance coding.
+
+Open Extensions: `Ctrl + Shift + X`
+
+Example Extensions:
+- Python by Microsoft
+- Prettier (Code Formatter)
+- Live Server
+- GitLens
+
+Installing Extensions:
+Search → Install → Reload
+
+Pro Tip: Use workspace recommendations for team projects.
+
+---
+
+ 9. Code Snippets in VS Code
+Snippets let you reuse code quickly.
+
+Create a Custom Snippet:
+1. File → Preferences → User Snippets
+2. Select language (e.g., Python)
+3. Add entry:
+```json
+"Print to console": {
+  "prefix": "log",
+  "body": ["console.log('$1');"],
+  "description": "Log output"
+}
+```
+
+Trigger Snippet: Type `log` → Press `Tab`
+
+---
+
+ 10. Web Development in VS Code
+Install Live Server for instant browser refresh.
+
+Steps:
+1. Install “Live Server” extension.
+2. Right-click HTML file → Open with Live Server
+
+HTML/CSS Tips:
+- Emmet support built-in.
+- Use color preview & auto-close tags.
+
+Pro Tip: Combine with Prettier for consistent formatting.
+
+---
+
+ 11. Python Development in VS Code
+Install Python extension and Pylance.
+
+Setup:
+- Select interpreter: `Ctrl + Shift + P` → “Python: Select Interpreter”
+- Run script: `Ctrl + F5`
+
+Linting & Debugging: Automatically checks errors.
+
+Pro Tip: Use virtual environments (`venv`) and `.env` files.
+
+---
+
+ 12. Debugging in VS Code
+Start Debugging:
+- Click the Run icon or press `F5`.
+
+Add Breakpoints: Click left of line number.
+
+View Variables: Watch, Locals, and Call Stack.
+
+Launch Configurations:
+Customize in `.vscode/launch.json`.
+
+Pro Tip: Use conditional breakpoints for complex debugging.
+
+---
+
+ 13. Jupyter Notebook in VS Code
+Install the Jupyter extension.
+
+Open Notebook:
+- Create `.ipynb` file.
+- Run cells using `Shift + Enter`.
+
+Features:
+- Inline graphs with Matplotlib.
+- Variable explorer.
+
+Pro Tip: Convert between `.py` and `.ipynb` using command palette.
+
+---
+
+ 14. Markdown in VS Code
+Markdown allows formatted documentation.
+
+Preview Mode: `Ctrl + Shift + V`
+
+Split Preview: `Ctrl + K V`
+
+Example:
+```markdown
+ Heading 1
+Bold Text
+- Bullet List
+```
+
+Pro Tip: Install “Markdown All in One” for shortcuts.
+
+---
+
+ 15. Profiles in VS Code
+Profiles save your setup preferences.
+
+Create Profile:
+- `Ctrl + Shift + P` → “Profiles: Create”
+
+Switch Profile:
+- Quickly toggle between workspaces.
+
+Pro Tip: Use profiles for language-specific setups (Python, Web, etc.)
+
+---
+
+ 16. Git and GitHub in VS Code
+Initialize Repo: Source Control → Initialize Repository
+
+Basic Commands:
+- Stage: `+`
+- Commit: `Ctrl + Enter`
+- Push/Pull: via buttons or Command Palette
+
+Clone Repo:
+`Ctrl + Shift + P` → “Git: Clone”
+
+Pro Tip: Install GitLens to visualize commit history.
+
+---
+
+ 17. Top VS Code Shortcuts (Bonus)
+| Action | Shortcut |
+|---------|-----------|
+| Open Command Palette | Ctrl + Shift + P |
+| Toggle Terminal | Ctrl + ` |
+| Split Editor | Ctrl + \ |
+| Comment Line | Ctrl + / |
+| Format Code | Shift + Alt + F |
+| Find | Ctrl + F |
+| Replace | Ctrl + H |
+| Go to Definition | F12 |
+| Open Settings | Ctrl + , |
+
+---
+
+ 18. Most Useful Extensions for Beginners (Bonus)
+1. Prettier – Code formatter  
+2. Live Server – Real-time HTML preview  
+3. Python – For Python development  
+4. GitLens – Git insights  
+5. Bracket Pair Colorizer 2 – Match parentheses easily  
+6. Auto Rename Tag – Rename HTML pairs automatically  
+7. Material Icon Theme – Beautify file icons  
+8. Markdown All in One – Enhanced Markdown editing  
+
+---
+
+ 
