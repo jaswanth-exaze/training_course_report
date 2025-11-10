@@ -2114,6 +2114,256 @@ Example:
 
 
 
+====================================================================
+PERMISSIONS BASICS IN LINUX
+====================================================================
+
+1. MULTI-USER SYSTEM AND PERMISSIONS INTRO
+----------------------------------------------------
+Linux is a **multi-user operating system**, meaning multiple users can
+use the same system at the same time — either locally or remotely.
+
+Each user has their **own files, directories, and privileges**.
+To maintain security and data integrity, Linux uses a **permission model**
+that controls:
+    - Who can read files,
+    - Who can modify files,
+    - Who can execute files.
+
+Permissions are vital because they:
+    - Prevent unauthorized access to sensitive data.
+    - Allow collaboration while maintaining privacy.
+    - Protect system stability and file integrity.
+
+The permissions system revolves around:
+    - Users
+    - Groups
+    - Others
+
+----------------------------------------------------
+2. FILE OWNERS AND GROUP OWNERS
+----------------------------------------------------
+Each file or directory in Linux has:
+    1. **An Owner (User)** – The user who created the file.
+    2. **A Group Owner (Group)** – A set of users who share access.
+    3. **Others** – Everyone else on the system.
+
+You can view ownership details using the `ls -l` command.
+
+Example:
+    ls -l file.txt
+
+Output:
+    -rw-r--r-- 1 jaswanth devteam 1200 Nov 7 09:30 file.txt
+                 |        |       |
+                 |        |       +--> Group owner
+                 |        +----------> User owner
+                 +-------------------> Permissions
+
+Here:
+    - User owner = jaswanth
+    - Group owner = devteam
+
+Change ownership using:
+    chown <user> file
+    chgrp <group> file
+    chown <user>:<group> file
+
+----------------------------------------------------
+3. THE FILE TYPE
+----------------------------------------------------
+When you run `ls -l`, the first character of the permissions string
+indicates the **type of file**.
+
+Example:
+    -rw-r--r--
+     ^
+     File type indicator
+
+Common file types:
+
++---------+-----------------------------+
+| Symbol  | Meaning                     |
++---------+-----------------------------+
+| -       | Regular file                |
+| d       | Directory                   |
+| l       | Symbolic link (shortcut)    |
+| c       | Character device file       |
+| b       | Block device file           |
+| p       | Named pipe                 |
+| s       | Socket                      |
++---------+-----------------------------+
+
+Example:
+    drwxr-xr-x   → Directory
+    -rw-r--r--   → Regular file
+    lrwxrwxrwx   → Symbolic link
+
+----------------------------------------------------
+4. UNDERSTANDING PERMISSIONS
+----------------------------------------------------
+Permissions define **who can do what** with a file or directory.
+
+Format (10 characters total):
+    -rwxr-xr--
+
+Breakdown:
+		
+    [1]  → File type (-, d, l, etc.)
+    [2-4] → Owner permissions (rwx)
+    [5-7] → Group permissions (r-x)
+    [8-10] → Others permissions (r--)
+
+Meaning:
+    r → read
+    w → write
+    x → execute
+    - → no permission
+
+Example:
+    -rw-r--r--
+
+| Field | Meaning                              |
+|--------|--------------------------------------|
+| -      | Regular file                        |
+| rw-    | Owner can read and write            |
+| r--    | Group can only read                 |
+| r--    | Others can only read                |
+
+----------------------------------------------------
+5. READ PERMISSIONS
+----------------------------------------------------
+### On Files:
+- The **read (r)** permission allows viewing or displaying file contents.
+Example:
+    cat file.txt
+    less file.txt
+If you lack read permission, you'll see:
+    cat: Permission denied
+
+### On Directories:
+- Read permission allows listing of directory contents with `ls`.
+Example:
+    ls dirname/
+
+Without read permission:
+    ls: cannot open directory ‘dirname’: Permission denied
+
+----------------------------------------------------
+6. WRITE PERMISSIONS
+----------------------------------------------------
+### On Files:
+- The **write (w)** permission allows modifying or deleting file contents.
+
+Example:
+    echo "new line" >> file.txt
+
+Without write permission:
+    bash: file.txt: Permission denied
+
+### On Directories:
+- Write permission allows:
+    - Creating new files
+    - Deleting existing files
+    - Renaming files within that directory
+
+Example:
+    touch newfile.txt
+    rm oldfile.txt
+
+Without directory write permission:
+    touch: cannot touch ‘newfile.txt’: Permission denied
+
+⚠️ Note:
+A user can delete a file in a directory **if they have write permission
+on the directory**, even if they don’t own the file.
+
+----------------------------------------------------
+7. EXECUTE PERMISSIONS
+----------------------------------------------------
+### On Files:
+- The **execute (x)** permission allows running the file as a program
+  or script.
+
+Example:
+    ./script.sh
+
+If execute permission is missing:
+    bash: ./script.sh: Permission denied
+
+You can add execute permission:
+    chmod +x script.sh
+
+### On Directories:
+- Execute permission allows entering the directory (using `cd`).
+
+Example:
+    cd dirname/
+
+Without execute permission:
+    bash: cd: dirname: Permission denied
+
+So:
+    - Read (r): list directory contents
+    - Write (w): create/delete files inside
+    - Execute (x): enter or traverse the directory
+
+----------------------------------------------------
+SUMMARY TABLE
+----------------------------------------------------
+
++-----------+----------------------+-------------------------------------------+
+| Permission| On Files             | On Directories                            |
++-----------+----------------------+-------------------------------------------+
+| Read (r)  | View or display file | List contents using `ls`                  |
+| Write (w) | Modify or delete file| Add, delete, or rename files inside       |
+| Execute(x)| Run as program/script| Access or traverse directory              |
++-----------+----------------------+-------------------------------------------+
+
+----------------------------------------------------
+EXAMPLE PERMISSION STRING
+----------------------------------------------------
+
+    -rwxr-xr--
+     |  |  | |
+     |  |  | +-- Others: read only
+     |  |  +---- Group: read, execute
+     |  +------- Owner: read, write, execute
+     +---------- Regular file
+
+----------------------------------------------------
+REAL-WORLD EXAMPLES
+----------------------------------------------------
+1. View permissions:
+    ls -l file.txt
+
+2. Give execute permission to owner:
+    chmod u+x script.sh
+
+3. Remove write permission for group:
+    chmod g-w file.txt
+
+4. Allow everyone to read:
+    chmod a+r report.txt
+
+5. Remove all permissions for others:
+    chmod o-rwx secret.txt
+
+----------------------------------------------------
+IN SHORT
+----------------------------------------------------
+| Symbol | Meaning        | Applies To |
+|---------|----------------|------------|
+| r       | Read access    | File/Directory |
+| w       | Write access   | File/Directory |
+| x       | Execute access | File/Directory |
+| u       | User/Owner     | Individual who owns file |
+| g       | Group          | Users belonging to same group |
+| o       | Others         | Everyone else |
+| a       | All (u+g+o)    | Shortcut for all categories |
+
+Example:
+    chmod u=rwx,g=rx,o=r file.txt
 
 
 
