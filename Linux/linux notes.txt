@@ -2365,5 +2365,328 @@ IN SHORT
 Example:
     chmod u=rwx,g=rx,o=r file.txt
 
+====================================================================
+ALTERING PERMISSIONS IN LINUX
+====================================================================
+
+This section explains how to modify file and directory permissions,
+switch users, work as the superuser, and manage file ownership and groups.
+
+====================================================================
+1. THE chmod COMMAND: SYMBOLIC NOTATION
+====================================================================
+
+The `chmod` (change mode) command changes permissions for a file or directory.
+
+SYNTAX:
+    chmod [WHO][OPERATOR][PERMISSIONS] <file/directory>
+
+----------------------------------------------------
+WHO can be:
+----------------------------------------------------
+    u  → user (owner)
+    g  → group
+    o  → others
+    a  → all (u + g + o)
+
+----------------------------------------------------
+OPERATORS:
+----------------------------------------------------
+    +  → add permission
+    -  → remove permission
+    =  → set exact permission
+
+----------------------------------------------------
+PERMISSIONS:
+----------------------------------------------------
+    r  → read
+    w  → write
+    x  → execute
+
+----------------------------------------------------
+EXAMPLES:
+----------------------------------------------------
+1. Add execute permission for user (owner):
+    chmod u+x script.sh
+
+2. Remove write permission for group:
+    chmod g-w notes.txt
+
+3. Give read permission to others:
+    chmod o+r report.txt
+
+4. Give full access to everyone:
+    chmod a+rwx file.txt
+
+5. Remove all permissions from others:
+    chmod o-rwx private.txt
+
+6. Set exact permissions (no addition/subtraction):
+    chmod u=rw, g=r, o= file.txt
+
+----------------------------------------------------
+VERIFY:
+----------------------------------------------------
+    ls -l file.txt
+
+OUTPUT:
+    -rw-r----- 1 user group 234 Nov 10 12:00 file.txt
 
 
+===================================================================
+2. USING OCTAL (NUMERIC) NOTATION WITH chmod
+====================================================================
+
+In octal notation, each permission type has a numeric value:
+
+    r (read)    = 4
+    w (write)   = 2
+    x (execute) = 1
+    - (none)    = 0
+
+Add them together for each class (user, group, others).
+
+----------------------------------------------------
+TABLE:
+----------------------------------------------------
+| Permission | Numeric Value | Meaning           |
+|-------------|----------------|------------------|
+| ---         | 0              | no permission     |
+| --x         | 1              | execute only      |
+| -w-         | 2              | write only        |
+| -wx         | 3              | write + execute   |
+| r--         | 4              | read only         |
+| r-x         | 5              | read + execute    |
+| rw-         | 6              | read + write      |
+| rwx         | 7              | read + write + execute |
+
+----------------------------------------------------
+EXAMPLES:
+----------------------------------------------------
+1. chmod 755 file.txt
+   → rwxr-xr-x  (owner full, group & others read/execute)
+
+2. chmod 644 file.txt
+   → rw-r--r--  (owner read/write, others read only)
+
+3. chmod 700 private.txt
+   → rwx------  (owner full access, others none)
+
+4. chmod 777 test.sh
+   → rwxrwxrwx  (everyone full access — use with caution)
+
+5. chmod 751 folder/
+   → rwxr-x--x  (owner full, group read/execute, others execute only)
+====================================================================
+3. THE su COMMAND — SUBSTITUTE USER
+====================================================================
+
+`su` (substitute user) allows switching from one user to another.
+
+----------------------------------------------------
+SYNTAX:
+----------------------------------------------------
+    su [OPTIONS] [USERNAME]
+
+----------------------------------------------------
+COMMON USES:
+----------------------------------------------------
+1. Switch to another user:
+    su exaze
+
+2. Switch with full environment (like login):
+    su - exaze
+
+3. Switch to root user (superuser):
+    su -
+
+4. Return to previous user:
+    exit
+
+----------------------------------------------------
+NOTES:
+----------------------------------------------------
+- The `-` loads the target user’s environment variables (like PATH, HOME).
+- Without `-`, it keeps the current shell’s environment.
+====================================================================
+4. THE SUPER SPECIAL ROOT USER
+====================================================================
+
+The **root** user is the superuser in Linux.
+
+Root can:
+    - Read, write, or delete any file.
+    - Create, modify, and remove users or groups.
+    - Install or remove software.
+    - Change system configurations.
+
+----------------------------------------------------
+IDENTIFICATION:
+----------------------------------------------------
+When logged in as root, the prompt ends with:
+    #
+Example:
+    root@ubuntuserver:~#
+
+Normal users see:
+    $
+
+----------------------------------------------------
+WARNINGS:
+----------------------------------------------------
+- Root has unlimited power — mistakes (like `rm -rf /`) can break the system.
+- Avoid staying logged in as root for normal operations.
+====================================================================
+5. USING THE sudo COMMAND
+====================================================================
+
+`sudo` (superuser do) lets permitted users run commands as the root user.
+
+----------------------------------------------------
+SYNTAX:
+----------------------------------------------------
+    sudo <command>
+
+----------------------------------------------------
+EXAMPLES:
+----------------------------------------------------
+1. Install software:
+    sudo apt install nginx
+
+2. Edit system file:
+    sudo nano /etc/hosts
+
+3. Restart a service:
+    sudo systemctl restart ssh
+
+4. Run multiple commands as root:
+    sudo bash
+
+----------------------------------------------------
+VERIFY sudo ACCESS:
+----------------------------------------------------
+    groups
+If `sudo` is listed → user can use `sudo`.
+
+----------------------------------------------------
+TEMPORARY ROOT SHELL:
+----------------------------------------------------
+    sudo -i
+or
+    sudo su
+
+----------------------------------------------------
+CONFIGURATION FILE:
+----------------------------------------------------
+Sudo permissions are defined in:
+    /etc/sudoers
+and additional files under:
+    /etc/sudoers.d/
+
+----------------------------------------------------
+VIEW SUDO USERS:
+----------------------------------------------------
+    getent group sudo
+====================================================================
+6. CHANGING OWNERSHIP WITH chown
+====================================================================
+
+The `chown` command changes file or directory ownership.
+
+SYNTAX:
+    chown [OPTIONS] USER[:GROUP] FILE
+
+----------------------------------------------------
+EXAMPLES:
+----------------------------------------------------
+1. Change owner only:
+    sudo chown exaze file.txt
+
+2. Change owner and group:
+    sudo chown jaswanth:devteam project/
+
+3. Change group only:
+    sudo chown :staff notes.txt
+
+4. Recursively change ownership for all files inside a directory:
+    sudo chown -R jaswanth:jaswanth /home/jaswanth
+
+----------------------------------------------------
+VERIFY:
+----------------------------------------------------
+    ls -l
+====================================================================
+7. WORKING WITH GROUPS (DEMO)
+====================================================================
+
+Groups help manage permissions for multiple users at once.
+
+----------------------------------------------------
+CREATE A GROUP:
+----------------------------------------------------
+    sudo groupadd devteam
+
+----------------------------------------------------
+ADD USER TO GROUP:
+----------------------------------------------------
+    sudo adduser user gruop_name
+
+----------------------------------------------------
+CHECK USER’S GROUPS:
+----------------------------------------------------
+    groups exaze
+
+----------------------------------------------------
+CHANGE FILE GROUP:
+----------------------------------------------------
+    sudo chgrp devteam project.txt
+
+----------------------------------------------------
+SET GROUP OWNERSHIP ON DIRECTORY:
+----------------------------------------------------
+    sudo chown :devteam /var/www/project/
+
+----------------------------------------------------
+ALLOW GROUP INHERITANCE (SGID BIT):
+----------------------------------------------------
+    sudo chmod g+s /var/www/project/
+
+Now all new files created inside will inherit the `devteam` group.
+
+----------------------------------------------------
+REMOVE USER FROM GROUP:
+----------------------------------------------------
+    sudo gpasswd -d exaze devteam
+
+----------------------------------------------------
+DELETE GROUP:
+----------------------------------------------------
+    sudo groupdel devteam
+====================================================================
+SUMMARY TABLE — ALTERING PERMISSIONS IN LINUX
+====================================================================
+
++-----------------+----------------------------------------+--------------------------------------+
+| Command         | Purpose                                | Example                              |
++-----------------+----------------------------------------+--------------------------------------+
+| chmod           | Change file or directory permissions   | chmod 755 script.sh                  |
+| su              | Switch to another user                 | su - exaze                           |
+| sudo            | Run command as root (administrator)    | sudo apt update                      |
+| chown           | Change owner and/or group of a file    | sudo chown user:group file.txt       |
+| chgrp           | Change only the group of a file        | sudo chgrp devteam project.txt       |
+| usermod -aG     | Add a user to a supplementary group    | sudo usermod -aG sudo exaze          |
+| groups          | Show all groups a user belongs to      | groups exaze                         |
++-----------------+----------------------------------------+--------------------------------------+
+
+====================================================================
+TIPS & BEST PRACTICES
+====================================================================
+✔ Use **symbolic mode** for small permission tweaks (e.g., `chmod u+r`, `chmod g-w`).  
+✔ Use **numeric (octal) mode** for complete permission settings (e.g., `chmod 755 file`).  
+✔ Prefer using **sudo** instead of logging in as root for safety.  
+✔ Use **chown** and **chgrp** to manage file ownership properly.  
+✔ Always **verify permissions** using `ls -l` after making changes.  
+✔ Avoid `chmod 777` unless testing — it gives everyone full control (insecure).  
+✔ Keep `/home` folders private; use shared directories for collaboration.  
+
+====================================================================
