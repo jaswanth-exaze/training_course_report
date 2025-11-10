@@ -1819,17 +1819,298 @@ Key Points:
 
 
 
+find -type f -name "*closed*" | wc -l
+980
 
+find -type f -name "*CLOSED*"
+./case_2320_CLOSED.txt
+./case_2328_CLOSED.txt
+./case_1660_CLOSED.txt
 
+find -type f -iname "*closed*" | wc -l
+983
 
+find -type f -iname "*[13579]_open*" |wc -l
+519
 
+find -empty
+./case_2950_open.txt
+./case_2900_open.txt
+./case_2979_closed.txt
 
+find . -type f -size +20k | xargs ls -lh
+-rw-r--r-- 1 jaswanth jaswanth 154K May  4  2016 ./case_1503_closed.txt
+-rw-r--r-- 1 jaswanth jaswanth  22K May  4  2016 ./case_1647_open.txt
+-rw-r--r-- 1 jaswanth jaswanth 132K May  4  2016 ./case_1995_open.txt
 
+find . -type f -size +150k -and -name "*closed.txt"
+./case_1503_closed.txt
 
+find . -newer yesterday.txt
+./case_2307_open.txt
 
+====================================================================
+GREP COMMAND IN LINUX
+====================================================================
 
+1. What is it?
+----------------------------------------------------
+The `grep` command (Global Regular Expression Print) is used to search for specific text patterns or strings inside files or standard input.
+It prints every line that matches the given pattern.
 
+In simple terms:
+    grep searches for text inside files and shows matching lines.
 
+2. Why is it used?
+----------------------------------------------------
+- To find words or patterns in files quickly.
+- To filter command output using text patterns.
+- To verify log or configuration content.
+- To search multiple files at once.
+- To perform advanced pattern matching using regular expressions.
+
+3. How does it work?
+----------------------------------------------------
+- `grep` reads input (from a file or command output).
+- It compares each line against the given pattern.
+- If the pattern matches, that line is printed to the screen.
+- You can use options for case sensitivity, line numbers, word matching,
+  recursive search, etc.
+
+Syntax:
+    grep [OPTIONS] PATTERN [FILE...]
+
+Examples:
+    grep "error" logfile.txt
+    grep -i "main" *.c
+    dmesg | grep "usb"
+
+----------------------------------------------------
+4. BASIC USAGE EXAMPLES
+----------------------------------------------------
+
+Example 1: Simple search
+    grep "error" system.log
+Explanation:
+    Prints all lines containing the word “error”.
+
+Example 2: Case-insensitive search
+    grep -i "error" system.log
+Explanation:
+    Matches “error”, “Error”, “ERROR”, etc.
+
+Example 3: Show line numbers
+    grep -n "error" system.log
+Output:
+    42:error: unable to start process
+
+Example 4: Search for an exact word
+    grep -w "root" /etc/passwd
+Explanation:
+    Matches only the exact word “root”, not “rooted”.
+
+Example 5: Count matching lines
+    grep -c "error" system.log
+Output:
+    5
+
+Example 6: Invert match (exclude lines containing pattern)
+    grep -v "success" result.log
+Explanation:
+    Prints all lines that do NOT contain “success”.
+
+Example 7: Highlight matching text (enabled by default on most systems)
+    grep --color=auto "fail" test.log
+
+----------------------------------------------------
+5. SEARCHING MULTIPLE FILES
+----------------------------------------------------
+
+Example 1:
+    grep "import" *.py
+Explanation:
+    Searches all `.py` files in the current directory.
+
+Example 2:
+    grep "main" file1.c file2.c
+Explanation:
+    Searches both files and shows filenames with matching lines.
+
+Example 3:
+    grep -H "root" /etc/*
+Explanation:
+    Shows filename and matching line (H = always show filename).
+
+Example 4: Recursive search through directories
+    grep -r "Linux" /home/user/docs
+Explanation:
+    Searches for “Linux” in all files and subdirectories.
+
+Example 5: Recursive + case-insensitive
+    grep -ri "error" /var/log
+
+----------------------------------------------------
+6. USING REGULAR EXPRESSIONS
+----------------------------------------------------
+By default, `grep` supports basic regex.  
+You can use extended regex with `egrep` or `grep -E`.
+
+Example 1: Lines starting with a word (^)
+    grep "^Error" logfile.txt
+Explanation:
+    Matches lines beginning with “Error”.
+
+Example 2: Lines ending with a word ($)
+    grep "failed$" logfile.txt
+
+Example 3: OR condition (use -E or egrep)
+    grep -E "error|fail|critical" logfile.txt
+
+Example 4: Search for digits
+    grep "[0-9]" file.txt
+
+Example 5: Match repeated characters
+    grep "lo\{2\}" file.txt
+Explanation:
+    Matches “ll” in “hello”.
+
+Example 6: Match any character (.)
+    grep "h.t" file.txt
+Explanation:
+    Matches “hat”, “hit”, “hot”, etc.
+
+Example 7: Escape special characters
+    grep "2\.0" version.txt
+Explanation:
+    Matches literal “2.0”, not regex “2(anything)0”.
+
+----------------------------------------------------
+7. COMMON OPTIONS
+----------------------------------------------------
++----------------+---------------------------------------------------------+
+| Option         | Description                                             |
++----------------+---------------------------------------------------------+
+| -i             | Ignore case while matching.                             |
+| -n             | Show line numbers of matches.                           |
+| -c             | Show only the count of matching lines.                  |
+| -v             | Invert match (show lines that do NOT match).            |
+| -w             | Match the exact word only.                              |
+| -x             | Match the entire line exactly.                          |
+| -r or -R       | Search recursively through directories.                 |
+| -H             | Always show filenames in output.                        |
+| -h             | Suppress filenames in multi-file search.                |
+| -l             | Show only filenames with matches.                       |
+| -L             | Show only filenames WITHOUT matches.                    |
+| -o             | Show only the matched parts, not whole lines.           | 
+| -q             | Quiet mode (no output; just return exit status).        |
+| --color=auto   | Highlight matching text for better visibility.          |
+| -E             | Use Extended Regular Expressions (same as `egrep`).     |
+| -F             | Interpret pattern as a fixed string (same as `fgrep`).  |
+| -A N           | Print N lines after each match.                         |
+| -B N           | Print N lines before each match.                        |
+| -C N           | Print N lines before and after (context).               |
++----------------+---------------------------------------------------------+
+
+----------------------------------------------------
+8. ADVANCED USAGE EXAMPLES
+----------------------------------------------------
+
+Example 1: Search inside command output
+    ps aux | grep firefox
+Explanation:
+    Finds running processes related to “firefox”.
+
+Example 2: Search inside compressed files
+    zgrep "error" logfile.gz
+Explanation:
+    Searches inside `.gz` compressed files.
+
+Example 3: Display context around matches
+    grep -C 2 "failed" server.log
+Explanation:
+    Shows 2 lines before and after each matching line.
+
+Example 4: Show only matched part of line
+    grep -o "[0-9]\+" file.txt
+Explanation:
+    Displays only numbers found in each line.
+
+Example 5: Suppress error messages (useful for permissions)
+    grep "config" /etc/* 2>/dev/null
+
+Example 6: Combine grep and find
+    find /var/log -type f -name "*.log" -exec grep -i "error" {} \;
+
+Example 7: Combine grep and xargs
+    find . -name "*.py" | xargs grep "import"
+
+----------------------------------------------------
+9. EXIT STATUS CODES
+----------------------------------------------------
+The `grep` command returns exit codes that can be used in scripts:
+
++--------+-------------------------------------------+
+| Code   | Meaning                                   |
++--------+-------------------------------------------+
+| 0      | At least one match was found.             |
+| 1      | No matches were found.                    |
+| 2      | An error occurred (e.g., file not found). |
++--------+-------------------------------------------+
+
+Example:
+    grep "hello" file.txt && echo "Found" || echo "Not found"
+
+----------------------------------------------------
+10. REAL-WORLD USAGE
+----------------------------------------------------
+- Search logs for errors:
+    grep -i "error" /var/log/syslog
+
+- Check configuration values:
+    grep "^Listen" /etc/httpd/conf/httpd.conf
+
+- Find failed SSH attempts:
+    grep "Failed password" /var/log/auth.log
+
+- Search specific functions in code:
+    grep -rn "def " /home/user/project
+
+- Monitor system logs in real-time:
+    tail -f /var/log/syslog | grep "network"
+
+----------------------------------------------------
+11. SUMMARY
+----------------------------------------------------
++---------------------+----------------------------------------------------------+
+| Feature             | Description                                              |
++---------------------+----------------------------------------------------------+
+| Command Name        | grep                                                     |
+| Purpose             | Search text or patterns inside files                     |
+| Default Behavior     | Prints all lines containing the pattern                 |
+| Pattern Types       | Plain text or regular expressions                        |
+| Extended Version    | grep -E or egrep                                         |
+| Fixed String Version | grep -F or fgrep                                        |
+| Recursive Search    | grep -r pattern path                                     |
+| Common Options      | -i, -n, -v, -c, -r, -w, -o                               |
+| Exit Codes          | 0 = match, 1 = no match, 2 = error                       |
++---------------------+----------------------------------------------------------+
+----------------------------------------------------
+12. QUICK REFERENCE
+----------------------------------------------------
++----------------------------+-----------------------------------------------+
+| Purpose                    | Command Example                               |
++----------------------------+-----------------------------------------------+
+| Simple Search              | grep "pattern" file.txt                       |
+| Recursive Search           | grep -r "pattern" /path                       |
+| Count Matches              | grep -c "pattern" file.txt                    |
+| Exact Word Match           | grep -w "pattern" file.txt                    |
+| Exclude a Pattern          | grep -v "pattern" file.txt                    |
+| Show Filenames Only        | grep -l "pattern" *.txt                       |
+| Multiple Patterns (OR)     | grep -E "error|fail" logfile.txt              |
+| Highlight Matches          | grep --color=auto "pattern" file.txt          |
+| Show Line Numbers          | grep -n "pattern" file.txt                    |
+| Context Around Match       | grep -C 2 "pattern" file.txt                  |
++----------------------------+-----------------------------------------------+
 
 
 
