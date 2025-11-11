@@ -2961,16 +2961,16 @@ Add lines like:
 ----------------------------------------------------
 🔹 Useful Everyday Aliases:
 ----------------------------------------------------
-| Alias | Expands To | Purpose |
+| Alias  | Expands To  | Purpose |
 |--------|-------------|---------|
-| ll | ls -l | Long list view |
-| la | ls -A | List all except . and .. |
-| c | clear | Clear the screen |
-| grep | grep --color=auto | Highlight search results |
-| .. | cd .. | Go up one directory |
-| ... | cd ../.. | Go up two directories |
+| ll     | ls -l       | Long list view |
+| la     | ls -A       | List all except . and .. |
+| c      | clear       | Clear the screen |
+| grep   | grep --color=auto | Highlight search results |
+| ..     | cd ..       | Go up one directory |
+| ...    | cd ../..    | Go up two directories |
 | update | sudo apt update && sudo apt upgrade | System update |
-| please | sudo !! | Rerun last command as sudo |
+| please | sudo !!      | Rerun last command as sudo |
 
 ----------------------------------------------------
 🔹 Bonus:
@@ -3004,3 +3004,442 @@ TIPS:
 ✔ Reload `.bashrc` after changes using `source ~/.bashrc`.  
 ✔ Use `printenv`, `env`, and `set` to inspect your environment.  
 ✔ Avoid overwriting critical variables like PATH accidentally.
+
+
+====================================================================
+WRITING OUR OWN COMMANDS
+====================================================================
+
+In Linux, you can automate tasks, build utilities, or create your own
+commands using shell scripting. These scripts can act just like built-in
+commands once you make them executable and add them to your PATH.
+
+====================================================================
+1. INTRODUCTION TO SCRIPTING
+====================================================================
+
+A **shell script** is simply a text file containing commands that the shell
+executes line by line. It allows automation of repetitive tasks and
+creation of custom utilities.
+
+----------------------------------------------------
+🔹 Why Use Shell Scripts:
+----------------------------------------------------
+✔ Automate daily tasks (backups, reports, updates).  
+✔ Create your own commands or tools.  
+✔ Combine multiple Linux commands easily.  
+✔ Save time and reduce manual errors.  
+
+----------------------------------------------------
+🔹 Shell Script Structure:
+----------------------------------------------------
+1. A shebang line (tells which interpreter to use).  
+2. One or more shell commands.  
+3. Optional variables, loops, and conditions.
+
+Example:
+    #!/bin/bash
+    echo "Welcome to shell scripting!"
+    date
+====================================================================
+2. OUR FIRST SCRIPT
+====================================================================
+
+Let's create a simple script step by step.
+
+----------------------------------------------------
+STEP 1: Create a new file
+----------------------------------------------------
+    nano hi
+
+----------------------------------------------------
+STEP 2: Add the following content:
+----------------------------------------------------
+    #!/bin/bash
+    echo "Hello, $USER!"
+    echo "Today is $(date)"
+    echo "Your current directory is: $(pwd)"
+	echo "Last ran hi at $(date)" >> hi.log
+
+----------------------------------------------------
+STEP 3: Save and exit (Ctrl + O, Enter, Ctrl + X)
+
+----------------------------------------------------
+STEP 4: Run the script
+----------------------------------------------------
+    bash hi
+
+OUTPUT:
+    Hello, jaswanth!
+    Today is Mon Nov 11 09:15:23 IST 2025
+    Your current directory is: /home/exaze
+====================================================================
+3. THE MYSTERIOUS PATH VARIABLE
+====================================================================
+
+The **PATH** variable tells your shell where to look for commands.
+
+When you type a command like `ls` or `python3`, the shell searches
+through directories listed in PATH **from left to right** until it finds
+a matching executable.
+
+----------------------------------------------------
+🔹 View your PATH:
+----------------------------------------------------
+    echo $PATH
+
+OUTPUT EXAMPLE:
+    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+
+Each directory is separated by a colon `:`.
+
+----------------------------------------------------
+🔹 How PATH Works:
+----------------------------------------------------
+When you type `ls`, the shell searches:
+    /usr/local/sbin/ls  
+    /usr/local/bin/ls  
+    /usr/sbin/ls  
+    /usr/bin/ls  
+    /sbin/ls  
+    /bin/ls  
+
+and stops when it finds the first match.
+
+====================================================================
+4. ADDING TO THE PATH
+====================================================================
+
+If you create your own scripts, you can place them in a personal folder
+and add that folder to your PATH so the shell can find them easily.
+
+----------------------------------------------------
+🔹 STEP 1: Create a personal bin directory
+----------------------------------------------------
+    mkdir -p ~/bin
+
+----------------------------------------------------
+🔹 STEP 2: Move your script there
+----------------------------------------------------
+    mv hi ~/bin/
+
+----------------------------------------------------
+🔹 STEP 3: Add this folder to your PATH
+----------------------------------------------------
+    export PATH=$PATH:~/bin
+
+----------------------------------------------------
+🔹 STEP 4: Give permissions to execute
+----------------------------------------------------
+    chmod a+x hi
+
+----------------------------------------------------
+🔹 STEP 5: Verify
+----------------------------------------------------
+    echo $PATH
+    which hi
+
+If everything’s set up, you can now run your script from anywhere:
+    hi
+----------------------------------------------------
+🔹 Make it permanent:
+----------------------------------------------------
+Add the export line to your `~/.bashrc`:
+    export PATH=$PATH:~/bin
+
+Then reload:
+    source ~/.bashrc
+
+====================================================================
+5. MAKING OUR SCRIPT EXECUTABLE
+====================================================================
+
+To run your script directly (without typing bash in front of it), you
+must give it *execute permission.*
+
+----------------------------------------------------
+🔹 Check current permissions:
+----------------------------------------------------
+    ls -l hi
+
+OUTPUT:
+    -rw-r--r-- 1 exaze exaze 120 Nov 11 09:25 hello.sh
+
+Notice: no `x` (execute) permission.
+
+----------------------------------------------------
+🔹 Add execute permission:
+----------------------------------------------------
+    chmod +x hi
+
+Now check again:
+    ls -l hi
+
+OUTPUT:
+    -rwxr-xr-x 1 exaze exaze 120 Nov 11 09:25 hello.sh
+
+----------------------------------------------------
+🔹 Run the script:
+----------------------------------------------------
+    ./hi
+
+If the folder is in PATH:
+    hello.sh
+====================================================================
+6. THE SIGNIFICANCE OF THE SHEBANG (#!)
+====================================================================
+
+The **shebang line** (`#!`) at the top of a script tells Linux which
+interpreter to use to execute the file.
+
+----------------------------------------------------
+🔹 Syntax:
+----------------------------------------------------
+    #!/path/to/interpreter
+
+Examples:
+    #!/bin/bash        → Bash shell
+    #!/bin/sh          → POSIX shell
+    #!/usr/bin/python3 → Python 3 interpreter
+    #!/usr/bin/env node → Node.js via PATH lookup
+
+----------------------------------------------------
+🔹 How It Works:
+----------------------------------------------------
+When you run a script directly (e.g., ./hi),
+Linux reads the first line:
+    #!/bin/bash
+and launches that program to interpret the rest of the file.
+
+Without the shebang, you would need to specify the interpreter manually:
+    bash hi
+
+----------------------------------------------------
+🔹 Why It Matters:
+----------------------------------------------------
+✔ Ensures the script runs in the correct shell.  
+✔ Prevents compatibility issues.  
+✔ Makes scripts portable across systems.  
+✔ Allows different scripting languages (bash, python, etc.).
+====================================================================
+SUMMARY TABLE — SCRIPTING ESSENTIALS
+====================================================================
+
++------------------------+------------------------------------------+---------------------------------------------+
+| Command / Concept      | Purpose                                  | Example                                     |
++------------------------+------------------------------------------+---------------------------------------------+
+| echo                   | Print text or variable value             | echo "Hello, $USER"                         |
+| bash script.sh         | Run a script using bash interpreter      | bash hello.sh                               |
+| chmod +x file.sh       | Make a script executable                 | chmod +x hello.sh                           |
+| ./script.sh            | Execute script from current directory    | ./hello.sh                                  |
+| PATH variable          | Directories searched for executables     | echo $PATH                                  |
+| export PATH=$PATH:~/bin| Add custom folder to search path         | export PATH=$PATH:~/scripts                 |
+| which <command>        | Locate a command or script               | which python3                               |
+| #!/bin/bash            | Shebang → defines interpreter            | first line of script                        |
+| mv script ~/bin        | Move to bin folder for global access     | mv hello.sh ~/bin                           |
++------------------------+------------------------------------------+---------------------------------------------+
+
+====================================================================
+TIPS:
+====================================================================
+✔ Always start your script with a proper shebang.  
+✔ Use `chmod +x` to make scripts executable.  
+✔ Store custom scripts in `~/bin` or `/usr/local/bin`.  
+✔ Update PATH permanently in `~/.bashrc`.  
+✔ Test scripts with `bash -x script.sh` to debug.  
+✔ Use clear names and comments in your scripts.  
+✔ Keep backups of your `.bashrc` before editing it.
+
+
+====================================================================
+WRITING OUR OWN COMMANDS — WEATHER SCRIPT USING CASE
+====================================================================
+
+GOAL:
+----------------------------------------------------
+Create a custom terminal command named `weather`
+that shows real-time weather using wttr.in service.
+
+====================================================================
+STEP 1 — INSTALL curl
+====================================================================
+
+curl is a command-line tool used to fetch data from URLs.
+We will use it to access wttr.in (a free text-based weather service).
+
+----------------------------------------------------
+Install curl:
+----------------------------------------------------
+sudo apt install curl -y
+
+====================================================================
+STEP 2 — TEST wttr.in SERVICE
+====================================================================
+
+To confirm curl works and wttr.in is accessible:
+
+----------------------------------------------------
+Get general weather:
+----------------------------------------------------
+curl wttr.in
+
+----------------------------------------------------
+Get weather for a specific city:
+----------------------------------------------------
+curl wttr.in/hyderabad
+
+----------------------------------------------------
+Expected output:
+----------------------------------------------------
+Weather report for Hyderabad:
+   ⛅  +33°C, light breeze, humidity details etc.
+====================================================================
+STEP 3 — CREATE THE WEATHER SCRIPT
+====================================================================
+
+We will now create a script file called `weather`
+that supports different options like help, forecast, and location.
+
+----------------------------------------------------
+Create and open script file:
+----------------------------------------------------
+nano weather
+
+----------------------------------------------------
+Paste the following script:
+----------------------------------------------------
+#!/bin/bash
+
+case $1 in 
+-h | --help)
+        echo "WELCOME TO WEATHER HELP"
+        echo "-3 for next 3 days of weather"
+        ;;
+-3)
+        echo "YOU PROVIDED -3"
+        curl "wttr.in"
+        ;;
+-l | --location)
+        curl "wttr.in/$2"
+        ;;
+*)
+        curl "wttr.in?m1"
+        ;;
+esac
+====================================================================
+STEP 4 — SAVE AND EXIT
+
+In nano editor:
+----------------------------------------------------
+Press  Ctrl + O   → Save file
+Press  Enter      → Confirm filename
+Press  Ctrl + X   → Exit nano
+====================================================================
+STEP 5 — MAKE THE SCRIPT EXECUTABLE
+
+Now we must grant execution permission so it can run like a command.
+----------------------------------------------------
+Make it executable:
+
+chmod +x weather
+
+Verify:
+
+ls -l weather
+→ -rwxr-xr-x 1 jaswanth jaswanth  120 Nov 11 11:45 weather
+
+====================================================================
+STEP 6 — QUICK TESTS
+====================================================================
+
+Test your new weather command directly from the current folder.
+
+----------------------------------------------------
+Default weather (quick summary):
+----------------------------------------------------
+./weather
+
+----------------------------------------------------
+Help menu:
+----------------------------------------------------
+./weather -h
+or
+./weather --help
+
+Expected Output:
+WELCOME TO WEATHER HELP
+-3 for next 3 days of weather
+
+----------------------------------------------------
+3-day forecast:
+----------------------------------------------------
+./weather -3
+
+Expected Output:
+YOU PROVIDED -3
+Weather report for current location (3 days)
+
+----------------------------------------------------
+Specific city weather:
+----------------------------------------------------
+./weather -l hyderabad
+or
+./weather --location hyderabad
+
+Expected Output:
+Weather report for Hyderabad: 🌤️ +33°C
+====================================================================
+STEP 7 — SHORT OUTPUT EXAMPLES
+====================================================================
+
+----------------------------------------------------
+Command: ./weather
+Output:
+🌞 +31°C
+
+----------------------------------------------------
+Command: ./weather -3
+Output:
+YOU PROVIDED -3
+Weather report:
+☀️ +33°C → 🌦️ +29°C → ☁️ +30°C
+
+----------------------------------------------------
+Command: ./weather -l delhi
+Output:
+Delhi: 🌤️ +32°C
+====================================================================
+STEP 8 — SUMMARY
+====================================================================
+
+You have successfully created your own custom command `weather`
+that fetches live weather data directly from the terminal.
+
+----------------------------------------------------
+SUMMARY TABLE
+----------------------------------------------------
++---------------------------+---------------------------------------+
+| Action / Option           | Command / Example                     |
++---------------------------+---------------------------------------+
+| Install curl              | sudo apt install curl -y              |
+| Test curl weather service | curl wttr.in                          |
+| Test with city            | curl wttr.in/hyderabad                |
+| Create script             | nano weather                          |
+| Make executable           | chmod +x weather                      |
+| Default quick summary     | ./weather                             |
+| Show help                 | ./weather -h                          |
+| 3-day forecast            | ./weather -3                          |
+| City weather              | ./weather -l hyderabad                |
++---------------------------+---------------------------------------+
+
+====================================================================
+TIPS:
+====================================================================
+✔ Always start with `#!/bin/bash` at the top of your script.  
+✔ Use `chmod +x` to make scripts executable.  
+✔ Use `$1` and `$2` to read user arguments.  
+✔ Keep scripts in ~/bin or /usr/local/bin to run them globally.  
+✔ You can use `curl -s` to hide progress bars for cleaner output.  
+✔ wttr.in supports many formats — explore `curl wttr.in/:help` for more.
+
+
