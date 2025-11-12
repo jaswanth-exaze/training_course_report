@@ -311,3 +311,62 @@ Run test container:
 sudo docker run hello-world
 ✅ You should see:
 “Hello from Docker! Your installation appears to be working correctly.”
+====================================================================================================================
+DOCKER IMAGE
+====================================================================
+
+A Docker Image is a blueprint or template used to create containers.
+
+An image contains:
+	- The application code
+	- Required libraries and dependencies
+	- System tools and configuration files
+	- A base operating system layer (like Ubuntu or Alpine)
+Images are read-only and reusable.
+They define what your application looks like and how it runs.
+
+
+EXAMPLE:
+The image "python:3.10" includes:
+	- A lightweight Linux system
+	- Python 3.10 pre-installed
+	- Essential Python tools
+You can use this image to run Python anywhere, witho
+===============================================================
+2. DOCKER CONTAINER
+===============================================================
+A Docker Container is a running instance of an image.
+
+It acts like a mini isolated computer that runs your application.
+
+Each container has:
+- Its own filesystem (copied from the image)
+- Its own memory and process space
+- Isolation from other containers and the host system
+
+You can start, stop, or delete containers anytime.ut installing Python manually.
+EXAMPLE:
+Command:
+docker run python:3.10
+
+What happens:
+1. Docker checks for the image "python:3.10".
+2. If not found, it downloads it from Docker Hub.
+3. It creates a container from that image.
+4. Python runs inside that container.
+
+3. RELATIONSHIP BETWEEN IMAGE AND CONTAINER
+	Image = Blueprint (read-only)
+	Container = Running instance created from the image
+			
+			Analogy: Image = Recipe, Container = Cooked Dish
+
+	You "run" a container from an image.
+
+4. VISUAL UNDERSTANDING
+🧠 SIMPLE VISUAL UNDERSTANDING
+[ Docker Image ]
+       |
+       |---> [ Container #1 ]
+       |---> [ Container #2 ]
+       |---> [ Container #3 ]
