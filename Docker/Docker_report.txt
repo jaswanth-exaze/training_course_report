@@ -360,7 +360,6 @@ What happens:
 	Container = Running instance created from the image
 			
 			Analogy: Image = Recipe, Container = Cooked Dish
-
 	You "run" a container from an image.
 
 4. VISUAL UNDERSTANDING
@@ -370,3 +369,298 @@ What happens:
        |---> [ Container #1 ]
        |---> [ Container #2 ]
        |---> [ Container #3 ]
+---------------------------------------------------------------------------
+DOCKER IMAGE TAGS
+=================
+Docker image tags are used to identify different versions or variants of the same image.
+
+Each image on Docker Hub or your local system can have multiple tags.
+A tag is like a label that helps you specify which version of the image you want to use.
+A tag is a human-readable identifier attached to a Docker image.
+It tells Docker which version or build of the image you are referring to.
+Example:
+python:3.10
+python:3.11
+python:latest
+
+Here:
+- "python" is the image name.
+- "3.10", "3.11", and "latest" are tags.
+
+If you do not specify a tag, Docker automatically uses the tag "latest".
+Example:
+docker pull ubuntu
+is the same as:
+docker pull ubuntu:latest
+
+ IMAGE NAMING STRUCTURE
+		repository_name : tag
+=============================================================================================
+5. USEFUL COMMANDS
+=============================================================================================
+List available images:
+	docker images
+
+Remove an image:
+	docker rmi <image_id>
+
+Remove all images:
+	docker rmi $(docker images)
+
+List running containers:
+	docker ps
+
+List all containers (running + stopped):
+	docker ps -a
+
+Remove a container:
+	docker rm <container_id>
+	docker rm <container_name>
+
+Remove all stopped containers
+	docker container prune
+	docker rm $(docker ps --filter status=exited -q)
+
+		docker ps --filter status=exited Show stopped containers
+		docker ps --filter status=exited -q Show only IDs
+		docker rm $(docker ps --filter status=exited -q) Remove all stopped containers
+		docker container prune Remove stopped containers (asks confirmation)
+		docker rm -f $(docker ps -aq) Remove all containers (force)
+To forcefully stop and remove a running container:
+	docker rm -f <container_name_or_id>
+Explanation:
+	- "-f" or "--force" stops the container (if running) and deletes it immediately.
+
+To remove every container on your system:
+	docker rm -f $(docker ps -aq)
+Explanation:
+- "docker ps -aq" lists all container IDs.
+- "docker rm -f" deletes them all forcefully.
+------------------------------------------------------------------------------------------
+UBUNTU DOCKER IMAGE
+The Ubuntu Docker image is one of the most commonly used base images in Docker.
+It provides a lightweight, clean Ubuntu environment inside a container
+so you can run Linux commands and build applications easily.
+
+To download the Ubuntu image:
+		docker pull ubuntu
+You can also pull a specific version:
+		docker pull ubuntu:22.04
+
+you can start a container from the Ubuntu image.
+
+Command:
+		docker run -it ubuntu
+
+Explanation:
+- "run" creates and starts a new container.
+- "-it" makes it interactive (you can type commands inside).
+- "ubuntu" is the image name.
+
+You will enter a shell prompt inside the container, like:
+root@b9a4f22e8b61:/#
+
+This means you are now inside an Ubuntu environment running inside Docker.
+
+To exit the container, type:
+		exit
+or press:
+		Ctrl + D
+
+This stops the container and brings you back to your host terminal.
+
+
+
+====================================================================
+1. START A STOPPED CONTAINER
+Use the "docker start" command followed by the container name or ID.
+
+Example:
+docker start myubuntu
+
+This will start the container in the background.
+
+If you want to attach to it (enter the container terminal again):
+docker start -ai myubuntu
+
+Options:
+-a Attach to the container output.
+-i Keep it interactive (allows you to type commands).
+
+====================================================================
+2. RESTART A RUNNING CONTAINER
+If the container is already running and you want to restart it (stop + start automatically):
+docker restart <container_id or name>
+
+Example:
+docker restart webserver
+docker restart 4585e3995b52
+
+Docker stops the container, waits a few seconds, and then starts it again.
+
+====================================================================
+3. STOP AND RESTART MANUALLY
+Stop a running container:
+docker stop webserver
+docker stop 4585e3995b52
+
+====================================================================
+EXECUTION OF COMMANDS INSIDE A RUNNING CONTAINER
+
+In Docker, you can execute commands inside a running container
+to inspect, troubleshoot, or manage applications without stopping them.
+
+You don’t need to recreate or restart the container —
+you can directly access it and run commands just like in a regular Linux shell.
+
+
+First, identify which containers are currently running.
+
+RUN A COMMAND INSIDE A RUNNING CONTAINER
+Use the command:
+docker exec [OPTIONS] <container_name_or_id> <command>
+
+This allows you to execute any command inside a running container
+without attaching to it permanently.
+
+ BASIC EXAMPLES
+Example 1: Check which user is active
+docker exec myubuntu whoami
+
+Output:
+root
+
+Example 2: List files inside the container’s root directory
+docker exec myubuntu ls /
+
+Example 3: Display environment variables
+docker exec myubuntu env
+
+C:\Users\Exaze>docker exec -it dc81f348738f date
+Wed Nov 12 10:51:46 UTC 2025
+
+========================================================================================================
+VIEWING DOCKER CONTAINER LOGS
+
+Docker provides logging features to help you view and analyze the output (logs)
+generated by applications running inside containers.
+
+Logs are essential for debugging, monitoring, and tracking the behavior of containers.
+
+BASIC COMMAND TO VIEW LOGS
+Command:
+docker logs <container_name_or_id>
+
+Example:
+docker logs webserver
+Output example:
+Starting Nginx server...
+Nginx running on port 80
+172.17.0.1 - - [12/Nov/2025:10:22:03] "GET /index.html" 200
+This command prints all logs from the container since it was created.
+
+VIEW REAL-TIME (LIVE) LOGS
+To continuously stream live logs as the container runs, use the "-f" flag.
+
+Command:
+docker logs -f <container_name_or_id>
+
+Example:
+docker logs -f webserver
+
+Explanation:
+- "-f" stands for "follow", similar to "tail -f" in Linux.
+- It updates the terminal in real time as new logs are generated.
+
+To stop viewing live logs, press:
+Ctrl + C
+Example:
+docker logs --tail 10 webserver
+
+This displays only the last 10 lines of logs.
+
+To include timestamps in log output:
+docker logs --timestamps <container_name_or_id>
+
+Example:
+docker logs --timestamps webserver 
+Command Description
+docker logs <name> View container logs
+docker logs -f <name> Stream logs live (follow mode)
+docker logs --tail N <name> Show last N log lines
+docker logs --timestamps <name> Show logs with timestamps
+docker logs -f --tail N <name> Stream last N lines with updates
+docker inspect -f ... Check log driver
+docker run --log-driver <driver> Use specific log driver
+
+RENAME A DOCKER CONTAINER
+The "docker rename" command allows you to change the name of an existing container
+without stopping or recreating it.
+
+It’s useful when you want to give containers meaningful names
+(for easier identification and management).
+Command format:
+docker rename <old_name> <new_name>
+
+Example:
+docker rename old_container myubuntu
+
+This changes the container’s name from "old_container" to "myubuntu".
+
+====================================================================
+DOCKER SAVE — SAVING DOCKER IMAGES TO A TAR FILE
+The docker save command is used to export a Docker image
+into a single .tar archive file (tarball).
+
+It is useful when you want to:
+- Back up an image.
+- Transfer an image to another system without using Docker Hub.
+- Store images offline.
+BASIC SYNTAX
+Command format:
+docker save [OPTIONS] -o <file_name>.tar <image_name>:<tag>
+
+Example:
+docker save -o ubuntu_backup.tar ubuntu:22.04
+
+Explanation:
+- "save" → exports the image.
+- "-o" → specifies the output file.
+- "ubuntu_backup.tar" → name of the saved file.
+- "ubuntu:22.04" → the image you want to save
+
+IMPORTING A DOCKER IMAGE FROM A TAR FILE
+When you have a Docker image saved as a .tar archive file,
+you can import or load it back into Docker using the docker load or docker import commands.
+
+Both commands are used to restore images, but they serve different purposes.
+
+Use the docker load command when the image was created using docker save.
+
+Command syntax:
+docker load -i <file_name>.tar
+
+Example:
+docker load -i ubuntu_backup.tar
+
+Explanation:
+- "load" tells Docker to import an image from a file.
+- "-i" specifies the input tar file (the image archive).
+
+SHOW DOCKER CONTAINER STATISTICS
+The docker stats command is used to monitor real-time performance
+and resource usage of running Docker containers.
+
+It shows live statistics such as:
+- CPU usage
+- Memory usage
+- Network I/O
+- Disk I/O
+- PIDs (process count)
+
+This helps you understand container performance and detect issues.
+
+Command:
+docker stats
+
+This displays a live, continuously updating table of running containers.
