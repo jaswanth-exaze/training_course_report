@@ -726,3 +726,47 @@ This displays a live, continuously updating table of running containers.
 +----------------------------+------------------------------------------+
 | remove all (Win PS)        | docker rm -f (docker ps -aq)              |
 +----------------------------+------------------------------------------+
+
+DOCKER RUN OPTIONS
++------------------------------+------------------------------------------+------------------------------------------+
+| docker run Option            | Example                                  | Description                              |
++------------------------------+------------------------------------------+------------------------------------------+
+| --name                       | docker run --name myapp ubuntu           | Assign a custom container name           |
+| -d                           | docker run -d nginx                      | Run in background (detached mode)        |
+| -it                          | docker run -it ubuntu /bin/bash          | Interactive terminal shell               |
+| --rm                         | docker run --rm ubuntu                   | Remove container after exit              |
+| -p                           | docker run -p 8080:80 nginx              | Map host port to container port          |
+| -P                           | docker run -P nginx                      | Map all exposed ports to random ports    |
++------------------------------+------------------------------------------+------------------------------------------+
+| -v                           | docker run -v myvol:/data ubuntu         | Mount a Docker volume                    |
+| -v (bind mount)              | docker run -v C:\app:/app ubuntu         | Mount host folder inside container       |
+| --mount                      | docker run --mount type=bind,...         | Advanced mount with full control         |
++------------------------------+------------------------------------------+------------------------------------------+
+| -e                           | docker run -e MODE=prod myapp            | Set environment variable                 |
+| --env-file                   | docker run --env-file config.env myapp   | Load env variables from file             |
++------------------------------+------------------------------------------+------------------------------------------+
+| --network                    | docker run --network mynet ubuntu        | Attach container to a network            |
+| --hostname                   | docker run --hostname app1 ubuntu        | Set container hostname                   |
+| --ip                         | docker run --network mynet --ip ...      | Assign static IP in user network         |
++------------------------------+------------------------------------------+------------------------------------------+
+| --restart always             | docker run --restart always myapp        | Always restart container on failure      |
+| --restart unless-stopped     | docker run --restart unless-stopped app  | Restart unless manually stopped          |
+| --restart on-failure         | docker run --restart on-failure app      | Restart only if exit code != 0           |
++------------------------------+------------------------------------------+------------------------------------------+
+| --memory                     | docker run --memory 512m myapp           | Limit container RAM                      |
+| --cpus                       | docker run --cpus 1.5 myapp              | Limit CPU usage                          |
+| --cpu-shares                | docker run --cpu-shares 512 myapp        | Set CPU priority                         |
+| --memory-swap                | docker run --memory 512m --memory-swap 1g| Limit RAM + Swap                         |
++------------------------------+------------------------------------------+------------------------------------------+
+| --privileged                 | docker run --privileged ubuntu           | Full host access (dangerous)             |
+| --user                       | docker run --user 1000:1000 ubuntu       | Run container as specific user           |
+| --cap-add                    | docker run --cap-add NET_ADMIN ubuntu    | Add extra Linux capabilities             |
++------------------------------+------------------------------------------+------------------------------------------+
+| --workdir                    | docker run --workdir /app ubuntu         | Set working directory inside container   |
+| --entrypoint                 | docker run --entrypoint /bin/sh ubuntu   | Override container entrypoint            |
+| CMD override                 | docker run ubuntu echo “hello”           | Replace default CMD command              |
++------------------------------+------------------------------------------+------------------------------------------+
+| --detach-keys                | docker run --detach-keys="ctrl-x" ubuntu | Change detach key combination            |
+| --log-driver                 | docker run --log-driver json-file ubuntu | Select container logging mechanism       |
+| --dns                        | docker run --dns 8.8.8.8 ubuntu          | Use custom DNS server                    |
++------------------------------+------------------------------------------+------------------------------------------+
