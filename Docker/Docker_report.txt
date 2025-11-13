@@ -664,3 +664,65 @@ Command:
 docker stats
 
 This displays a live, continuously updating table of running containers.
+
+
++----------------------------+------------------------------------------+
+| Action / Category          | Command / Example                         |
++----------------------------+------------------------------------------+
+| show version               | docker --version                          |
+| show system info           | docker info                               |
++----------------------------+------------------------------------------+
+| list images                | docker images                             |
+| pull image                 | docker pull ubuntu                        |
+| remove image               | docker rmi ubuntu:latest                  |
+| build image                | docker build -t myapp:v1 .                |
+| tag image                  | docker tag myapp:v1 myapp:latest          |
++----------------------------+------------------------------------------+
+| run container              | docker run ubuntu                         |
+| run interactive            | docker run -it ubuntu                     |
+| run detached               | docker run -d nginx                       |
+| run with name              | docker run --name myubuntu ubuntu         |
+| list running containers    | docker ps                                 |
+| list all containers        | docker ps -a                              |
+| start container            | docker start myubuntu                     |
+| stop container             | docker stop myubuntu                      |
+| restart container          | docker restart myubuntu                   |
+| remove container           | docker rm myubuntu                        |
+| force remove container     | docker rm -f myubuntu                     |
++----------------------------+------------------------------------------+
+| exec command inside        | docker exec myubuntu ls /                |
+| exec interactive shell     | docker exec -it myubuntu /bin/bash        |
+| attach to container        | docker attach myubuntu                    |
++----------------------------+------------------------------------------+
+| view logs                  | docker logs myubuntu                      |
+| follow logs live           | docker logs -f myubuntu                   |
+| show last 20 log lines     | docker logs --tail 20 myubuntu            |
++----------------------------+------------------------------------------+
+| save image to tar          | docker save -o ubuntu.tar ubuntu:latest   |
+| load image from tar        | docker load -i ubuntu.tar                 |
+| export container fs        | docker export myubuntu > backup.tar       |
+| import fs as image         | docker import backup.tar myubuntu:v1      |
++----------------------------+------------------------------------------+
+| prune stopped containers   | docker container prune                    |
+| prune unused images        | docker image prune                        |
+| full cleanup               | docker system prune -a                    |
++----------------------------+------------------------------------------+
+| list networks              | docker network ls                         |
+| create network             | docker network create mynet               |
+| connect to network         | docker network connect mynet myubuntu     |
++----------------------------+------------------------------------------+
+| list volumes               | docker volume ls                          |
+| create volume              | docker volume create myvol                |
+| remove volume              | docker volume rm myvol                    |
++----------------------------+------------------------------------------+
+| inspect container          | docker inspect myubuntu                   |
+| view processes             | docker top myubuntu                       |
+| resource stats             | docker stats                              |
+| port mappings              | docker port myubuntu                      |
++----------------------------+------------------------------------------+
+| stop all (Linux)           | docker stop $(docker ps -q)               |
+| remove all (Linux)         | docker rm -f $(docker ps -aq)             |
+| remove all images          | docker rmi -f $(docker images -q)         |
++----------------------------+------------------------------------------+
+| remove all (Win PS)        | docker rm -f (docker ps -aq)              |
++----------------------------+------------------------------------------+
