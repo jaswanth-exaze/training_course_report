@@ -770,3 +770,931 @@ DOCKER RUN OPTIONS
 | --log-driver                 | docker run --log-driver json-file ubuntu | Select container logging mechanism       |
 | --dns                        | docker run --dns 8.8.8.8 ubuntu          | Use custom DNS server                    |
 +------------------------------+------------------------------------------+------------------------------------------+
+====================================================================
+1. DOCKER IMAGES
+
+A Docker image is a lightweight, read-only template used to create containers.
+It contains everything needed to run an application:
+
+- Base operating system
+- Application code
+- Required libraries
+- Environment configuration
+
+Images are immutable and built using layers.
+
+COMMON COMMANDS:
+docker images                 List all images
+docker pull ubuntu            Download an image
+docker rmi myimage            Remove an image
+docker inspect nginx          View detailed image information
+
+IMAGE LAYER STRUCTURE (ASCII):
+
+    +-----------------------------+
+    |     Application Code        |
+    +-----------------------------+
+    |      Dependencies           |
+    +-----------------------------+
+    |       Runtime Layer         |
+    +-----------------------------+
+    |       Base OS Layer         |
+    +-----------------------------+
+
+====================================================================
+2. CREATING A NEW DOCKER IMAGE
+
+You create a new Docker image using a Dockerfile.
+
+STEP 1: Create a Dockerfile
+Example content:
+FROM python:3.10-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["python", "app.py"]
+
+STEP 2: Build the image
+docker build -t myapp:1.0 .
+
+STEP 3: Run a container from the image
+docker run -p 5000:5000 myapp:1.0
+
+DOCKER IMAGE BUILD FLOW (ASCII):
+
+            +--------------------+
+            |   Read Dockerfile  |
+            +----------+---------+
+                       |
+                       v
+            +--------------------+
+            |  Load Base Image   |
+            +----------+---------+
+                       |
+                       v
+            +--------------------+
+            | Execute Instructions|
+            | (COPY, RUN, etc.)  |
+            +----------+---------+
+                       |
+                       v
+            +--------------------+
+            | Create Final Image |
+            +--------------------+
+
+====================================================================
+3. ENVIRONMENT VARIABLES IN DOCKER
+
+Environment variables allow you to configure applications
+without modifying your code or rebuilding the image.
+
+WHY USE ENV VARIABLES?
+- Set app mode (dev/prod)
+- Set ports, keys, database URLs
+- Avoid hardcoding config
+
+METHOD 1: Define inside Dockerfile
+ENV APP_MODE=production
+ENV PORT=5000
+
+METHOD 2: Pass while running
+docker run -e APP_MODE=dev -e PORT=3000 myapp
+
+METHOD 3: Use an env file
+.env file:
+APP_MODE=prod
+PORT=8000
+
+Run with file:
+docker run --env-file .env myapp
+
+ENV VALUE PRIORITY (Highest → Lowest)
+1. docker run -e
+2. --env-file
+3. ENV in Dockerfile
+
+FLOW (ASCII):
+
+Dockerfile ENV  --->|
+docker run -e   --->|--> Final Container ENVIRONMENT
+.env file ------->|
+
+====================================================================
+4. CMD vs ENTRYPOINT
+
+Both define what runs when a container starts, but they behave differently.
+
+CMD
+- Sets the default command
+- Can be overridden by the user
+- Good for flexible defaults
+
+ENTRYPOINT
+- Acts as the main executable
+- Not easily overridden
+- Good for forcing a specific program to run
+
+COMPARISON TABLE:
+
++-------------+-----------------------------------------------+
+| TYPE        | PURPOSE & BEHAVIOR                            |
++-------------+-----------------------------------------------+
+| CMD         | Default command, user can replace it          |
+|             | Example: docker run myimg bash                |
++-------------+-----------------------------------------------+
+| ENTRYPOINT  | Main executable that always runs              |
+|             | CMD becomes default arguments                 |
++-------------+-----------------------------------------------+
+
+EXAMPLE 1: Using only CMD
+CMD ["python", "app.py"]
+
+docker run myapp
+→ python app.py
+
+docker run myapp bash
+→ bash (CMD overridden)
+
+EXAMPLE 2: ENTRYPOINT + CMD
+ENTRYPOINT ["python"]
+CMD ["app.py"]
+
+docker run myapp
+→ python app.py
+
+docker run myapp test.py
+→ python test.py
+
+====================================================================
+====================================================================
+1. WHAT IS DOCKER COMPOSE?
+
+Docker Compose is a tool that lets you define and run multiple containers
+as a single application using a file called "docker-compose.yml".
+
+Instead of running several docker run commands manually,
+you define all services once and start everything with a single command.
+
+Use cases:
+- Multi-container apps (example: web + backend + database)
+- Local development
+- Running dependent containers automatically
+
+====================================================================
+2. DOCKER COMPOSE FILE (docker-compose.yml)
+
+A Docker Compose file uses YAML format and describes:
+- Services (containers)
+- Images or build instructions
+- Ports
+- Volumes
+- Environment variables
+- Networks
+
+Example docker-compose.yml:
+
+version: "3.9"
+services:
+  web:
+    image: nginx
+    ports:
+      - "80:80"
+
+  redis:
+    image: redis:alpine
+
+In this example, two containers (web and redis) are started together.
+
+====================================================================
+3. IMPORTANT COMPOSE COMMANDS
+
+docker compose up
+Starts all containers defined in docker-compose.yml
+
+docker compose up -d
+Starts everything in detached (background) mode
+
+docker compose down
+Stops and removes containers, networks, images created by Compose
+
+docker compose ps
+Lists all containers running through Compose
+
+docker compose logs
+Shows logs of all services
+
+docker compose logs web
+Shows logs of a specific service
+
+docker compose stop
+Stops containers but does NOT remove them
+
+docker compose start
+Starts stopped containers
+
+====================================================================
+4. DOCKER COMPOSE WORKFLOW (ASCII DIAGRAM)
+
+            +-----------------------------+
+            |   docker-compose.yml file   |
+            +-------------+---------------+
+                          |
+                          v
+            +-----------------------------+
+            |   Parse YAML configuration  |
+            +-------------+---------------+
+                          |
+                          v
+            +-----------------------------+
+            | Create services/containers  |
+            | (web, db, redis, etc.)      |
+            +-------------+---------------+
+                          |
+                          v
+            +-----------------------------+
+            |  Start containers together  |
+            |  Build images if needed     |
+            +-----------------------------+
+
+====================================================================
+5. USING BUILD OPTION IN COMPOSE
+
+Instead of using an image directly, Compose can build from a Dockerfile.
+
+Example:
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+
+In this case:
+- Compose reads the Dockerfile in the current folder
+- Builds the image
+- Starts the container
+
+====================================================================
+6. USING ENVIRONMENT VARIABLES IN COMPOSE
+
+You can set environment variables inside docker-compose.yml:
+
+services:
+  db:
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=testdb
+
+Or load variables from .env file automatically:
+APP_MODE=production
+PORT=8080
+
+Compose reads .env automatically and applies values.
+
+====================================================================
+7. DEPENDS_ON — SERVICE STARTUP ORDER
+
+Use depends_on to ensure containers start in a specific order.
+
+Example:
+
+services:
+  app:
+    image: myapp
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+
+This ensures:
+db starts → then app starts
+
+Note:
+depends_on does NOT wait for db to be "ready",
+it only waits for the container to start.
+
+====================================================================
+8. VOLUMES IN DOCKER COMPOSE
+
+Volumes persist data even after containers are removed.
+
+Example:
+
+services:
+  db:
+    image: mysql
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+
+This keeps MySQL data safe.
+
+====================================================================
+9. NETWORKS IN DOCKER COMPOSE
+
+Compose automatically creates a private network.
+Containers can communicate using service names.
+
+Example:
+web can talk to db using:
+mysql://db:3306
+
+Custom networks:
+
+services:
+  app:
+    image: myapp
+    networks:
+      - backend
+
+  db:
+    image: mysql
+    networks:
+      - backend
+
+networks:
+  backend:
+
+====================================================================
+
+====================================================================
+1. WHAT IS A DOCKER REGISTRY?
+
+A Docker Registry is a storage and distribution system for Docker images.
+It is where you upload (push) and download (pull) container images.
+
+Think of it like GitHub, but for Docker images.
+
+Common types of registries:
+- Docker Hub (public)
+- GitHub Container Registry
+- GitLab Container Registry
+- AWS ECR
+- Azure Container Registry
+- Google Container Registry
+- Self-hosted Docker Registry (private)
+
+====================================================================
+2. REGISTRY -> REPOSITORY -> IMAGE TAG
+
+Inside a registry, images are organized like this:
+
+Registry
+  └── Repository
+        └── Image Tags (versions)
+
+Example:
+docker.io/library/nginx:latest
+
+Breakdown:
+- docker.io      = Registry (Docker Hub)
+- library/nginx  = Repository
+- latest         = Tag (version of the image)
+
+====================================================================
+3. COMMON DOCKER REGISTRY COMMANDS
+
+docker login
+Authenticate to a registry
+
+docker logout
+Logout from registry
+
+docker pull <image>
+Download an image from a registry
+
+docker push <image>
+Upload an image to a registry
+
+docker tag <src> <target>
+Rename or re-tag an image before pushing
+
+====================================================================
+4. PUSHING AN IMAGE TO A REGISTRY (FULL PROCESS)
+
+Step 1: Login  
+docker login
+
+Step 2: Tag your image  
+docker tag myapp:1.0 username/myapp:1.0
+
+Step 3: Push the image  
+docker push username/myapp:1.0
+
+Now your image is available online.
+
+====================================================================
+5. PULLING AN IMAGE FROM A REGISTRY
+
+docker pull username/myapp:1.0
+
+After pulling, you can run it:
+docker run username/myapp:1.0
+
+====================================================================
+6. LOCAL PRIVATE DOCKER REGISTRY
+
+You can run your own private registry locally like this:
+
+docker run -d -p 5000:5000 --name registry registry:2
+
+This starts a private registry at:
+http://localhost:5000
+
+Pushing to private registry:
+
+docker tag myapp:1.0 localhost:5000/myapp:1.0
+docker push localhost:5000/myapp:1.0
+
+Pulling from private registry:
+
+docker pull localhost:5000/myapp:1.0
+
+====================================================================
+7. DOCKER REGISTRY WORKFLOW (ASCII DIAGRAM)
+
+            +-----------------------------+
+            |      Docker Build Image     |
+            +--------------+--------------+
+                           |
+                           v
+            +-----------------------------+
+            |      Tag the Image          |
+            |  (username/app:version)     |
+            +--------------+--------------+
+                           |
+                           v
+            +-----------------------------+
+            |        Push to Registry     |
+            +--------------+--------------+
+                           |
+                           v
+            +-----------------------------+
+            |   Image Stored in Registry  |
+            +--------------+--------------+
+                           |
+                           v
+            +-----------------------------+
+            |       Pull on any system    |
+            +-----------------------------+
+
+====================================================================
+8. WHY USE A REGISTRY?
+
+- Share images with your team
+- Deploy to cloud platforms
+- Version control for container builds
+- Secure private images
+- Automated CI/CD pipelines can pull images easily
+
+====================================================================
+9. DOCKER HUB RATE LIMITS (IMPORTANT)
+
+Anonymous users have pull rate limits.
+If you pull too often, Docker may block requests temporarily.
+
+Solution:
+docker login
+or use a private registry.
+
+====================================================================
+
+====================================================================
+1. DOCKER ENGINE
+
+Docker Engine is the core part of Docker.
+It is responsible for building, running, and managing containers.
+
+It uses a client-server architecture:
+- Docker Client (CLI)
+- Docker Daemon (dockerd)
+- REST API
+- Container Runtime (containerd / runc)
+
+====================================================================
+2. DOCKER ENGINE ARCHITECTURE (ASCII DIAGRAM)
+
+               +----------------------------+
+               |      Docker Client         |
+               |   (docker commands)        |
+               +-------------+--------------+
+                             |
+                  Docker CLI sends commands
+                             |
+                             v
+               +----------------------------+
+               |       REST API Server      |
+               | (dockerd listens on socket)|
+               +-------------+--------------+
+                             |
+                             v
+               +----------------------------+
+               |      Docker Daemon         |
+               |   Manages images, volumes, |
+               |   networks and containers  |
+               +-------------+--------------+
+                             |
+                             v
+               +----------------------------+
+               |    containerd runtime      |
+               +-------------+--------------+
+                             |
+                             v
+               +----------------------------+
+               |      runc (low-level)      |
+               | Creates containers using    |
+               | Linux kernel features       |
+               +----------------------------+
+
+====================================================================
+3. COMPONENTS OF DOCKER ENGINE
+
+1. Docker Client  
+   - The "docker" command you type in terminal.
+
+2. Docker Daemon  
+   - Runs in background.
+   - Manages containers, images, volumes, networks.
+
+3. Docker API  
+   - Client talks to daemon using REST API over Unix socket.
+
+4. containerd  
+   - High-level container lifecycle manager.
+
+5. runc  
+   - Actually creates containers using Linux namespaces and cgroups.
+
+====================================================================
+4. HOW A DOCKER COMMAND WORKS (FLOW)
+
+docker run nginx
+
+Flow:
+Docker CLI → Docker Daemon → Pull image → Create container → Start container
+
+====================================================================
+5. DOCKER STORAGE
+
+Docker uses different storage mechanisms to store:
+- Images
+- Containers
+- Volumes
+- Layers
+
+There are three main storage types:
+1. Image Layers  
+2. Container Layer  
+3. Volumes
+
+====================================================================
+6. DOCKER STORAGE TYPES (DETAILED)
+
+1. Image Layers (Read-Only)
+   - Each instruction in a Dockerfile creates a layer.
+   - Layers are shared across containers.
+
+2. Container Layer (Read-Write)
+   - Temporary and exists only while the container is running.
+   - Data stored here is LOST when container is removed.
+
+3. Volumes (Persistent Storage)
+   - Recommended for databases.
+   - Data survives container recreation.
+
+====================================================================
+7. VOLUME TYPES
+
+1. Anonymous Volumes  
+   - Automatically created and usually temporary.
+
+2. Named Volumes  
+   - Defined by user.
+   - Stored under /var/lib/docker/volumes/
+
+3. Bind Mounts  
+   - Maps a host folder directly into container.
+   - Example: /home/user/data:/data
+
+====================================================================
+8. DOCKER STORAGE FLOW (ASCII)
+
+             +----------------------------+
+             |      Docker Image          |
+             |     (Read-Only Layers)     |
+             +--------------+-------------+
+                            |
+                            v
+             +----------------------------+
+             |    Container Layer         |
+             | (Temporary, RW filesystem) |
+             +--------------+-------------+
+                            |
+                            v
+             +----------------------------+
+             |         Volumes            |
+             | (Persistent Application     |
+             |           Data)            |
+             +----------------------------+
+
+====================================================================
+9. DOCKER NETWORKING
+
+Docker networking allows containers to communicate:
+- With each other
+- With the host system
+- With the outside world
+
+====================================================================
+10. TYPES OF DOCKER NETWORKS
+
+1. bridge (default)
+   - Most commonly used.
+   - Containers get their own IP and can talk to each other.
+   - Example default network: docker0
+
+2. host
+   - Shares host’s network directly.
+   - No isolation.
+
+3. none
+   - No network access for the container.
+
+4. overlay
+   - Used for multi-host communication (Docker Swarm).
+
+5. macvlan
+   - Assigns a MAC address to the container.
+   - Container appears as a physical device on the network.
+
+====================================================================
+11. CHECK NETWORKS AND DETAILS
+
+docker network ls
+List all networks
+
+docker network inspect bridge
+Show network details
+
+docker network create mynet
+Create custom network
+
+docker run -d --network=mynet nginx
+Run container inside custom network
+
+====================================================================
+12. DOCKER NETWORK FLOW (ASCII DIAGRAM)
+
+                +-------------------------+
+                |    Host Machine         |
+                +-----------+-------------+
+                            |
+                            v
+                +-------------------------+
+                |   Docker Networks       |
+                | (bridge / host / none)  |
+                +-----------+-------------+
+                            |
+                            v
+        +----------+   +----------+   +----------+
+        | Container|   | Container|   | Container|
+        |   A      |<--|   B      |-->|    C     |
+        +----------+   +----------+   +----------+
+              Communication happens through networks
+
+====================================================================
+13. WHY NETWORKING MATTERS IN DOCKER
+
+- Containers need to communicate with databases
+- Web servers need internet access
+- Microservices architecture depends on inter-container communication
+- Helps isolate and secure applications
+
+====================================================================
+====================================================================
+1. CONTAINER ORCHESTRATION
+
+Container orchestration is the automated management of containerized
+applications, including:
+
+- Deploying containers
+- Scaling containers up or down
+- Restarting failed containers
+- Managing load balancing
+- Rolling updates and rollbacks
+- Service discovery
+- Ensuring high availability
+
+It is required when applications become too large to manage manually.
+
+Examples of orchestration tools:
+- Docker Swarm
+- Kubernetes
+- Amazon ECS
+- Nomad
+
+====================================================================
+2. WHY CONTAINER ORCHESTRATION IS IMPORTANT
+
+1. Scalability  
+   Easily increase number of containers based on traffic.
+
+2. High Availability  
+   If a container fails, orchestrator replaces it automatically.
+
+3. Load Balancing  
+   Distributes traffic across containers.
+
+4. Self-Healing  
+   Automatically restarts or replaces failed containers.
+
+5. Automated Deployment  
+   Rolling updates, zero-downtime deployments.
+
+6. Multi-node Management  
+   Run containers across hundreds of machines.
+
+====================================================================
+3. ORCHESTRATION WORKFLOW (ASCII DIAGRAM)
+
+            +---------------------------------+
+            |   Desired State (User wants)    |
+            |   e.g., "Run 3 replicas"        |
+            +----------------+----------------+
+                             |
+                             v
+            +---------------------------------+
+            |   Orchestrator System           |
+            |  (Swarm, Kubernetes, etc.)      |
+            +----------------+----------------+
+                             |
+                             v
+            +---------------------------------+
+            |   Actual State (Current system) |
+            +---------------------------------+
+                             |
+                             v
+            Continually adjusts containers to match desired state
+
+====================================================================
+4. DOCKER SWARM
+
+Docker Swarm is Docker’s native container orchestration tool.
+It allows you to create a cluster of Docker nodes that work together.
+
+Swarm consists of:
+- Manager Nodes (control plane)
+- Worker Nodes (run containers)
+
+====================================================================
+5. DOCKER SWARM KEY FEATURES
+
+- Built-in load balancing
+- Rolling updates
+- Service scaling (replicas)
+- Self-healing
+- Secure by default (TLS encryption)
+- Easy setup (simple commands)
+
+====================================================================
+6. SWARM ARCHITECTURE (ASCII DIAGRAM)
+
+                 +----------------------+
+                 |   Manager Node       |
+                 |  (decides actions)   |
+                 +---------+------------+
+                           |
+                 Schedules Services, Replicas
+                           |
+           +---------------+----------------+
+           |                                |
++-------------------+             +-------------------+
+|   Worker Node 1   |             |   Worker Node 2   |
+| Runs containers   |             | Runs containers   |
++-------------------+             +-------------------+
+
+Managers decide; workers execute.
+
+====================================================================
+7. IMPORTANT SWARM COMMANDS
+
+docker swarm init
+Initialize swarm (manager node)
+
+docker swarm join
+Join another node as worker/manager
+
+docker service create --replicas 3 nginx
+Create a service with 3 replicas
+
+docker service ls
+List running services
+
+docker node ls
+List all nodes in the swarm
+
+docker service scale myservice=5
+Scale service to 5 replicas
+
+docker service update myservice
+Update a service (rolling update)
+
+====================================================================
+8. DOCKER SWARM DEPLOYMENT FLOW
+
+1. Convert containers into services  
+2. Define number of replicas  
+3. Swarm schedules tasks to nodes  
+4. Containers created across workers  
+5. Load balancing applied automatically  
+6. If a container fails → Swarm recreates it  
+
+====================================================================
+9. KUBERNETES INTRODUCTION
+
+Kubernetes (K8s) is the most powerful and widely used container
+orchestration system. Created by Google, now maintained by CNCF.
+
+Kubernetes is designed for:
+- Large-scale deployments
+- Fully automated rollouts
+- Intelligent load balancing
+- Self-healing containers
+- Multi-node, multi-region clusters
+- Enterprise grade reliability
+
+====================================================================
+10. KUBERNETES COMPONENTS (HIGH LEVEL)
+
+1. Master (Control Plane)
+   - API Server
+   - Scheduler
+   - Controller Manager
+   - ETCD (cluster database)
+
+2. Worker Nodes
+   - Kubelet
+   - Kube Proxy
+   - Pods (containers run here)
+
+====================================================================
+11. KUBERNETES BASIC CONCEPTS
+
+Pod  
+- Smallest deployable unit  
+- Contains 1 or more containers  
+
+Deployment  
+- Manages multiple replicas of Pods  
+- Handles scaling and rolling updates  
+
+Service  
+- Stable networking for Pods  
+- Load balancer inside Kubernetes  
+
+Namespace  
+- Logical separation inside cluster  
+
+====================================================================
+12. KUBERNETES ARCHITECTURE (ASCII DIAGRAM)
+
+                    +-----------------------------+
+                    |       Control Plane         |
+                    |  API Server, ETCD,          |
+                    |  Scheduler, Controllers     |
+                    +---------------+-------------+
+                                    |
+                                    |
+                         +----------+-----------+
+                         |                      |
+             +-------------------+    +-------------------+
+             |    Worker Node    |    |    Worker Node    |
+             +-------------------+    +-------------------+
+             | Kubelet           |    | Kubelet           |
+             | Kube Proxy        |    | Kube Proxy        |
+             | Pods/Containers   |    | Pods/Containers   |
+             +-------------------+    +-------------------+
+
+====================================================================
+13. KUBERNETES VS DOCKER SWARM (QUICK COMPARISON)
+
++-----------------------+---------------------+------------------------+
+| FEATURE               | DOCKER SWARM        | KUBERNETES             |
++-----------------------+---------------------+------------------------+
+| Setup Complexity      | Simple              | Complex                |
+| Scalability           | Medium              | Very High              |
+| Rollouts              | Good                | Excellent              |
+| Self-Healing          | Yes                 | Very advanced          |
+| Load Balancing        | Built-in            | Built-in + advanced    |
+| Best For              | Small/medium apps   | Enterprise-level apps  |
++-----------------------+---------------------+------------------------+
+
+====================================================================
+
+
+
