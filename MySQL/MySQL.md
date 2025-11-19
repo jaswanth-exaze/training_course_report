@@ -140,7 +140,7 @@ interact with data.
 
 `SHOW TABLES;`
 
-**USE:** `USE ``mydatabas``e``;` (to select a database to work with)
+**USE:** `USE ``mydatabase``;` (to select a database to work with)
 
 **DROP:** `DROP DATABASE ``mydatabase``;` ,
 
