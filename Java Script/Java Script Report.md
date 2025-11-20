@@ -133,31 +133,34 @@ JavaScript Learning Syllabus
 
 21. Final Project
     - Complete project using DOM, events, localStorage, and API
-# Part 2 – JavaScript Basics  
-## 1. Variables (var, let, const)
+ # Part 2 – JavaScript Basics  
 
-Variables are containers used to store values in JavaScript.  
+------------------------------------------------------------
+
+# 1. Variables (var, let, const)
+
+Variables store values in JavaScript.  
 They allow your program to read, update, and manipulate data dynamically.
 
-JavaScript provides **three keywords** to declare variables:
-- `var`  
-- `let`  
-- `const`  
+JavaScript provides three keywords to declare variables:
+- var  
+- let  
+- const  
 
-Each behaves differently in terms of **scope**, **updating**, and **re-declaration.
+Each behaves differently in terms of scope, updating, and re-declaration.
 
 ------------------------------------------------------------
 
 # let (Modern Variable Declaration)
 
 ### Key Points
-- **Block-scoped** (available only inside `{ … }`)  
-- **Can be updated**  
-- **Cannot be re-declared** in the same block  
-- Introduced in **ES6**
+- Block-scoped  
+- Can be updated  
+- Cannot be re-declared in the same block  
+- Introduced in ES6  
 
-### When to use `let`  
-Use `let` when the value **needs to change**, e.g., loop counters, temporary values, intermediate calculations.
+### When to use let  
+Use when the value needs to change (loop counters, temporary values).
 
 ### Example
 ```javascript
@@ -167,7 +170,7 @@ score = 20;
 console.log(score);
 </script>
 ```
-**Output:**  
+Output:  
 20
 
 ------------------------------------------------------------
@@ -175,31 +178,30 @@ console.log(score);
 # const (Immutable Binding)
 
 ### Key Points
-- **Block-scoped**  
-- **Cannot be reassigned** (no update to the binding)  
-- **Cannot be re-declared**  
-- **Must be initialized** at declaration  
-- Recommended for values that **should not be reassigned**
+- Block-scoped  
+- Cannot be reassigned  
+- Cannot be re-declared  
+- Must be initialized at declaration  
 
-### Important Clarification
-`const` prevents **reassignment** of the binding, but **does NOT make objects/arrays immutable**. You can still change properties/elements.
+### Important Clarification  
+const prevents reassignment, but does not make objects or arrays immutable.
 
 ### Example (object mutation allowed)
 ```javascript
 <script>
 const user = { name: "Jaswanth" };
-user.name = "Kumar";   // allowed: modifying property
+user.name = "Kumar"; 
 console.log(user);
 </script>
 ```
-**Output:**  
+Output:  
 { name: "Kumar" }
 
 ### Example (reassignment not allowed)
 ```javascript
 <script>
 const x = 5;
-x = 10; // Uncaught TypeError: Assignment to constant variable.
+x = 10; // Error
 </script>
 ```
 
@@ -208,22 +210,19 @@ x = 10; // Uncaught TypeError: Assignment to constant variable.
 # var (Legacy Declaration — avoid in modern code)
 
 ### Key Points
-- **Function-scoped** (NOT block-scoped)  
-- **Can be updated** and **re-declared**  
-- Subject to **hoisting** (declaration moved to top, value undefined until assignment)  
-- Can lead to bugs due to unexpected scope leakage
-
-### Why avoid `var`  
-`var` can unintentionally leak variables outside blocks and behave unpredictably due to hoisting.
+- Function-scoped  
+- Can be updated and re-declared  
+- Hoisted (initialized as undefined)  
+- Can cause unexpected behavior  
 
 ### Example (hoisting)
 ```javascript
 <script>
-console.log(a); // undefined (declaration hoisted, value not assigned yet)
+console.log(a); 
 var a = 10;
 </script>
 ```
-**Output:**  
+Output:  
 undefined
 
 ### Example (block leakage)
@@ -232,10 +231,10 @@ undefined
 if (true) {
   var leaked = "I'm outside now";
 }
-console.log(leaked); // "I'm outside now"
+console.log(leaked);
 </script>
 ```
-**Output:**  
+Output:  
 I'm outside now
 
 ------------------------------------------------------------
@@ -245,75 +244,529 @@ I'm outside now
 | Feature            | var                    | let                   | const                    |
 |--------------------|------------------------|------------------------|--------------------------|
 | Scope              | Function-scoped        | Block-scoped           | Block-scoped             |
-| Can be updated     | Yes                    | Yes                    | No (binding)             |
-| Can be re-declared | Yes                    | No (in same scope)     | No                       |
+| Can be updated     | Yes                    | Yes                    | No                       |
+| Can be re-declared | Yes                    | No                     | No                       |
 | Must initialize    | No                     | No                     | Yes                      |
-| Hoisting behavior  | Yes (declared, undefined) | Yes (declared, TDZ)  | Yes (declared, TDZ)      |
-| Use in modern JS   | Avoid (legacy)         | Recommended for mutable values | Recommended for constants |
-
-> TDZ = Temporal Dead Zone (accessing `let`/`const` before initialization throws ReferenceError)
+| Hoisting behavior  | Yes (undefined)        | Yes (TDZ)              | Yes (TDZ)                |
+| Use in modern JS   | Avoid                  | Good                   | Best default choice      |
 
 ------------------------------------------------------------
 
-# Common Patterns & Gotchas
+# 2. Data Types (Primitive & Non-Primitive)
 
-- Prefer `const` by default; use `let` when you must reassign.  
-- Do **not** use `var` unless required for legacy compatibility.  
-- `const` stops reassignment but not mutation — use patterns like `Object.freeze()` if you need immutability.  
-- Be careful with loops and closures when using `var` (classic closure trap).
+JavaScript has two major categories of data types.
 
-### Example: closure trap with var vs let
+------------------------------------------------------------
+
+# Primitive Data Types
+
+Primitive values are stored directly in memory and are immutable.
+
+### Types
+- String  
+- Number  
+- Boolean  
+- Null  
+- Undefined  
+- BigInt  
+- Symbol  
+
+------------------------------------------------------------
+
+# String  
+Represents a sequence of characters.  
+Used for text.
+
+### Example
 ```javascript
 <script>
-for (var i = 0; i < 3; i++) {
-  setTimeout(() => console.log("var:", i), 10); // var: 3, 3, 3
-}
-
-for (let j = 0; j < 3; j++) {
-  setTimeout(() => console.log("let:", j), 10); // let: 0, 1, 2
-}
+let firstName = "Jaswanth";
+let msg = 'Welcome';
+let text = `Template literal example`;
+console.log(firstName, msg, text);
 </script>
 ```
-**Output (order may vary):**  
-var: 3  
-var: 3  
-var: 3  
-let: 0  
-let: 1  
-let: 2
-
-Explanation: `var` shares one `i`, `let` creates a fresh binding each iteration.
 
 ------------------------------------------------------------
 
-# Full Example (Your Required Format)
+# Number  
+JavaScript uses floating-point numbers for both decimals and integers.
+
+### Example
+```javascript
+<script>
+let age = 23;
+let price = 99.5;
+console.log(age, price);
+</script>
+```
+
+------------------------------------------------------------
+
+# Boolean  
+Represents true or false.
+
+### Example
+```javascript
+<script>
+let isLoggedIn = true;
+let isVerified = false;
+console.log(isLoggedIn, isVerified);
+</script>
+```
+
+------------------------------------------------------------
+
+# Null  
+Intentional empty value.
+
+### Example
+```javascript
+<script>
+let data = null;
+console.log(data);
+</script>
+```
+
+------------------------------------------------------------
+
+# Undefined  
+A variable declared but not assigned.
+
+### Example
+```javascript
+<script>
+let value;
+console.log(value);
+</script>
+```
+
+------------------------------------------------------------
+
+# BigInt  
+Used for very large integers.
+
+### Example
+```javascript
+<script>
+let big = 123456789123456789n;
+console.log(big);
+</script>
+```
+
+------------------------------------------------------------
+
+# Symbol  
+Used to create unique identifiers.
+
+### Example
+```javascript
+<script>
+let s1 = Symbol("id");
+let s2 = Symbol("id");
+console.log(s1 === s2);
+</script>
+```
+
+Output:  
+false
+
+------------------------------------------------------------
+
+# Non-Primitive Types  
+Stored by reference.
+
+### Types
+- Object  
+- Array  
+- Function  
+
+------------------------------------------------------------
+
+### Example (Object, Array, Function)
+```javascript
+<script>
+let user = { name: "Jaswanth", age: 22 };
+let numbers = [10, 20, 30];
+function greet() { console.log("Hello"); }
+</script>
+```
+
+------------------------------------------------------------
+
+# 3. Operators (Arithmetic, Logical, Comparison)
+
+Operators allow mathematical and logical operations.
+
+------------------------------------------------------------
+
+# Arithmetic Operators
+-  Addition + 
+-  Subtraction   -
+-  Multiplication  *
+-  Division /
+-  Modulus  %
+- Exponent  **
+
+### Example
+```javascript
+<script>
+let x = 10;
+let y = 3;
+console.log(x + y);
+console.log(x - y);
+console.log(x * y);
+console.log(x % y);
+</script>
+```
+
+------------------------------------------------------------
+
+# Comparison Operators
+Used to compare values.
+
+- >  
+- <  
+- >=  
+- <=  
+- ==  
+- ===  
+- !=  
+- !==  
+
+### Example
+```javascript
+<script>
+console.log(10 > 5);
+console.log(10 === "10");
+console.log(10 === 10);
+</script>
+```
+
+------------------------------------------------------------
+
+# Logical Operators
+- &&  
+- ||  
+- !  
+
+### Example
+```javascript
+<script>
+console.log(true && false);
+console.log(true || false);
+console.log(!false);
+</script>
+```
+
+------------------------------------------------------------
+
+# 4. Template Literals
+
+Allows variable embedding and multi-line strings using backticks.
+
+### Example
 ```javascript
 <script>
 let name = "Jaswanth";
-const age = 22;
-var city = "Hyderabad";
-
-console.log(name, age, city);
+let msg = `Hello ${name}, welcome.`;
+console.log(msg);
 </script>
 ```
-**Output:**  
-Jaswanth 22 Hyderabad
+
+------------------------------------------------------------
+
+# 5. Comments in JavaScript
+
+Used to document code.
+
+### Single-line
+```javascript
+// this is a comment
+```
+
+### Multi-line
+```javascript
+/*
+  multi-line comment
+*/
+```
+
+------------------------------------------------------------
+
+# 6. Type Conversion (Explicit & Implicit)
+
+------------------------------------------------------------
+
+# Explicit Conversion
+
+### Example
+```javascript
+<script>
+console.log(Number("20"));
+console.log(String(100));
+console.log(Boolean(1));
+</script>
+```
+
+------------------------------------------------------------
+
+# Implicit Conversion
+
+### Example
+```javascript
+<script>
+console.log("5" + 2); // concatenation
+console.log("5" - 2); // numeric subtraction
+</script>
+```
+
+Output:  
+52  
+3
 
 ------------------------------------------------------------
 
 # Practice Tasks
-1. Declare three variables (`name`, `age`, `city`) using `let`/`const` and print them.  
-2. Create a `const` array and push a new item — observe behavior.  
-3. Try reassigning a `const` value — observe the error.  
-4. Create a `for` loop using `var` and `let`, then log values inside `setTimeout` to see the difference.  
-5. Use `Object.freeze()` on an object declared with `const` and try to mutate it.
+
+1. Declare one example of each primitive data type.  
+2. Create an object with keys name, age, and city.  
+3. Perform arithmetic operations on two numbers.  
+4. Use template literals to print an introduction.  
+5. Convert string "50" to number and verify the type.  
+
+# Part 3 – Control Flow in JavaScript  
 
 ------------------------------------------------------------
 
-# Short Checklist (What you should remember)
-- Use `const` by default.  
-- Use `let` when you need reassignment.  
-- Avoid `var`.  
-- `const` ≠ immutable (for objects/arrays).  
-- Be aware of hoisting and TDZ.
+## 1. Introduction to Control Flow
+
+Control flow determines **how JavaScript executes your code**.  
+It allows your program to:
+
+- Make decisions  
+- Execute code conditionally  
+- Repeat actions  
+- Skip certain steps  
+
+Main control flow structures:
+- if / else  
+- switch  
+- for loop  
+- while loop  
+- do-while loop  
+- break and continue  
+
+------------------------------------------------------------
+
+# if, else if, else
+
+Used to make decisions based on conditions.
+
+### Example
+```javascript
+<script>
+let marks = 85;
+
+if (marks >= 90) {
+    console.log("Grade A");
+} else if (marks >= 75) {
+    console.log("Grade B");
+} else {
+    console.log("Grade C");
+}
+</script>
+```
+
+Output:  
+Grade B
+
+------------------------------------------------------------
+
+# Comparison Operators
+
+Used in conditions to compare values.
+
+Operators:
+ ```
+ >  
+ <  
+ >=  
+ <=  
+ == (loose equality)  
+ === (strict equality, recommended)  
+ !=  
+ !== 
+ ``` 
+
+### Example
+```javascript
+<script>
+console.log(10 > 5);
+console.log(10 === "10");
+console.log(10 === 10);
+</script>
+```
+
+Output:  
+true  
+false  
+true
+
+------------------------------------------------------------
+
+# switch Statement
+
+Used when matching one value with multiple possible cases.
+
+### Example
+```javascript
+<script>
+let day = 3;
+let dayName = "";
+
+switch (day) {
+    case 1:
+        dayName = "Monday";
+        break;
+    case 2:
+        dayName = "Tuesday";
+        break;
+    case 3:
+        dayName = "Wednesday";
+        break;
+    default:
+        dayName = "Unknown";
+}
+
+console.log(dayName);
+</script>
+```
+
+Output:  
+Wednesday
+
+------------------------------------------------------------
+
+# for Loop
+
+Used when the number of iterations is known.
+
+### Syntax
+for (initialization; condition; increment) {  
+    statements  
+}
+
+### Example
+```javascript
+<script>
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+</script>
+```
+
+Output:  
+1  
+2  
+3  
+4  
+5
+
+------------------------------------------------------------
+
+# while Loop
+
+Runs as long as the condition is true.
+
+### Example
+```javascript
+<script>
+let n = 1;
+
+while (n <= 3) {
+    console.log(n);
+    n++;
+}
+</script>
+```
+
+Output:  
+1  
+2  
+3
+
+------------------------------------------------------------
+
+# do-while Loop
+
+Runs the code at least once before checking the condition.
+
+### Example
+```javascript
+<script>
+let count = 1;
+
+do {
+    console.log(count);
+    count++;
+} while (count <= 3);
+</script>
+```
+
+Output:  
+1  
+2  
+3
+
+------------------------------------------------------------
+
+# break and continue
+
+### break  
+Stops the loop immediately.
+
+### continue  
+Skips the current iteration and continues the loop.
+
+### Example
+```javascript
+<script>
+for (let i = 1; i <= 5; i++) {
+    if (i === 3) {
+        continue; // skip 3
+    }
+    if (i === 5) {
+        break; // stop loop
+    }
+    console.log(i);
+}
+</script>
+```
+
+Output:  
+1  
+2  
+4
+
+------------------------------------------------------------
+
+# Summary Table
+
+| Feature      | for loop                     | while loop                 | do-while loop                 |
+|--------------|------------------------------|----------------------------|-------------------------------|
+| Runs when    | Condition true               | Condition true             | At least once                 |
+| Condition    | Checked before each loop     | Checked before             | Checked after first run       |
+| Use case     | Known iterations             | Unknown iterations         | Must run once even if false   |
+
+------------------------------------------------------------
+
+# Practice Tasks
+
+1. Write an if–else program to check if a number is even or odd.  
+2. Use switch to print the name of a month based on its number.  
+3. Print numbers from 1 to 20 using a for loop.  
+4. Print numbers from 10 to 1 using a while loop.  
+5. Skip printing the number 7 using continue.  
+6. Use break to stop the loop when the number reaches 15.
 
