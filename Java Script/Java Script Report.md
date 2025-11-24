@@ -1124,7 +1124,7 @@ Output:
 
 ---
 
-# Practice Tasks
+## Practice Tasks
 
 1. Write an if–else program to check if a number is even or odd.
 2. Use switch to print the name of a month based on its number.
@@ -1132,3 +1132,566 @@ Output:
 4. Print numbers from 10 to 1 using a while loop.
 5. Skip printing the number 7 using continue.
 6. Use break to stop the loop when the number reaches 15.
+---
+# Strict Mode in JavaScript
+
+Strict Mode is a special mode in JavaScript that makes the language **more secure, cleaner, and less error-prone**.  
+It changes the way JavaScript runs, helping you catch mistakes early.
+
+You enable strict mode by adding this line at the top of a script or function:
+
+```javascript
+"use strict";
+```
+
+------------------------------------------------------------
+
+## Why Strict Mode Exists
+
+Strict mode helps by:
+- Preventing the use of undeclared variables  
+- Throwing more meaningful errors  
+- Blocking dangerous or outdated features  
+- Making JavaScript behave more predictably  
+- Improving performance in some cases  
+
+------------------------------------------------------------
+
+## Example: Without Strict Mode
+
+```javascript
+<script>
+x = 10;        // No error, JS creates a global variable automatically
+console.log(x);
+</script>
+```
+
+Output:  
+10
+
+This is risky because mistakes become hidden global variables.
+
+------------------------------------------------------------
+
+## Example: With Strict Mode
+
+```javascript
+<script>
+"use strict";
+
+x = 10;        // Error: x is not defined
+console.log(x);
+</script>
+```
+
+Output:  
+ReferenceError: x is not defined
+
+Strict mode forces you to **declare variables properly** using let, const, or var.
+
+------------------------------------------------------------
+
+## Where to Place Strict Mode
+
+### At the top of a script file:
+```javascript
+"use strict";
+```
+
+### Inside a function only:
+```javascript
+function test() {
+    "use strict";
+    // strict mode only inside this function
+}
+```
+
+------------------------------------------------------------
+---
+# Part 4 – Functions in JavaScript  
+
+
+## 1. Introduction to Functions
+
+A function is a reusable block of code designed to perform a specific task.  
+Functions help avoid repeating the same code and make programs structured and maintainable.
+
+A function contains:
+- Function name  
+- Parameters (optional)  
+- Function body  
+- Return value (optional)  
+
+### Example
+```javascript
+<script>
+function greet() {
+    console.log("Hello from a function");
+}
+greet();
+</script>
+```
+
+Output:  
+Hello from a function
+
+------------------------------------------------------------
+
+## 2. Function Declaration, Expression, and Arrow Functions
+
+### Function Declaration
+Declared with the function keyword. Hoisted (can be called before declaration).
+
+```javascript
+<script>
+function add(a, b) {
+    return a + b;
+}
+console.log(add(5, 3));
+</script>
+```
+
+Output:  
+8
+
+------------------------------------------------------------
+
+### Function Expression
+Function assigned to a variable. Not hoisted.
+
+```javascript
+<script>
+const multiply = function (x, y) {
+    return x * y;
+};
+console.log(multiply(4, 2));
+</script>
+```
+
+Output:  
+8
+
+------------------------------------------------------------
+
+### Arrow Function
+Shorter syntax introduced in ES6.  
+Does not have its own this or arguments.
+General syntax:
+
+```javascript
+const functionName = (parameters) => {
+    return expression;
+};
+```
+
+```javascript
+<script>
+const subtract = (a, b) => {
+    return a - b;
+};
+console.log(subtract(10, 4));
+</script>
+```
+
+Output:  
+6
+
+### Arrow Function Short Form
+If only one expression, return is automatic.
+
+```javascript
+<script>
+const square = n => n * n;
+console.log(square(5));
+</script>
+```
+
+Output:  
+25
+
+------------------------------------------------------------
+
+## 3. Parameters, Arguments, Default Values, Rest Parameters
+
+### Parameters and Arguments
+Parameters: placeholders  
+Arguments: actual values passed
+
+```javascript
+<script>
+function welcome(name) {
+    console.log("Welcome " + name);
+}
+welcome("Jaswanth");
+</script>
+```
+
+Output:  
+Welcome Jaswanth
+
+------------------------------------------------------------
+
+### Default Parameters
+Used when no argument is passed.
+
+```javascript
+<script>
+function greet(name = "Guest") {
+    console.log("Hello " + name);
+}
+greet();
+</script>
+```
+
+Output:  
+Hello Guest
+
+------------------------------------------------------------
+
+### Rest Parameters
+Used when the number of arguments is unknown.
+
+```javascript
+<script>
+function sum(...nums) {
+    let total = 0;
+    for (let n of nums) {
+        total += n;
+    }
+    console.log(total);
+}
+sum(10, 20, 30);
+</script>
+```
+
+Output:  
+60
+
+------------------------------------------------------------
+
+## 4. Return Statement and Execution Flow
+
+The return statement sends a value back to the caller and stops further execution inside the function.
+
+```javascript
+<script>
+function getTotal(a, b) {
+    return a + b;
+    console.log("This will not run");
+}
+console.log(getTotal(10, 5));
+</script>
+```
+
+Output:  
+15
+
+------------------------------------------------------------
+
+## 5. Scope and Lexical Scope (Core Concept)
+
+### Local and Global Scope
+Variables declared inside a function are local.  
+Variables declared outside are global.
+
+```javascript
+<script>
+let x = 10; // global
+
+function show() {
+    let y = 20; // local
+    console.log(x, y);
+}
+show();
+</script>
+```
+
+Output:  
+10 20
+
+------------------------------------------------------------
+
+### Lexical Scope (Important for Closures)
+Inner functions can access variables from the outer function.
+
+```javascript
+<script>
+function outer() {
+    let message = "Inside Outer";
+
+    function inner() {
+        console.log(message);
+    }
+    inner();
+}
+outer();
+</script>
+```
+
+Output:  
+Inside Outer
+
+------------------------------------------------------------
+
+# Practice Tasks
+
+1. Write a function that returns the square of a number.  
+2. Create an arrow function that prints your name.  
+3. Write a function with default parameters for greeting.  
+4. Write a function using rest parameters to sum numbers.  
+5. Create a function inside another function and print an outer variable.  
+
+# Part 5 – Arrays in JavaScript  
+
+------------------------------------------------------------
+
+## 1. Creating Arrays
+
+<p style=color:pink; >Arrays store multiple values in a single variable.  </p>
+They maintain an ordered list of elements.
+
+### Example
+```javascript
+<script>
+let numbers = [10, 20, 30];
+let mixed = [1, "hello", true];
+let empty = [];
+console.log(numbers, mixed, empty);
+</script>
+```
+
+Output:  
+[10, 20, 30] ["hello", true] []
+
+### Using new Array()
+```javascript
+<script>
+let values = new Array(5, 10, 15);
+console.log(values);
+</script>
+```
+
+------------------------------------------------------------
+
+# 2. Core Methods (push, pop, shift, unshift)
+
+### push() – Add at end
+```javascript
+<script>
+let nums = [1, 2];
+nums.push(3);
+console.log(nums);
+</script>
+```
+Output: [1, 2, 3]
+
+------------------------------------------------------------
+
+### pop() – Remove last element
+```javascript
+<script>
+let nums = [1, 2, 3];
+nums.pop();
+console.log(nums);
+</script>
+```
+Output: [1, 2]
+
+------------------------------------------------------------
+
+### shift() – Remove first element
+```javascript
+<script>
+let nums = [10, 20, 30];
+nums.shift();
+console.log(nums);
+</script>
+```
+Output: [20, 30]
+
+------------------------------------------------------------
+
+### unshift() – Add at beginning
+```javascript
+<script>
+let nums = [20, 30];
+nums.unshift(10);
+console.log(nums);
+</script>
+```
+Output: [10, 20, 30]
+
+------------------------------------------------------------
+
+# 3. Higher-Order Methods: map, filter, reduce
+
+## map() – transforms each element and returns new array
+```javascript
+<script>
+let nums = [1, 2, 3];
+let squares = nums.map(function(n) {
+    return n * 2;
+});
+console.log(squares);
+</script>
+```
+Output: [2, 4, 6]
+
+------------------------------------------------------------
+
+## filter() – keeps elements that match a condition
+```javascript
+<script>
+let nums = [10, 5, 20, 3];
+let result = nums.filter(function(n) {
+    return n > 8;
+});
+console.log(result);
+</script>
+```
+Output: [10, 20]
+
+------------------------------------------------------------
+
+## reduce() – reduces array to a single value
+```javascript
+<script>
+let nums = [1, 2, 3, 4];
+let total = nums.reduce(function(acc, n) {
+    return acc + n;
+}, 0);
+console.log(total);
+</script>
+```
+Output: 10
+
+------------------------------------------------------------
+
+# 4. Other Utility Methods (find, some, every, forEach)
+
+## find() – returns first matched element
+```javascript
+<script>
+let nums = [5, 12, 8];
+let result = nums.find(n => n > 10);
+console.log(result);
+</script>
+```
+Output: 12
+
+------------------------------------------------------------
+
+## some() – returns true if at least one matches
+```javascript
+<script>
+let nums = [2, 4, 6];
+console.log(nums.some(n => n > 5));
+</script>
+```
+Output: true
+
+------------------------------------------------------------
+
+## every() – returns true only if all match
+```javascript
+<script>
+let nums = [2, 4, 6];
+console.log(nums.every(n => n % 2 === 0));
+</script>
+```
+Output: true
+
+------------------------------------------------------------
+
+## forEach() – runs a function on each element (no return)
+```javascript
+<script>
+let nums = [1, 2, 3];
+nums.forEach(n => console.log(n));
+</script>
+```
+Output:  
+1  
+2  
+3
+
+------------------------------------------------------------
+
+# 5. sort() and reverse()
+
+## sort()
+Sorts values alphabetically by default.
+
+```javascript
+<script>
+let nums = [20, 100, 3];
+nums.sort();
+console.log(nums);
+</script>
+```
+Output: [100, 20, 3]
+
+To sort numerically:
+```javascript
+<script>
+let nums = [20, 100, 3];
+nums.sort((a, b) => a - b);
+console.log(nums);
+</script>
+```
+Output: [3, 20, 100]
+
+------------------------------------------------------------
+
+## reverse()
+```javascript
+<script>
+let nums = [1, 2, 3];
+nums.reverse();
+console.log(nums);
+</script>
+```
+Output: [3, 2, 1]
+
+------------------------------------------------------------
+
+# 6. Spread & Rest Operators
+
+## Spread (...) – expands array elements
+```javascript
+<script>
+let nums = [1, 2, 3];
+let extended = [...nums, 4, 5];
+console.log(extended);
+</script>
+```
+Output: [1, 2, 3, 4, 5]
+
+------------------------------------------------------------
+
+## Rest (...) – collects multiple values into an array
+```javascript
+<script>
+function sum(...values) {
+    let total = 0;
+    for (let v of values) total += v;
+    console.log(total);
+}
+sum(10, 20, 30);
+</script>
+```
+Output: 60
+
+------------------------------------------------------------
+
+# Practice Tasks
+
+1. Create an array of 5 numbers and use push, pop, shift, unshift.  
+2. Use map() to convert all numbers to their squares.  
+3. Use filter() to keep numbers greater than 50.  
+4. Use reduce() to find the sum of an array.  
+5. Use find() to get the first even number.  
+6. Sort an array numerically.  
+7. Use spread operator to merge two arrays.  
+8. Create a function that uses rest operator to multiply all inputs.  
+
