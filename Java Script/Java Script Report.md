@@ -347,6 +347,61 @@ Welcome Jaswanth
 3. Print your name in the console.
 4. Try console.log(), console.warn(), console.error().
 5. Write both single-line and multi-line comments in JS.
+---
+# Brief History of JavaScript
+
+JavaScript was created in **1995** by **Brendan Eich** while working at Netscape.  
+It was developed in just **10 days** to make web pages interactive.
+
+------------------------------------------------------------
+
+## Key Milestones
+
+### 1995 – Creation
+- JavaScript was originally called **Mocha**, then **LiveScript**, and finally renamed **JavaScript** for marketing reasons.
+
+### 1996 – Standardization Begins
+- Microsoft created **JScript** for Internet Explorer.
+- To avoid browser conflicts, JavaScript was standardized and became **ECMAScript**.
+
+### 1997 – ECMAScript 1 (ES1)
+- The first official version of the JavaScript standard.
+
+### 2009 – ECMAScript 5 (ES5)
+- Major improvements: JSON support, strict mode, array methods like map, filter, reduce.
+
+### 2015 – ECMAScript 6 (ES6)
+- Biggest update in history.
+- Introduced let, const, arrow functions, classes, promises, modules, template literals, and more.
+
+### 2016–Present – Yearly Updates
+- JavaScript now receives an update **every year**.
+- Features added gradually: async/await, optional chaining, BigInt, etc.
+
+------------------------------------------------------------
+
+## Why JavaScript Grew So Fast?
+
+- Only language that runs natively in browsers.
+- Became the foundation of frontend development.
+- Later expanded to backend via **Node.js** (2009).
+- Massive ecosystem: frameworks, tools, libraries.
+
+------------------------------------------------------------
+
+## Current Status
+
+JavaScript is one of the most widely used programming languages in the world.  
+It powers:
+- Web applications  
+- Mobile apps  
+- Desktop apps  
+- Backend servers  
+- IoT devices  
+
+It continues to evolve with new features added every year.
+
+---
 
 # Part 2 – JavaScript Basics
 
@@ -456,7 +511,43 @@ Output:
 I'm outside now
 
 ---
+```javascript
+if (true) {
+     let b = 200; 
+     var c = 100; 
+} 
+console.log(b);   // ReferenceError: b is not defined
+console.log(c);   // 100
+```
+What happens?
 
+let b → block-scoped → exists only inside { }
+
+var c → function-scoped → ignores the block and becomes global (since not inside a function)
+
+Reason:
+
+b is block-scoped → not available outside the if block.
+
+c ignores block scope → becomes global → accessible outside the if block.
+
+```javascript
+function test() { 
+    let b = 200; 
+    var c = 100; 
+} 
+console.log(b);  // ReferenceError: b is not defined
+console.log(c);  // ReferenceError: c is not defined
+```
+
+b → declared with let inside a function → function-scoped, accessible only inside the function
+    
+c → declared with var inside a function → also function-scoped, accessible only inside the function.
+
+REASON:
+Variables inside a function (whether let or var) never leak outside the function.
+
+So both b and c are NOT available outside test().
 # Summary Table (Quick Reference)
 
 | Feature            | var             | let          | const               |
@@ -727,7 +818,9 @@ Used to document code.
 
 ```javascript
 <script>
-  console.log(Number("20")); console.log(String(100)); console.log(Boolean(1));
+  console.log(Number("20")); 
+  console.log(String(100)); 
+  console.log(Boolean(1));
 </script>
 ```
 
@@ -739,8 +832,8 @@ Used to document code.
 
 ```javascript
 <script>
-  console.log("5" + 2); // concatenation console.log("5" - 2); // numeric
-  subtraction
+  console.log("5" + 2); // concatenation 
+  console.log("5" - 2); // numeric subtraction
 </script>
 ```
 
@@ -829,7 +922,9 @@ Operators:
 
 ```javascript
 <script>
-  console.log(10 > 5); console.log(10 === "10"); console.log(10 === 10);
+  console.log(10 > 5); 
+  console.log(10 === "10"); 
+  console.log(10 === 10);
 </script>
 ```
 
@@ -839,6 +934,41 @@ false
 true
 
 ---
+# Ternary Operator (Short Explanation)
+
+The ternary operator provides a **shorter way** to write simple if–else statements.  
+It is often used when you need to choose between two values based on a condition.
+
+### Syntax
+condition ? value_if_true : value_if_false
+
+### Example
+```javascript
+<script>
+let age = 20;
+let result = (age >= 18) ? "Adult" : "Minor";
+console.log(result);
+</script>
+```
+
+Output:  
+Adult
+
+### When to use
+- When you need a quick inline decision  
+- When the condition is simple  
+- When returning or assigning one of two values  
+
+### Example in print
+```javascript
+<script>
+console.log( (5 > 3) ? "Yes" : "No" );
+</script>
+```
+
+Output:  
+Yes
+
 
 # switch Statement
 

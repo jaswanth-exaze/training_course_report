@@ -69,18 +69,90 @@ const ujk= `I am ${name}, a ${age} years
  old ${job}!` ;
  console.log(ujk);
  
- */
-
-
-const age = 17;
-const isOldEnough = age >= 18;
-
+ 
+ 
+ const age = 18;
+ const isOldEnough = age >= 18;
+ 
 if(isOldEnough){
 console.log("Elegible");
 }
-else{
+else if(!isOldEnough){
     console.log("In Elegible");
 }
+else{
+    console.log("somthing went worng....")
+};
+
+
+console.log(Number("jk"))
+console.log(typeof NaN)
+console.log("10")
+let t=20;
+console.log(t.isOldEnough)
+console.log(Boolean(0))
+console.log(Boolean(undefined))
+console.log(Boolean ("jk") )
+console.log(Boolean ({}))
+console.log(Boolean(''))
+
+
+console.log(18=='18')
+console.log(18==='18')
+console.log(18=="18")
+
+let p=Number(prompt());
+console.log(p)
+console.log(typeof p)
+
+console.log("hello")
+
+const x=2;
+
+switch (x){
+    case 0:
+        console.log("zero");
+        break;
+    case 1:
+        console.log("one");
+        break;
+    case 2:
+        console.log("two");
+        break;
+    case 3:
+        console.log("three");
+        break;
+    case 4:
+        console.log("four");
+        break;
+    case 5:
+        console.log("five");
+        break;
+}
+
+
+const jk = 2;
+jk>=18 ? console.log("Elegible"): console.log("Inelegible");
+
+console.log(`I am ${jk>=18 ? 'Elegible' : 'Inelegible' } to vote.`) 
+let n=3
+console.log(`hey ${n} is ${n%2==0 ? "even" : "odd"}`) ;
+
+console.log((5<3)? "yes":"no")
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
