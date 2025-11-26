@@ -1695,3 +1695,300 @@ Output: 60
 7. Use spread operator to merge two arrays.  
 8. Create a function that uses rest operator to multiply all inputs.  
 
+# Part 6 – Objects in JavaScript (Detailed & Enhanced)  
+
+------------------------------------------------------------
+
+## 1. What Are Objects?
+
+Objects are used to store **multiple related values** together in a structured way.  
+Instead of storing separate variables (name, age, city), you group them inside an object.
+
+Objects represent real-world entities:
+- A user  
+- A product  
+- A laptop  
+- A bank account  
+
+Objects use **key–value pairs**, also called **properties**.
+
+### Example
+```javascript
+<script>
+let user = {
+    name: "Jaswanth",  
+    age: 22,
+    city: "Hyderabad"
+};
+console.log(user);
+</script>
+```
+
+Key points:
+- Keys are strings (name, age, city)
+- Values can be any data type
+- Order does not matter in objects
+
+------------------------------------------------------------
+
+## 2. Creating Objects
+
+### 2.1 Object Literal (Most Common)
+```javascript
+<script>
+let person = {
+    name: "Arun",
+    age: 25
+};
+</script>
+```
+This is the most frequently used way in modern JavaScript.
+
+------------------------------------------------------------
+
+### 2.2 Using new Object()
+This is older and rarely used but still valid.
+
+```javascript
+<script>
+let obj = new Object();
+obj.title = "Developer";
+obj.level = 1;
+</script>
+```
+
+------------------------------------------------------------
+
+### 2.3 Constructor Function
+Used to create multiple similar objects.
+
+```javascript
+<script>
+function User(name, age) {
+    this.name = name;
+    this.age = age;
+}
+let u = new User("Kiran", 30);
+console.log(u);
+</script>
+```
+
+This pattern is used for more structured and repetitive object creation.
+
+------------------------------------------------------------
+
+## 3. Accessing & Updating Properties
+
+Objects can be accessed in two ways:  
+- Dot notation  
+- Bracket notation  
+
+### Dot Notation (clean & preferred)
+```javascript
+<script>
+let user = { name: "Jaswanth", age: 22 };
+console.log(user.name);
+user.age = 23;
+</script>
+```
+
+------------------------------------------------------------
+
+### Bracket Notation (when key has space/special chars)
+```javascript
+<script>
+let person = { "home city": "Hyderabad" };
+console.log(person["home city"]);
+person["home city"] = "Delhi";
+</script>
+```
+
+Bracket notation is useful when:
+- Key contains spaces  
+- Key is dynamic (e.g., stored in variable)
+
+------------------------------------------------------------
+
+## 4. Adding and Deleting Properties
+
+### Add New Property
+```javascript
+<script>
+let user = { name: "Ram" };
+user.city = "Hyderabad";
+console.log(user);
+</script>
+```
+
+------------------------------------------------------------
+
+### Delete a Property
+```javascript
+<script>
+let user = { name: "Ram", city: "Hyd" };
+delete user.city;
+console.log(user);
+</script>
+```
+
+------------------------------------------------------------
+
+## 5. Nested Objects
+
+Objects can contain other objects for better organization.
+
+```javascript
+<script>
+let student = {
+    name: "Akhil",
+    marks: {
+        math: 90,
+        science: 85
+    }
+};
+console.log(student.marks.math);
+</script>
+```
+
+This is common in real applications (APIs, database results).
+
+------------------------------------------------------------
+
+## 6. Object Methods (Functions inside Objects)
+
+A method is simply a function stored as a value inside an object.
+
+```javascript
+<script>
+let user = {
+    name: "Jaswanth",
+    greet: function() {
+        return "Hello " + this.name;
+    }
+};
+console.log(user.greet());
+</script>
+```
+
+Key point:
+- Methods often use **this** to access properties inside the same object.
+
+------------------------------------------------------------
+
+## 7. The this Keyword
+
+The value of **this** inside a method refers to the **object that calls it**.
+
+```javascript
+<script>
+let car = {
+    brand: "BMW",
+    getBrand: function() {
+        return this.brand;
+    }
+};
+console.log(car.getBrand());
+</script>
+```
+
+If this was inside a regular function (not a method), **this** would refer to window (in non-strict mode).
+
+------------------------------------------------------------
+
+## 8. Looping Through Objects (for…in)
+
+Used to loop through all keys in an object.
+
+```javascript
+<script>
+let user = { name: "Ram", age: 22 };
+
+for (let key in user) {
+    console.log(key, user[key]);
+}
+</script>
+```
+
+Useful when you want to list all details of an object.
+
+------------------------------------------------------------
+
+## 9. freeze() and seal()
+
+### Object.freeze()
+Prevents:
+- Adding new properties  
+- Deleting properties  
+- Changing existing values  
+
+```javascript
+<script>
+let obj = { a: 10 };
+Object.freeze(obj);
+obj.a = 50; // ignored
+console.log(obj);
+</script>
+```
+
+------------------------------------------------------------
+
+### Object.seal()
+Prevents:
+- Adding new properties  
+- Deleting properties  
+
+But **allows modifying existing values**.
+
+```javascript
+<script>
+let obj = { x: 1 };
+Object.seal(obj);
+obj.x = 5;  
+delete obj.x; 
+console.log(obj);
+</script>
+```
+
+------------------------------------------------------------
+
+## 10. Object Destructuring
+
+Destructuring allows quick extraction of values from objects into variables.
+
+```javascript
+<script>
+let user = { name: "Jaswanth", age: 22 };
+let { name, age } = user;
+console.log(name, age);
+</script>
+```
+
+Makes code cleaner when working with large objects.
+
+------------------------------------------------------------
+
+## 11. Spread Operator with Objects
+
+### Copying an object
+```javascript
+<script>
+let user = { a: 1, b: 2 };
+let newUser = { ...user, c: 3 };
+console.log(newUser);
+</script>
+```
+
+Spread operator helps avoid modifying the original object.
+
+------------------------------------------------------------
+
+# Practice Tasks
+
+1. Create an object for a mobile phone with brand, model, price.  
+2. Add a method that returns full details using this.  
+3. Create a nested object for marks and print science marks.  
+4. Loop through any object using for…in.  
+5. Freeze an object and attempt modifications.  
+6. Use destructuring to extract any two properties.  
+7. Merge two objects using spread operator.  
+

@@ -118,32 +118,46 @@ for(let i=0;i<add.length;i++) {
 console.log(add)
 
 const nums = [2, 4, 7, 11];
-console.log(nums.filter((n) => n % 2 != 0).length);
+console.log(nums.filter((n) => n % 2 != 0).length);'
+
+
+let a=0;
+a=10;
+console.log(a)
+
+const b=0;
+b=10;  // here also i am modifing 
+console.log(b)
+const jk={
+    name:"jaswanth",
+    age:25,
+    city:"hyderabad",
+    
+    
+    year: function(age){
+        return 2025-age
+    }
+}
+console.log(jk.age)
+console.log(jk.year(jk.age))
+
+
+function User(name,age,city){
+    this.name=name;
+    this.age=age;
+    this.city=city;
+}
+let i = new User("manoj",27,"Dosapadu");
+console.log(i)
 */
+let i=0;
+while(i<5){
+    console.log(i)
+    i++
+}
 
-const arr=[1,2,3,4,5]
-console.log(arr);
-
-arr.pop(arr)
-console.log(arr);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+let j=0;
+do{
+    console.log(j)
+    j++
+}while(j<0)
