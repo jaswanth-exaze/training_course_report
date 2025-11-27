@@ -1992,301 +1992,1066 @@ Spread operator helps avoid modifying the original object.
 6. Use destructuring to extract any two properties.  
 7. Merge two objects using spread operator.  
 
-
-# Part 6 – Objects in JavaScript (Detailed & Enhanced)  
+# Part 7 – Strings in JavaScript  
 
 ------------------------------------------------------------
 
-## 1. What Are Objects?
+## 1. What Are Strings?
 
-Objects are used to store **multiple related values** together in a structured way.  
-Instead of storing separate variables (name, age, city), you group them inside an object.
+A string is a sequence of characters used to represent text.  
+Strings can contain words, numbers, symbols, spaces, and entire sentences.
 
-Objects represent real-world entities:
-- A user  
-- A product  
-- A laptop  
-- A bank account  
+JavaScript strings are immutable, meaning their content cannot be changed directly.
 
-Objects use **key–value pairs**, also called **properties**.
+### Ways to create strings:
+- Double quotes: "Hello"  
+- Single quotes: 'Hello'  
+- Template literals: `Hello`
 
-### Example
+------------------------------------------------------------
+
+## 2. Creating Strings
+
 ```javascript
 <script>
-let user = {
-    name: "Jaswanth",  
-    age: 22,
-    city: "Hyderabad"
-};
-console.log(user);
+let s1 = "Hello";
+let s2 = 'JavaScript';
+let s3 = `Template Literal Example`;   // ES6
+console.log(s1, s2, s3);
 </script>
 ```
 
-Key points:
-- Keys are strings (name, age, city)
-- Values can be any data type
-- Order does not matter in objects
+Output:  
+Hello JavaScript Template Literal Example
 
 ------------------------------------------------------------
 
-## 2. Creating Objects
-
-### 2.1 Object Literal (Most Common)
-```javascript
-<script>
-let person = {
-    name: "Arun",
-    age: 25
-};
-</script>
-```
-This is the most frequently used way in modern JavaScript.
-
-------------------------------------------------------------
-
-### 2.2 Using new Object()
-This is older and rarely used but still valid.
+## 3. String Length
 
 ```javascript
 <script>
-let obj = new Object();
-obj.title = "Developer";
-obj.level = 1;
+let text = "Jaswanth";
+console.log(text.length);
 </script>
 ```
 
+Output:  
+8
+
 ------------------------------------------------------------
 
-### 2.3 Constructor Function
-Used to create multiple similar objects.
+## 4. Common String Methods
+
+### toUpperCase() and toLowerCase()
+```javascript
+<script>
+let name = "Jaswanth";
+console.log(name.toUpperCase());
+console.log(name.toLowerCase());
+</script>
+```
+
+Output:  
+JASWANTH  
+jaswanth
+
+------------------------------------------------------------
+
+### trim() – removes spaces from both ends
+```javascript
+<script>
+let text = "   hello   ";
+console.log(text.trim());
+</script>
+```
+
+Output:  
+hello
+
+------------------------------------------------------------
+
+### slice() – cuts part of a string
+```javascript
+<script>
+let s = "JavaScript";
+console.log(s.slice(0, 4));   // from index 0 to 3
+</script>
+```
+
+Output:  
+Java
+
+------------------------------------------------------------
+
+### substring() – similar to slice (cannot use negative values)
+```javascript
+<script>
+let s = "JavaScript";
+console.log(s.substring(4, 10));
+</script>
+```
+
+Output:  
+Script
+
+------------------------------------------------------------
+
+### replace() – replaces part of a string
+```javascript
+<script>
+let text = "I love JS";
+console.log(text.replace("JS", "JavaScript"));
+</script>
+```
+
+Output:  
+I love JavaScript
+
+------------------------------------------------------------
+
+### includes() – checks if text contains a substring
+```javascript
+<script>
+let text = "welcome to coding";
+console.log(text.includes("coding"));
+</script>
+```
+
+Output:  
+true
+
+------------------------------------------------------------
+
+### indexOf() – returns position of the first occurrence
+```javascript
+<script>
+let text = "JavaScript";
+console.log(text.indexOf("S"));
+</script>
+```
+
+Output:  
+4
+
+------------------------------------------------------------
+
+## 5. Template Literals (Deep Explanation)
+
+Template literals allow:
+- Multi-line strings  
+- Embedding variables easily  
+- Cleaner formatting  
 
 ```javascript
 <script>
-function User(name, age) {
-    this.name = name;
-    this.age = age;
+let name = "Jaswanth";
+let age = 22;
+let message = `My name is ${name} and I am ${age} years old.`;
+console.log(message);
+</script>
+```
+
+Output:  
+My name is Jaswanth and I am 22 years old.
+
+------------------------------------------------------------
+
+## 6. Escape Characters
+
+Used to insert characters that are hard to type directly.
+
+| Escape | Meaning         |
+|--------|------------------|
+| \n     | New line         |
+| \t     | Tab space        |
+| \'     | Single quote     |
+| \"     | Double quote     |
+| \\     | Backslash        |
+
+### Example:
+```javascript
+<script>
+let msg = "Hello\nWorld";
+console.log(msg);
+</script>
+```
+
+Output:
+Hello  
+World
+
+------------------------------------------------------------
+
+## 7. Converting Other Values to Strings
+
+### Using String()
+```javascript
+<script>
+console.log(String(100));
+console.log(String(true));
+</script>
+```
+
+Output:  
+100  
+true
+
+### Using toString()
+```javascript
+<script>
+let n = 50;
+console.log(n.toString());
+</script>
+```
+
+------------------------------------------------------------
+
+## 8. Looping Through a String
+
+```javascript
+<script>
+let text = "JS";
+
+for (let char of text) {
+    console.log(char);
 }
-let u = new User("Kiran", 30);
-console.log(u);
 </script>
 ```
 
-This pattern is used for more structured and repetitive object creation.
-
-------------------------------------------------------------
-
-## 3. Accessing & Updating Properties
-
-Objects can be accessed in two ways:  
-- Dot notation  
-- Bracket notation  
-
-### Dot Notation (clean & preferred)
-```javascript
-<script>
-let user = { name: "Jaswanth", age: 22 };
-console.log(user.name);
-user.age = 23;
-</script>
-```
-
-------------------------------------------------------------
-
-### Bracket Notation (when key has space/special chars)
-```javascript
-<script>
-let person = { "home city": "Hyderabad" };
-console.log(person["home city"]);
-person["home city"] = "Delhi";
-</script>
-```
-
-Bracket notation is useful when:
-- Key contains spaces  
-- Key is dynamic (e.g., stored in variable)
-
-------------------------------------------------------------
-
-## 4. Adding and Deleting Properties
-
-### Add New Property
-```javascript
-<script>
-let user = { name: "Ram" };
-user.city = "Hyderabad";
-console.log(user);
-</script>
-```
-
-------------------------------------------------------------
-
-### Delete a Property
-```javascript
-<script>
-let user = { name: "Ram", city: "Hyd" };
-delete user.city;
-console.log(user);
-</script>
-```
-
-------------------------------------------------------------
-
-## 5. Nested Objects
-
-Objects can contain other objects for better organization.
-
-```javascript
-<script>
-let student = {
-    name: "Akhil",
-    marks: {
-        math: 90,
-        science: 85
-    }
-};
-console.log(student.marks.math);
-</script>
-```
-
-This is common in real applications (APIs, database results).
-
-------------------------------------------------------------
-
-## 6. Object Methods (Functions inside Objects)
-
-A method is simply a function stored as a value inside an object.
-
-```javascript
-<script>
-let user = {
-    name: "Jaswanth",
-    greet: function() {
-        return "Hello " + this.name;
-    }
-};
-console.log(user.greet());
-</script>
-```
-
-Key point:
-- Methods often use **this** to access properties inside the same object.
-
-------------------------------------------------------------
-
-## 7. The this Keyword
-
-The value of **this** inside a method refers to the **object that calls it**.
-
-```javascript
-<script>
-let car = {
-    brand: "BMW",
-    getBrand: function() {
-        return this.brand;
-    }
-};
-console.log(car.getBrand());
-</script>
-```
-
-If this was inside a regular function (not a method), **this** would refer to window (in non-strict mode).
-
-------------------------------------------------------------
-
-## 8. Looping Through Objects (for…in)
-
-Used to loop through all keys in an object.
-
-```javascript
-<script>
-let user = { name: "Ram", age: 22 };
-
-for (let key in user) {
-    console.log(key, user[key]);
-}
-</script>
-```
-
-Useful when you want to list all details of an object.
-
-------------------------------------------------------------
-
-## 9. freeze() and seal()
-
-### Object.freeze()
-Prevents:
-- Adding new properties  
-- Deleting properties  
-- Changing existing values  
-
-```javascript
-<script>
-let obj = { a: 10 };
-Object.freeze(obj);
-obj.a = 50; // ignored
-console.log(obj);
-</script>
-```
-
-------------------------------------------------------------
-
-### Object.seal()
-Prevents:
-- Adding new properties  
-- Deleting properties  
-
-But **allows modifying existing values**.
-
-```javascript
-<script>
-let obj = { x: 1 };
-Object.seal(obj);
-obj.x = 5;  
-delete obj.x; 
-console.log(obj);
-</script>
-```
-
-------------------------------------------------------------
-
-## 10. Object Destructuring
-
-Destructuring allows quick extraction of values from objects into variables.
-
-```javascript
-<script>
-let user = { name: "Jaswanth", age: 22 };
-let { name, age } = user;
-console.log(name, age);
-</script>
-```
-
-Makes code cleaner when working with large objects.
-
-------------------------------------------------------------
-
-## 11. Spread Operator with Objects
-
-### Copying an object
-```javascript
-<script>
-let user = { a: 1, b: 2 };
-let newUser = { ...user, c: 3 };
-console.log(newUser);
-</script>
-```
-
-Spread operator helps avoid modifying the original object.
+Output:  
+J  
+S
 
 ------------------------------------------------------------
 
 # Practice Tasks
 
-1. Create an object for a mobile phone with brand, model, price.  
-2. Add a method that returns full details using this.  
-3. Create a nested object for marks and print science marks.  
-4. Loop through any object using for…in.  
-5. Freeze an object and attempt modifications.  
-6. Use destructuring to extract any two properties.  
-7. Merge two objects using spread operator.  
+1. Write a string and print its length.  
+2. Convert a given string to uppercase and lowercase.  
+3. Extract the word "Script" from "JavaScript" using slice().  
+4. Replace a word inside a sentence.  
+5. Use template literals to print a multi-line introduction.  
+6. Check if a string contains "JS" using includes().  
+7. Loop through the characters of any string and print each one.
+
+
+# Part 8 – Math and Date in JavaScript  
+
+------------------------------------------------------------
+
+## 1. Math Object (Built-in JavaScript Object)
+
+The Math object contains properties and methods for mathematical operations.  
+Math is not a constructor, so you cannot create Math objects.  
+You call its methods directly using **Math.methodName**.
+
+------------------------------------------------------------
+
+## 2. Math Properties
+
+### Common properties:
+- Math.PI  
+- Math.E  
+- Math.SQRT2  
+
+### Example
+```javascript
+<script>
+console.log(Math.PI);
+console.log(Math.E);
+</script>
+```
+
+Output:  
+3.141592653589793  
+2.718281828459045
+
+------------------------------------------------------------
+
+## 3. Math Methods
+
+### Math.round() – rounds to nearest integer
+```javascript
+<script>
+console.log(Math.round(4.6));
+</script>
+```
+Output:  
+5
+
+### Math.ceil() – rounds up
+```javascript
+<script>
+console.log(Math.ceil(4.1));
+</script>
+```
+Output:  
+5
+
+### Math.floor() – rounds down
+```javascript
+<script>
+console.log(Math.floor(4.9));
+</script>
+```
+Output:  
+4
+
+### Math.random() – random value between 0 and 1
+```javascript
+<script>
+console.log(Math.random());
+</script>
+```
+
+### Random number between 1 and 10
+```javascript
+<script>
+console.log(Math.floor(Math.random() * 10) + 1);
+</script>
+```
+
+### Math.max() and Math.min()
+```javascript
+<script>
+console.log(Math.max(10, 30, 5));
+console.log(Math.min(10, 30, 5));
+</script>
+```
+
+Output:  
+30  
+5
+
+### Math.sqrt() – square root
+```javascript
+<script>
+console.log(Math.sqrt(81));
+</script>
+```
+
+Output:  
+9
+
+------------------------------------------------------------
+
+## 4. Date Object
+
+The Date object stores date and time information.  
+Unlike Math, Date **is** a constructor and requires new Date().
+
+------------------------------------------------------------
+
+## 5. Creating Date Values
+
+### Current date and time
+```javascript
+<script>
+let now = new Date();
+console.log(now);
+</script>
+```
+
+### Specific date
+```javascript
+<script>
+let d = new Date("2023-10-15");
+console.log(d);
+</script>
+```
+
+### Year, month, day format
+```javascript
+<script>
+let d = new Date(2023, 9, 15);  // month index starts at 0
+console.log(d);
+</script>
+```
+
+------------------------------------------------------------
+
+## 6. Getting Date Components
+
+```javascript
+<script>
+let d = new Date();
+
+console.log(d.getFullYear());
+console.log(d.getMonth());     // 0 = Jan, 11 = Dec
+console.log(d.getDate());
+console.log(d.getHours());
+console.log(d.getMinutes());
+console.log(d.getSeconds());
+</script>
+```
+
+------------------------------------------------------------
+
+## 7. Setting Date Components
+
+```javascript
+<script>
+let d = new Date();
+d.setFullYear(2030);
+d.setMonth(5);        // June
+d.setDate(10);
+console.log(d);
+</script>
+```
+
+------------------------------------------------------------
+
+## 8. Date to String Conversions
+
+```javascript
+<script>
+let d = new Date();
+console.log(d.toDateString());
+console.log(d.toTimeString());
+console.log(d.toISOString());
+</script>
+```
+
+------------------------------------------------------------
+
+## 9. Calculating Time Difference (Important for real use)
+
+```javascript
+<script>
+let start = new Date("2025-01-01");
+let end = new Date("2025-01-10");
+
+let difference = end - start; // in milliseconds
+let days = difference / (1000 * 60 * 60 * 24);
+
+console.log(days);
+</script>
+```
+
+Output:  
+9
+
+------------------------------------------------------------
+
+# Practice Tasks
+
+1. Print the current year, month, and date using Date object.  
+2. Generate a random number between 100 and 200.  
+3. Use Math.max() to find the largest number in an array.  
+4. Create a date for your birthday and print the day of the week.  
+5. Calculate how many days are left until next New Year.  
+6. Use Math.floor(Math.random()) to simulate a dice roll (1–6).  
+
+# Part 9 – DOM (Document Object Model) – Detailed Explanation
+
+------------------------------------------------------------
+
+## 1. What Is the DOM?
+
+The DOM (Document Object Model) is a **programming interface** that the browser creates from your HTML.
+
+When you load a webpage:
+
+1. Browser reads HTML  
+2. Converts it into a **tree-like structure**  
+3. Creates JavaScript-accessible objects for each element  
+
+This allows JavaScript to:
+
+- Access HTML elements  
+- Modify text, attributes, and CSS  
+- Create new elements  
+- Remove existing ones  
+- Respond to user actions (click, input, etc.)
+
+### Visual Representation of DOM Tree
+
+```
+Document
+ └── html
+      ├── head
+      └── body
+           ├── h1
+           ├── p
+           ├── img
+           └── button
+```
+
+JavaScript interacts with this tree through the **document** object.
+
+------------------------------------------------------------
+
+## 2. Selecting Elements
+
+To work with DOM, you first need to select elements.
+
+### 2.1 getElementById()
+Selects a single element using its id.
+
+```javascript
+<script>
+let heading = document.getElementById("main-title");
+console.log(heading);
+</script>
+```
+
+### 2.2 getElementsByClassName()
+Returns all elements that have the given class (HTMLCollection).
+
+```javascript
+<script>
+let items = document.getElementsByClassName("item");
+console.log(items);
+</script>
+```
+
+### 2.3 getElementsByTagName()
+Select elements by tag.
+
+```javascript
+<script>
+let paragraphs = document.getElementsByTagName("p");
+</script>
+```
+
+### 2.4 querySelector() – most modern and recommended
+Selects the **first matching element**.
+
+```javascript
+<script>
+let btn = document.querySelector(".btn");
+</script>
+```
+
+### 2.5 querySelectorAll()
+Selects **all matching elements**.
+
+```javascript
+<script>
+let buttons = document.querySelectorAll("button");
+</script>
+```
+
+> querySelector() and querySelectorAll() are preferred in modern JavaScript.
+
+------------------------------------------------------------
+
+## 3. Changing Text, HTML, Attributes, and CSS
+
+Once you select an element, you can modify it.
+
+### 3.1 Changing Text
+textContent → only text  
+innerHTML → allows adding HTML structure  
+
+```javascript
+<script>
+let title = document.getElementById("main-title");
+title.textContent = "New Title Added";
+</script>
+```
+
+### 3.2 Changing HTML
+```javascript
+<script>
+let box = document.querySelector(".box");
+box.innerHTML = "<h2>Updated Heading</h2>";
+</script>
+```
+
+### 3.3 Changing Attributes
+```javascript
+<script>
+let img = document.querySelector("img");
+img.setAttribute("src", "new-photo.jpg");
+</script>
+```
+
+### 3.4 Changing CSS
+```javascript
+<script>
+let box = document.querySelector(".box");
+box.style.backgroundColor = "skyblue";
+box.style.padding = "20px";
+</script>
+```
+
+------------------------------------------------------------
+
+## 4. Creating New Elements Dynamically
+
+You can add elements to the page without touching HTML.
+
+### 4.1 Create Element
+```javascript
+<script>
+let p = document.createElement("p");
+p.textContent = "This is a new paragraph.";
+</script>
+```
+
+### 4.2 Append to Parent (adds at bottom)
+```javascript
+<script>
+let container = document.querySelector(".container");
+container.appendChild(p);
+</script>
+```
+
+### 4.3 Prepend (adds at top)
+```javascript
+<script>
+container.prepend(p);
+</script>
+```
+
+### 4.4 Insert Before an Element
+```javascript
+<script>
+container.insertBefore(p, container.firstChild);
+</script>
+```
+
+------------------------------------------------------------
+
+## 5. Removing Elements
+
+Remove an element directly:
+```javascript
+<script>
+let item = document.querySelector(".item");
+item.remove();
+</script>
+```
+
+Or remove from parent:
+```javascript
+<script>
+parent.removeChild(child);
+</script>
+```
+
+------------------------------------------------------------
+
+## 6. DOM Traversing (Moving Between Elements)
+
+DOM nodes have relationships like a family tree.
+
+### 6.1 Parent Element
+```javascript
+<script>
+let btn = document.querySelector("button");
+console.log(btn.parentElement);
+</script>
+```
+
+### 6.2 Children (HTMLCollection)
+```javascript
+<script>
+let list = document.querySelector("ul");
+console.log(list.children);
+</script>
+```
+
+### 6.3 Siblings
+```javascript
+<script>
+let item = document.querySelector("li");
+console.log(item.nextElementSibling);
+console.log(item.previousElementSibling);
+</script>
+```
+
+Traversing is useful when building dynamic UI like menus, tables, lists.
+
+------------------------------------------------------------
+
+## 7. Events and Event Listeners
+
+Events allow JavaScript to respond to user actions like clicking, typing, scrolling, or submitting a form.
+
+### 7.1 Click Event
+```javascript
+<script>
+let btn = document.querySelector("#save");
+
+btn.addEventListener("click", function() {
+    console.log("Button was clicked");
+});
+</script>
+```
+
+### 7.2 Input Event (captures typing)
+```javascript
+<script>
+let input = document.querySelector("#name");
+
+input.addEventListener("input", function(e) {
+    console.log("Typed:", e.target.value);
+});
+</script>
+```
+
+### 7.3 Change Event (select dropdown)
+```javascript
+<script>
+let select = document.querySelector("select");
+
+select.addEventListener("change", function(e) {
+    console.log("Selected:", e.target.value);
+});
+</script>
+```
+
+### 7.4 Mouse Events
+- mouseover  
+- mouseout  
+- mousedown  
+- mouseup  
+
+------------------------------------------------------------
+
+## 8. Example: Simple DOM Mini Project
+
+HTML:
+```html
+<div id="box" style="width:100px; height:100px; background:lightgray;"></div>
+<button id="change">Change Color</button>
+```
+
+JavaScript:
+```javascript
+<script>
+let box = document.getElementById("box");
+let btn = document.getElementById("change");
+
+btn.addEventListener("click", function() {
+    box.style.backgroundColor = "orange";
+});
+</script>
+```
+
+This demonstrates:
+- Selecting elements  
+- Adding event listeners  
+- Changing CSS dynamically  
+
+------------------------------------------------------------
+
+# Practice Tasks
+
+1. Select a paragraph using querySelector and change its text.  
+2. Create a new list item (li) and append it to a ul.  
+3. Remove any element when a delete button is clicked.  
+4. Build a color-change button that changes background randomly.  
+5. Create a simple counter app using two buttons (+ and –).  
+6. Create an input box and live display whatever the user types.  
+
+# Part 10 – Events & Event Handling in JavaScript
+
+------------------------------------------------------------
+
+## 1. What Are Events?
+
+Events are **actions** or **occurrences** that happen in the browser.  
+Examples:
+- Clicking a button  
+- Typing in an input box  
+- Submitting a form  
+- Hovering over an image  
+- Page loading  
+- Scrolling  
+
+JavaScript detects these events and allows you to **respond** using event handlers.
+
+------------------------------------------------------------
+
+## 2. Ways to Handle Events
+
+There are three main ways to attach events in JavaScript.
+
+------------------------------------------------------------
+
+### 2.1 Inline Events (Not Recommended)
+
+HTML:
+```html
+<button onclick="alert('Clicked')">Click Me</button>
+```
+
+This mixes HTML and JavaScript—avoid in modern code.
+
+------------------------------------------------------------
+
+### 2.2 Property Event Handlers
+
+```javascript
+<script>
+let btn = document.getElementById("save");
+btn.onclick = function() {
+    console.log("Button clicked");
+};
+</script>
+```
+
+Limitation:
+- Only **one** event function can be assigned (overwrites previous ones).
+
+------------------------------------------------------------
+
+### 2.3 addEventListener() – Recommended Modern Method
+
+```javascript
+<script>
+let btn = document.querySelector("#save");
+
+btn.addEventListener("click", function() {
+    console.log("Button clicked");
+});
+</script>
+```
+
+Advantages:
+- Multiple listeners supported  
+- Works with all event types  
+- Cleaner separation of HTML and JS  
+
+------------------------------------------------------------
+
+## 3. Common Event Types
+
+### Mouse Events
+- click  
+- dblclick  
+- contextmenu  
+- mouseover  
+- mouseout  
+- mousedown  
+- mouseup  
+
+### Keyboard Events
+- keydown  
+- keyup  
+- keypress  
+
+### Form Events
+- submit  
+- input  
+- change  
+- focus  
+- blur  
+
+### Window Events
+- load  
+- scroll  
+- resize  
+
+------------------------------------------------------------
+
+## 4. Event Object
+
+Every event gives an **event object** containing information about the event.
+
+```javascript
+<script>
+document.addEventListener("click", function(event) {
+    console.log(event.target);    // element clicked
+    console.log(event.type);       // type of event
+});
+</script>
+```
+
+------------------------------------------------------------
+
+## 5. Preventing Default Behavior
+
+Some HTML elements have default actions:
+- Links open pages  
+- Forms submit  
+- Right-click opens context menu  
+
+Use **preventDefault()** to stop this.
+
+```javascript
+<script>
+let link = document.querySelector("a");
+
+link.addEventListener("click", function(event) {
+    event.preventDefault();
+    console.log("Default prevented");
+});
+</script>
+```
+
+------------------------------------------------------------
+
+## 6. Event Bubbling (Very Important)
+
+Bubbling means events **start from the target element and move upward** through parents.
+
+### Example:
+HTML:
+```html
+<div id="parent">
+    <button id="child">Click Me</button>
+</div>
+```
+
+JavaScript:
+```javascript
+<script>
+document.getElementById("child").addEventListener("click", function() {
+    console.log("Child clicked");
+});
+
+document.getElementById("parent").addEventListener("click", function() {
+    console.log("Parent clicked");
+});
+</script>
+```
+
+Clicking the button prints:
+```
+Child clicked
+Parent clicked
+```
+
+Because:
+```
+button → div → body → document
+```
+
+------------------------------------------------------------
+
+## 7. Event Capturing (Rare but Useful)
+
+Capturing is the opposite of bubbling.  
+Events flow **from top to bottom**.
+
+Enable capturing by using third argument `true`.
+
+```javascript
+<script>
+document.addEventListener("click", function() {
+    console.log("capturing: document");
+}, true);
+</script>
+```
+
+------------------------------------------------------------
+
+## 8. Event Delegation (Very Important for Dynamic Elements)
+
+Event delegation means:
+- Attach event to **parent**
+- Handle events of **child elements** using event.target
+
+Useful when adding elements dynamically.
+
+Example:
+```javascript
+<script>
+let list = document.querySelector("#items");
+
+list.addEventListener("click", function(e) {
+    if (e.target.tagName === "LI") {
+        console.log("Clicked:", e.target.textContent);
+    }
+});
+</script>
+```
+
+Works even if new <li> elements are added later.
+
+------------------------------------------------------------
+
+## 9. Form Handling
+
+HTML:
+```html
+<form id="userForm">
+  <input type="text" id="name">
+  <button type="submit">Submit</button>
+</form>
+```
+
+JavaScript:
+```javascript
+<script>
+let form = document.getElementById("userForm");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    let value = document.getElementById("name").value;
+    console.log("Form submitted:", value);
+});
+</script>
+```
+
+------------------------------------------------------------
+
+## 10. Input and Change Events
+
+### input – runs every time user types
+```javascript
+<script>
+let input = document.querySelector("#username");
+
+input.addEventListener("input", function(e) {
+    console.log(e.target.value);
+});
+</script>
+```
+
+### change – runs when input loses focus or selection changes
+```javascript
+<script>
+let city = document.querySelector("#city");
+
+city.addEventListener("change", function(e) {
+    console.log("Selected:", e.target.value);
+});
+</script>
+```
+
+------------------------------------------------------------
+
+## 11. Example Project: Counter App
+
+HTML:
+```html
+<button id="plus">+</button>
+<span id="count">0</span>
+<button id="minus">-</button>
+```
+
+JavaScript:
+```javascript
+<script>
+let count = 0;
+
+document.querySelector("#plus").addEventListener("click", function() {
+    count++;
+    document.querySelector("#count").textContent = count;
+});
+
+document.querySelector("#minus").addEventListener("click", function() {
+    count--;
+    document.querySelector("#count").textContent = count;
+});
+</script>
+```
+
+------------------------------------------------------------
+
+# Practice Tasks
+
+1. Add a click event to change background color.  
+2. Create an input field that shows live typing below it.  
+3. Build a simple form and prevent its default submission.  
+4. Create a list using event delegation and log clicked item.  
+5. Implement a light/dark mode toggle button.  
+
+
+
 
