@@ -1655,21 +1655,88 @@ Output: [3, 2, 1]
 
 ------------------------------------------------------------
 
-# 6. Spread & Rest Operators
+## 6. Spread & Rest Operators ( ... )
 
-## Spread (...) – expands array elements
+The **spread** and **rest** operators use the same syntax (`...`)  
+but they perform **opposite** actions:
+
+- **Spread** = expands values  
+- **Rest**   = collects values  
+
+Both are extremely important in modern JavaScript for arrays, objects, and functions.
+
+------------------------------------------------------------
+
+## 1. Spread Operator – Expands Values
+
+Spread **expands an array or object into individual elements**.
+
+### 1.1 Spread with Arrays
 ```javascript
 <script>
 let nums = [1, 2, 3];
 let extended = [...nums, 4, 5];
+
 console.log(extended);
 </script>
 ```
-Output: [1, 2, 3, 4, 5]
+Output:
+```
+[1, 2, 3, 4, 5]
+```
+
+### 1.2 Merging Arrays
+```javascript
+<script>
+let a = [1, 2];
+let b = [3, 4];
+
+let merged = [...a, ...b];
+console.log(merged);  // [1, 2, 3, 4]
+</script>
+```
+
+### 1.3 Copying Arrays (Shallow Copy)
+```javascript
+<script>
+let original = [1, 2, 3];
+let copy = [...original];
+
+copy[0] = 99;
+
+console.log(original); // [1, 2, 3]
+console.log(copy);     // [99, 2, 3]
+</script>
+```
+
+### 1.4 Spread with Objects
+```javascript
+<script>
+let user = { name: "Jaswanth", age: 22 };
+let cloned = { ...user };
+
+console.log(cloned);  // { name: "Jaswanth", age: 22 }
+</script>
+```
+
+### 1.5 Merging Objects
+```javascript
+<script>
+let a = { x: 1 };
+let b = { y: 2 };
+
+let c = { ...a, ...b };
+console.log(c);  // { x: 1, y: 2 }
+</script>
+```
 
 ------------------------------------------------------------
 
-## Rest (...) – collects multiple values into an array
+## 2. Rest Operator – Collects Values
+
+Rest **collects remaining values into an array**.
+
+### 2.1 Rest in Function Parameters
 ```javascript
 <script>
 function sum(...values) {
@@ -1677,14 +1744,143 @@ function sum(...values) {
     for (let v of values) total += v;
     console.log(total);
 }
+
 sum(10, 20, 30);
 </script>
 ```
-Output: 60
+Output:
+```
+60
+```
+
+### 2.2 Rest to Capture Remaining Array Elements
+```javascript
+<script>
+let [first, second, ...others] = [10, 20, 30, 40, 50];
+
+console.log(first);   // 10
+console.log(second);  // 20
+console.log(others);  // [30, 40, 50]
+</script>
+```
+
+### 2.3 Rest in Object Destructuring
+```javascript
+<script>
+let user = { name: "A", age: 22, city: "Hyderabad", country: "India" };
+
+let { name, ...details } = user;
+
+console.log(name);     // "A"
+console.log(details);  // { age: 22, city:"Hyderabad", country:"India" }
+</script>
+```
 
 ------------------------------------------------------------
 
-# Practice Tasks
+## 3. Key Difference Between Spread vs Rest
+
+| Feature | Spread | Rest |
+|--------|--------|------|
+| Purpose | Expands values | Collects values |
+| Output | Individual elements | Array or object |
+| Used In | Arrays, objects, function calls | Function parameters, array/object destructuring |
+| Example | `[...arr]` | `(...args)` |
+
+**Spread = expand**  
+**Rest = gather**
+
+------------------------------------------------------------
+
+## 4. Important Details and Rules
+
+### 4.1 Spread cannot be used alone in function parameters
+Correct:
+```javascript
+function print(a, b, ...rest) {}
+```
+Incorrect:
+```javascript
+function print(...rest, a, b) {} // ❌ rest must be last
+```
+
+### 4.2 Spread creates shallow copies (not deep copies)
+```javascript
+<script>
+let obj = { nested: { x: 1 } };
+let copy = { ...obj };
+
+copy.nested.x = 100;
+
+console.log(obj.nested.x); // 100 (same reference)
+</script>
+```
+
+### 4.3 Spread works only with iterable values (arrays, strings, etc.)
+```javascript
+[...123] // ❌ error
+```
+
+### 4.4 Rest always returns an array (for arrays) or an object (for objects)
+
+------------------------------------------------------------
+
+## 5. Real-World Use Cases
+
+### 5.1 Passing array values into functions
+```javascript
+<script>
+function maxValue(a, b, c) {
+    console.log(Math.max(a, b, c));
+}
+
+let arr = [5, 10, 3];
+
+maxValue(...arr);
+</script>
+```
+
+### 5.2 Combining configuration objects
+```javascript
+<script>
+let defaultOptions = { theme: "light", sidebar: true };
+let userOptions = { theme: "dark" };
+
+let finalConfig = { ...defaultOptions, ...userOptions };
+
+console.log(finalConfig);
+</script>
+```
+
+### 5.3 Building flexible functions
+```javascript
+<script>
+function logAll(...items) {
+    for (let item of items) console.log(item);
+}
+
+logAll("A", "B", "C", 10, true);
+</script>
+```
+
+------------------------------------------------------------
+
+## Summary
+
+- **Spread (`...`) expands**: arrays, objects, arguments  
+- **Rest (`...`) collects**: function parameters, remaining values  
+- They use the same syntax but perform **opposite actions**  
+- Essential in modern JavaScript for:  
+  - Merging  
+  - Copying  
+  - Destructuring  
+  - Flexible function arguments  
+  - Handling large objects/arrays cleanly  
+
+
+------------------------------------------------------------
+
+## Practice Tasks
 
 1. Create an array of 5 numbers and use push, pop, shift, unshift.  
 2. Use map() to convert all numbers to their squares.  
@@ -1877,7 +2073,17 @@ Key point:
 
 ## 7. The this Keyword
 
-The value of **this** inside a method refers to the **object that calls it**.
+The **this** keyword is one of the most important and misunderstood concepts in JavaScript.  
+Its value **depends on how a function is called**, not where it is written.
+
+this is determined at **runtime**, based on the **calling context**.
+
+------------------------------------------------------------
+
+### 1. this Inside an Object Method
+
+When a function is called **as a method on an object**,  
+`this` refers to **the object that calls the method**.
 
 ```javascript
 <script>
@@ -1887,11 +2093,262 @@ let car = {
         return this.brand;
     }
 };
-console.log(car.getBrand());
+
+console.log(car.getBrand()); 
 </script>
 ```
 
-If this was inside a regular function (not a method), **this** would refer to window (in non-strict mode).
+Output:
+```
+BMW
+```
+
+Reason:  
+`car.getBrand()` → the object before the dot (`car`) becomes **this**.
+
+------------------------------------------------------------
+
+### 2. this Inside a Regular Function
+
+In a **regular function** (not inside an object):
+
+### Non-strict mode:
+`this` → refers to the **window object** (browser global object)
+
+### Strict mode:
+`this` → becomes **undefined**
+
+```javascript
+<script>
+function show() {
+    console.log(this);
+}
+
+show(); 
+</script>
+```
+
+- Non-strict mode → prints `window`  
+- Strict mode → prints `undefined`
+
+------------------------------------------------------------
+
+### 3. this Inside Event Listeners
+
+In event listeners, `this` refers to **the DOM element that received the event**.
+
+```javascript
+<script>
+document.querySelector("button").addEventListener("click", function() {
+    console.log(this); // the button
+});
+</script>
+```
+
+------------------------------------------------------------
+
+### 4. this Inside Arrow Functions (Very Important)
+
+Arrow functions **do NOT have their own this**.  
+They inherit this from the **surrounding (parent) scope**.
+
+```javascript
+<script>
+let user = {
+    name: "Jaswanth",
+    show: function() {
+        let inner = () => {
+            console.log(this.name);
+        };
+        inner();
+    }
+};
+
+user.show();
+</script>
+```
+
+Output:
+```
+Jaswanth
+```
+
+Reason:  
+Arrow function takes `this` from `show` → which belongs to `user`.
+
+### Key Rule:
+**Arrow functions are perfect when you want to keep the outer this.**
+
+------------------------------------------------------------
+
+### 5. this in Constructor Functions (or Classes)
+
+When using `new`, JavaScript creates an empty object and assigns it to `this`.
+
+```javascript
+<script>
+function Person(name) {
+    this.name = name;
+}
+
+let p = new Person("Kumar");
+console.log(p.name);
+</script>
+```
+
+Output:
+```
+Kumar
+```
+
+------------------------------------------------------------
+### 6. Explicit this Binding (call, apply, bind)
+
+You can **manually set** the value of this.
+
+### 6.1 call()
+```javascript
+<script>
+function show() {
+    console.log(this.value);
+}
+
+let obj = { value: 100 };
+
+show.call(obj); // this = obj
+</script>
+```
+
+### 6.2 apply()
+Same as call, but arguments are passed as an array.
+
+### 6.3 bind()
+Returns a new function with permanently bound this.
+
+```javascript
+<script>
+let car = { brand: "Audi" };
+
+function getBrand() {
+    return this.brand;
+}
+
+let bound = getBrand.bind(car);
+console.log(bound());
+</script>
+```
+
+------------------------------------------------------------
+
+### 7. this Inside Nested Functions
+
+Regular nested functions lose the outer this.
+
+```javascript
+<script>
+let team = {
+    name: "Developers",
+    show: function() {
+        function inner() {
+            console.log(this.name);
+        }
+        inner();
+    }
+};
+
+team.show();
+</script>
+```
+
+Output:
+```
+undefined
+```
+
+Reason:  
+inner() is a regular function → this = window (or undefined in strict mode)
+
+### Solution: Use arrow functions
+
+```javascript
+<script>
+let team = {
+    name: "Developers",
+    show: function() {
+        const inner = () => console.log(this.name);
+        inner();
+    }
+};
+
+team.show();
+</script>
+```
+
+------------------------------------------------------------
+
+### 8. this Behavior Summary Table
+
+| Where Used | Value of this |
+|------------|----------------|
+| Method inside object | Object that calls the method |
+| Regular function (non-strict) | window |
+| Regular function (strict) | undefined |
+| Arrow function | Inherited from parent scope |
+| Event listener | DOM element |
+| Constructor function | Newly created object |
+| call/apply/bind | Manually assigned object |
+
+------------------------------------------------------------
+
+### 9. Why Understanding this Is Important
+
+- Essential in object methods  
+- Crucial for working with classes and constructors  
+- Critical in event handling  
+- Helps avoid bugs in nested callbacks  
+- Widely used in frameworks (React, Node.js, Express, Vue)
+
+------------------------------------------------------------
+
+### 10. Practical Example Comparing All
+
+```javascript
+<script>
+let person = {
+    name: "Jaswanth",
+    
+    regular: function() {
+        console.log("regular:", this.name);
+    },
+
+    arrow: () => {
+        console.log("arrow:", this.name);
+    }
+};
+
+person.regular();  // "Jaswanth"
+person.arrow();    // undefined (or window.name)
+</script>
+```
+
+Why?
+
+- regular() → this = person  
+- arrow() → this = inherited from global (not person)
+
+------------------------------------------------------------
+
+### Summary
+
+- this depends on **HOW** a function is called, not where it is written.
+- Object methods → this = object  
+- Regular functions → this = window/undefined  
+- Arrow functions → inherit outer this  
+- Event listeners → this = element  
+- call/apply/bind allow manual this binding  
+- new keyword sets this to a new object  
+
+
 
 ------------------------------------------------------------
 
@@ -1953,17 +2410,227 @@ console.log(obj);
 
 ## 10. Object Destructuring
 
-Destructuring allows quick extraction of values from objects into variables.
 
+
+Object destructuring allows you to **extract values from objects directly into variables** using a concise syntax.  
+It replaces long repetitive code and makes working with objects easier, especially when dealing with complex or nested structures.
+
+------------------------------------------------------------
+
+### 10.1. Basic Destructuring
+
+Without destructuring:
 ```javascript
 <script>
 let user = { name: "Jaswanth", age: 22 };
-let { name, age } = user;
+
+let name = user.name;
+let age = user.age;
+
 console.log(name, age);
 </script>
 ```
 
-Makes code cleaner when working with large objects.
+With destructuring:
+```javascript
+<script>
+let user = { name: "Jaswanth", age: 22 };
+let { name, age } = user;
+
+console.log(name, age); 
+</script>
+```
+
+Destructuring extracts properties directly into variables with the **same name as the keys**.
+
+------------------------------------------------------------
+
+### 10.2. Renaming Variables During Destructuring
+
+Sometimes you want different variable names.
+
+```javascript
+<script>
+let user = { name: "Jaswanth", age: 22 };
+
+let { name: userName, age: userAge } = user;
+
+console.log(userName, userAge);
+</script>
+```
+
+Left side = new variable  
+Right side = original property name
+
+------------------------------------------------------------
+
+### 10.3. Default Values
+
+If a property does not exist, you can assign a default.
+
+```javascript
+<script>
+let user = { name: "Jaswanth" };
+
+let { age = 18, name } = user;
+
+console.log(name, age);
+</script>
+```
+
+If age is missing, it becomes 18.
+
+------------------------------------------------------------
+
+### 10.4. Destructuring Nested Objects
+
+You can extract deep nested properties easily.
+
+```javascript
+<script>
+let user = {
+    name: "Jaswanth",
+    address: {
+        city: "Hyderabad",
+        pin: 500001
+    }
+};
+
+let { address: { city, pin } } = user;
+
+console.log(city, pin);
+</script>
+```
+
+Important:  
+The outer key (`address`) is not created as a variable unless you explicitly assign it.
+
+------------------------------------------------------------
+
+### 10.5. Destructuring With Renaming + Default + Nested
+
+All features together:
+
+```javascript
+<script>
+let user = {
+    name: "Kumar",
+    info: {
+        city: "Hyderabad"
+    }
+};
+
+let {
+    name: fullName,
+    info: {
+        city: userCity,
+        pin = "No PIN"  
+    }
+} = user;
+
+console.log(fullName, userCity, pin);
+</script>
+```
+
+------------------------------------------------------------
+
+### 10.6. Destructuring in Function Parameters (Very Important)
+
+Useful when functions receive object arguments.
+
+Without destructuring:
+```javascript
+<script>
+function showUser(user) {
+    console.log(user.name, user.age);
+}
+showUser({name: "A", age: 20});
+</script>
+```
+
+With destructuring:
+```javascript
+<script>
+function showUser({ name, age }) {
+    console.log(name, age);
+}
+showUser({name: "A", age: 20});
+</script>
+```
+
+Cleaner and avoids repetitive `user.name`, `user.age`.
+
+------------------------------------------------------------
+
+### 10.7. Destructuring With Rest (...) Operator
+
+Extract some properties and collect the rest.
+
+```javascript
+<script>
+let user = {
+    name: "Jaswanth",
+    age: 22,
+    city: "Hyderabad",
+    country: "India"
+};
+
+let { name, age, ...others } = user;
+
+console.log(name, age); 
+console.log(others);    
+</script>
+```
+
+others becomes:
+```
+{ city: "Hyderabad", country: "India" }
+```
+
+------------------------------------------------------------
+
+### 10.8. Useful Everywhere: API Responses, Configs, Options Objects
+
+Real example:
+
+```javascript
+<script>
+let response = {
+    status: 200,
+    data: {
+        user: { id: 1, name: "Jaswanth" },
+        token: "abc123"
+    }
+};
+
+let {
+    data: {
+        user: { name },
+        token
+    }
+} = response;
+
+console.log(name, token);
+</script>
+```
+
+This avoids deeply nested property chains like:
+```
+response.data.user.name
+response.data.token
+```
+
+------------------------------------------------------------
+
+### 10.9. Why Use Object Destructuring?
+
+- Reduces repetitive code  
+- Cleaner syntax for large objects  
+- Essential for modern JS frameworks (React, Node.js, Express)  
+- Useful for extracting nested values  
+- Cleaner function arguments  
+- Helps when working with options/config objects  
+
 
 ------------------------------------------------------------
 
@@ -1982,7 +2649,7 @@ Spread operator helps avoid modifying the original object.
 
 ------------------------------------------------------------
 
-# Practice Tasks
+## Practice Tasks
 
 1. Create an object for a mobile phone with brand, model, price.  
 2. Add a method that returns full details using this.  
@@ -2224,7 +2891,7 @@ S
 
 ------------------------------------------------------------
 
-# Practice Tasks
+## Practice Tasks
 
 1. Write a string and print its length.  
 2. Convert a given string to uppercase and lowercase.  
@@ -2433,7 +3100,7 @@ Output:
 
 ------------------------------------------------------------
 
-# Practice Tasks
+## Practice Tasks
 
 1. Print the current year, month, and date using Date object.  
 2. Generate a random number between 100 and 200.  
@@ -2738,7 +3405,7 @@ This demonstrates:
 
 ------------------------------------------------------------
 
-# Practice Tasks
+## Practice Tasks
 
 1. Select a paragraph using querySelector and change its text.  
 2. Create a new list item (li) and append it to a ul.  
@@ -3044,7 +3711,7 @@ document.querySelector("#minus").addEventListener("click", function() {
 
 ------------------------------------------------------------
 
-# Practice Tasks
+## Practice Tasks
 
 1. Add a click event to change background color.  
 2. Create an input field that shows live typing below it.  
@@ -3055,3 +3722,1276 @@ document.querySelector("#minus").addEventListener("click", function() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Advanced JavaScript – Behind the Scenes (Topics 93–105)
+
+------------------------------------------------------------
+
+## 93. High-Level Overview of JavaScript
+
+JavaScript is:
+
+- High-level: you do not manage memory directly (no malloc/free).  
+- Interpreted/Just-In-Time compiled: engine compiles to machine code at runtime.  
+- Single-threaded: one main call stack, executes one thing at a time.  
+- Non-blocking: uses event loop + callbacks + promises for asynchronous behavior.  
+- Dynamic: types are determined at runtime (no explicit type declarations).  
+- Prototype-based: objects inherit from other objects via prototypes.  
+- Multi-paradigm: supports imperative, object-oriented, and functional styles.
+
+Main areas of JavaScript:
+
+1. **Language core**  
+   - Variables, types, functions, objects, arrays, operators, control flow.
+
+2. **Browser APIs (Web APIs)**  
+   - DOM, fetch, localStorage, timers, etc. (not part of core JS).
+
+3. **Runtime (environment)**  
+   - Engine + APIs + event loop + queues.
+
+Understanding JavaScript at a high level means knowing:
+- How the engine executes code  
+- How scope and closures work  
+- How async code is handled  
+- How memory is managed (primitives vs objects, garbage collection)
+
+------------------------------------------------------------
+
+## 94. The JavaScript Engine and Runtime
+
+### JavaScript Engine
+
+A JS engine (like V8) is responsible for **parsing** and **executing** JS code.
+
+Rough steps:
+
+1. **Parsing**  
+   - Source code is tokenized and converted into an AST (Abstract Syntax Tree).
+
+2. **Compilation (JIT)**  
+   - Engine compiles frequently used parts into optimized machine code.
+
+3. **Execution**  
+   - Compiled code is executed on the CPU.
+
+The engine also manages:
+- Call stack  
+- Heap (memory for objects, arrays, functions)  
+- Garbage collection  
+
+### JavaScript Runtime Environment
+
+The runtime is larger than the engine. It consists of:
+
+- Engine (V8, SpiderMonkey, etc.)  
+- Web APIs (timers, DOM, fetch) – provided by browser  
+- Event loop  
+- Callback queue / Task queue  
+- Microtask queue (promises, mutation observers)
+
+When you write:
+
+```javascript
+<script>
+setTimeout(() => console.log("Timeout"), 1000);
+console.log("End");
+</script>
+```
+
+Execution overview:
+
+1. console.log("End") is executed first (synchronous).  
+2. setTimeout callback is delegated to Web API.  
+3. After the delay, callback is placed into the callback queue.  
+4. Event loop pushes it to the call stack when the stack is empty.  
+5. "Timeout" is logged.
+
+This is how JavaScript achieves asynchronous behavior **despite being single-threaded**.
+
+------------------------------------------------------------
+
+## 95. Execution Contexts and The Call Stack
+
+An **Execution Context** is a container that stores information about the environment in which current code is executed.
+
+Types:
+- Global execution context  
+- Function execution context  
+- Eval execution context (rarely used)
+
+Each execution context has:
+- Variable environment (variables, functions)  
+- Lexical environment (scope chain)  
+- this binding  
+
+### Global Execution Context
+
+Created when the script starts.  
+Contains:
+- Global variables  
+- Global functions  
+- this (window in browsers, global object in Node)
+
+### Function Execution Context
+
+Created whenever a function is called.
+
+Contains:
+- Function arguments / parameters  
+- Local variables  
+- Inner function declarations  
+- Reference to outer lexical environment  
+
+### Call Stack
+
+The call stack manages execution contexts.
+
+Example:
+
+```javascript
+<script>
+function one() {
+    console.log("One");
+    two();
+}
+
+function two() {
+    console.log("Two");
+}
+
+one();
+</script>
+```
+
+Call stack steps:
+
+1. Global context created.  
+2. one() pushed → "One" logged.  
+3. two() pushed → "Two" logged.  
+4. two() finished → popped.  
+5. one() finished → popped.  
+6. Global context remains until program ends.
+
+Understanding the call stack is essential for:
+- Debugging  
+- Understanding recursion  
+- Understanding stack overflow errors  
+- Tracing async callbacks execution order
+
+------------------------------------------------------------
+
+## 96. Scope and The Scope Chain
+
+**Scope** defines **where a variable is accessible**.
+
+Types of scope in JavaScript:
+
+1. Global scope  
+2. Function scope  
+3. Block scope (with let and const)
+
+### Lexical Scoping
+
+JavaScript uses **lexical (static) scoping**:  
+- Scope is determined by where functions and blocks are written in the code, not by where they are called.
+
+Example:
+
+```javascript
+<script>
+let globalVar = "global";
+
+function outer() {
+    let outerVar = "outer";
+
+    function inner() {
+        let innerVar = "inner";
+        console.log(globalVar, outerVar, innerVar);
+    }
+
+    inner();
+}
+outer();
+</script>
+```
+
+The inner function can access:
+- innerVar (its own scope)  
+- outerVar (outer function scope)  
+- globalVar (global scope)
+
+### Scope Chain
+
+When JavaScript tries to resolve a variable name:
+
+1. Looks in the current (local) scope.  
+2. If not found, looks in the outer lexical environment.  
+3. Continues until global scope.  
+4. If not found → ReferenceError.
+
+The **scope chain** is this linked list of lexical environments.
+
+------------------------------------------------------------
+
+## 97. Scoping in Practice (var, let, const)
+
+### var – function scoped
+
+```javascript
+<script>
+if (true) {
+    var x = 10;
+}
+console.log(x); // 10
+</script>
+```
+
+x is visible outside the block because var is **not block-scoped**, only function-scoped.
+
+### let and const – block scoped
+
+```javascript
+<script>
+if (true) {
+    let y = 20;
+    const z = 30;
+}
+// console.log(y); // ReferenceError
+// console.log(z); // ReferenceError
+</script>
+```
+
+y and z exist only inside the curly braces.
+
+### Function Scope Example
+
+```javascript
+<script>
+function demo() {
+    var a = 1;
+    let b = 2;
+    const c = 3;
+    console.log(a, b, c);
+}
+demo();
+// console.log(a); // ReferenceError
+</script>
+```
+
+Variables are accessible only inside demo.
+
+### Shadowing
+
+Inner variable with same name hides outer variable.
+
+```javascript
+<script>
+let value = 10;
+
+function show() {
+    let value = 20;
+    console.log(value); // 20 (inner)
+}
+show();
+console.log(value); // 10 (outer)
+</script>
+```
+
+------------------------------------------------------------
+
+## 98. Variable Environment: Hoisting and The TDZ
+
+### Hoisting
+
+Before executing code, JavaScript **scans** the scope and:
+
+- Hoists variable declarations (var) with default value undefined  
+- Hoists function declarations (entire function body)  
+- Hoists let and const declarations but **keeps them in the TDZ** (Temporal Dead Zone) until the actual line is executed.
+
+### var Hoisting
+
+```javascript
+<script>
+console.log(a); // undefined (not ReferenceError)
+var a = 10;
+</script>
+```
+
+Internally interpreted like:
+
+```javascript
+var a;
+console.log(a);
+a = 10;
+```
+
+### let and const Hoisting with TDZ
+
+```javascript
+<script>
+// console.log(b); // ReferenceError (TDZ)
+let b = 20;
+</script>
+```
+
+They are hoisted but **not initialized**, so accessing them before line of declaration causes a ReferenceError.
+
+### Function Declaration Hoisting
+
+```javascript
+<script>
+greet(); // works
+
+function greet() {
+    console.log("Hello");
+}
+</script>
+```
+
+Because entire function is hoisted.
+
+------------------------------------------------------------
+
+## 99. Hoisting and TDZ in Practice
+
+### Example 1: var vs let
+
+```javascript
+<script>
+console.log(x); // undefined
+var x = 5;
+
+// console.log(y); // ReferenceError
+let y = 10;
+</script>
+```
+
+Explanation:
+- x is hoisted and initialized to undefined.  
+- y is hoisted but in TDZ until its declaration; accessing it early throws error.
+
+------------------------------------------------------------
+
+### Example 2: Function vs Function Expression
+
+```javascript
+<script>
+sayHello(); // works
+
+function sayHello() {
+    console.log("Hello");
+}
+
+// sayHi(); // TypeError: sayHi is not a function
+var sayHi = function() {
+    console.log("Hi");
+};
+</script>
+```
+
+Reason:
+- sayHello is a function declaration (fully hoisted).  
+- sayHi is a variable hoisted with undefined; at call time it is still undefined, not a function.
+
+------------------------------------------------------------
+
+### Example 3: TDZ with const
+
+```javascript
+<script>
+// console.log(rate); // ReferenceError
+const rate = 0.1;
+</script>
+```
+
+Accessing rate before initialization is illegal, even though it is hoisted.
+
+------------------------------------------------------------
+
+## 100. The this Keyword
+
+this refers to the **execution context** in which the function is called, not where it is defined.
+
+Its value **depends on how** the function is called.
+
+### 1. Global context (non-strict mode)
+
+```javascript
+<script>
+console.log(this); // window (in browser)
+</script>
+```
+
+### 2. Method call
+
+```javascript
+<script>
+let user = {
+    name: "Jaswanth",
+    show: function() {
+        console.log(this.name);
+    }
+};
+user.show(); // "Jaswanth"
+</script>
+```
+
+Here, this refers to the object before dot → user.
+
+### 3. Simple function call
+
+```javascript
+<script>
+function demo() {
+    console.log(this);
+}
+demo(); // window (non-strict), undefined (strict mode)
+</script>
+```
+
+### 4. Constructor call with new
+
+```javascript
+<script>
+function Person(name) {
+    this.name = name;
+}
+
+let p = new Person("Max");
+console.log(p.name);
+</script>
+```
+
+When using new:
+- A new empty object is created  
+- this points to that object  
+- The function returns this by default  
+
+### 5. Explicit binding: call, apply, bind
+
+```javascript
+<script>
+function show() {
+    console.log(this.value);
+}
+let obj = { value: 100 };
+
+show.call(obj);  // this = obj
+</script>
+```
+
+------------------------------------------------------------
+
+## 101. The this Keyword in Practice
+
+### Method Borrowing
+
+```javascript
+<script>
+let user = {
+    name: "Jaswanth",
+    greet() {
+        console.log("Hello " + this.name);
+    }
+};
+
+let other = { name: "Kiran" };
+
+user.greet.call(other); // this = other
+</script>
+```
+
+Output:  
+Hello Kiran
+
+------------------------------------------------------------
+
+### this in Event Handlers
+
+```javascript
+<script>
+let btn = document.querySelector("button");
+btn.addEventListener("click", function() {
+    console.log(this); // button element
+});
+</script>
+```
+
+In normal function inside addEventListener, this refers to the element.
+
+### Arrow Functions and this
+
+Arrow functions **do not have their own this**.  
+They inherit this from the surrounding lexical scope.
+
+```javascript
+<script>
+let user = {
+    name: "Jaswanth",
+    show: function() {
+        let inner = () => {
+            console.log(this.name);
+        };
+        inner();
+    }
+};
+user.show(); // "Jaswanth"
+</script>
+```
+
+Here, inner uses the same this as show (user).
+
+------------------------------------------------------------
+
+## 102. Regular Functions vs Arrow Functions
+
+### Syntax Difference
+
+Regular:
+```javascript
+function add(a, b) {
+    return a + b;
+}
+```
+
+Arrow:
+```javascript
+const add = (a, b) => a + b;
+```
+
+### this Behavior
+
+- Regular functions: this changes based on how function is called.  
+- Arrow functions: this is **lexically bound** (inherited from surrounding context).
+
+### arguments Object
+
+Regular functions have arguments object:
+
+```javascript
+function demo() {
+    console.log(arguments);
+}
+```
+
+Arrow functions do not have their own arguments.
+
+### Constructors
+
+Arrow functions **cannot** be used as constructors.
+
+```javascript
+const Person = (name) => {
+    this.name = name;
+};
+// new Person("Max"); // TypeError
+```
+
+Use regular functions or classes instead.
+
+### When to Use Which
+
+- Use arrow functions for:
+  - Callbacks  
+  - Short functions  
+  - Methods needing lexical this  
+
+- Use regular functions for:
+  - Constructors  
+  - Object methods where dynamic this is needed  
+  - Functions using arguments object  
+
+------------------------------------------------------------
+
+## 103. Memory Management: Primitives vs Objects
+
+JavaScript memory is conceptualized as:
+
+- Stack → stores primitive values and references  
+- Heap  → stores objects, arrays, functions  
+
+### Primitives (Number, String, Boolean, Null, Undefined, Symbol, BigInt)
+
+Assigned and copied **by value**.
+
+```javascript
+<script>
+let a = 10;
+let b = a;
+b = 20;
+console.log(a, b); // 10 20
+</script>
+```
+
+Changing b does not affect a.
+
+### Objects (arrays, functions, plain objects)
+
+Assigned and copied by **reference** (the reference itself is a primitive stored on stack, but it points to heap).
+
+```javascript
+<script>
+let obj1 = { x: 1 };
+let obj2 = obj1;
+obj2.x = 5;
+console.log(obj1.x, obj2.x); // 5 5
+</script>
+```
+
+Both variables refer to the same object in heap.
+
+Understanding this is crucial for:
+- Avoiding accidental mutations  
+- Correctly copying objects and arrays  
+- Managing state in applications  
+
+------------------------------------------------------------
+
+## 104. Object References in Practice (Shallow vs Deep Copies) – Full Detailed Explanation
+
+------------------------------------------------------------
+
+### 1. Why Object Copying Matters
+
+In JavaScript:
+- **Primitive values** (number, string, boolean, etc.) are copied **by value**.  
+- **Objects, arrays, functions** are copied **by reference**.
+
+This means:
+When you assign an object to another variable, both variables point to the **same memory location**.
+
+Understanding shallow and deep copying helps avoid bugs like:
+- Accidental mutations  
+- Unexpected data changes  
+- State corruption in applications  
+- Issues in React, Node.js, or any modern JS framework  
+
+------------------------------------------------------------
+
+### 2. JavaScript Memory Model (Simple View)
+
+JavaScript stores data in two places:
+
+### Stack  
+Stores:
+- Primitive values  
+- References (pointers) to objects in heap  
+
+### Heap  
+Stores:
+- Actual objects  
+- Arrays  
+- Functions  
+- Complex data structures  
+
+**Important**
+A variable storing an object DOES NOT store the object itself.  
+It stores the **reference** to the object in heap.
+
+------------------------------------------------------------
+
+### 3. Copying Objects — By Reference (The Core Problem)
+
+```javascript
+<script>
+let obj1 = { name: "Jaswanth", age: 22 };
+let obj2 = obj1; // Not a copy, just another reference
+
+obj2.age = 30;
+
+console.log(obj1.age); // 30
+</script>
+```
+
+### Why?
+Both obj1 and obj2 point to the **same memory location**.
+
+Diagram:
+
+```
+obj1 ---> { name: "Jaswanth", age: 22 } <--- obj2
+```
+
+Changing obj2 **changes the same object**, so obj1 also changes.
+
+This is why you need **copying** instead of referencing.
+
+------------------------------------------------------------
+
+### 4. Shallow Copy – What It Means
+
+A **shallow copy** copies:
+- Top-level properties  
+- But nested objects/arrays are still copied by reference  
+
+Shallow copy creates a **new object**, but nested levels still reference old memory.
+
+------------------------------------------------------------
+
+### 5. Ways to Create a Shallow Copy
+
+### 5.1 Using Spread Operator (...)
+```javascript
+<script>
+let original = { a: 1, nested: { b: 2 } };
+let copy = { ...original };
+
+copy.a = 10;
+copy.nested.b = 50;
+
+console.log(original.a);        // 1 (independent)
+console.log(original.nested.b); // 50 (shared nested reference)
+</script>
+```
+
+### 5.2 Using Object.assign()
+```javascript
+<script>
+let original = { x: 10, inner: { y: 20 } };
+let copy = Object.assign({}, original);
+
+copy.inner.y = 100;
+
+console.log(original.inner.y); // 100
+</script>
+```
+
+### 5.3 Array Shallow Copy
+```javascript
+<script>
+let arr = [1, 2, { value: 3 }];
+let copy = [...arr];
+
+copy[2].value = 999;
+console.log(arr[2].value); // 999
+</script>
+```
+
+------------------------------------------------------------
+
+### 6. Why Shallow Copy Is Not Enough
+
+Shallow copies do not copy nested objects.  
+Only the **first level** is copied.
+
+Whenever you modify a nested object, both original and copied objects change because they share the same reference.
+
+Example:
+```
+copy.nested === original.nested  // true
+```
+
+If your object has more than one level, shallow copy is **not safe**.
+
+------------------------------------------------------------
+
+### 7. Deep Copy – What It Means
+
+A **deep copy** creates:
+- A completely new object  
+- All nested objects and arrays are also fully copied  
+- No shared references  
+
+Diagram:
+
+```
+original ---> { a:1, nested:{ b:2 } }
+
+deepCopy ---> { a:1, nested:{ b:2 } }
+
+original.nested !== deepCopy.nested // true
+```
+
+Deep copy ensures:
+- Modifying nested objects inside copy does NOT affect original.
+
+------------------------------------------------------------
+
+### 8. Ways to Create Deep Copies
+
+### 8.1 JSON Method (Simple Deep Copy)
+
+```javascript
+<script>
+let original = { a: 1, nested: { b: 2 } };
+let deep = JSON.parse(JSON.stringify(original));
+
+deep.nested.b = 500;
+
+console.log(original.nested.b); // 2
+</script>
+```
+
+### Pros:
+- Simple  
+- Fast  
+- Works for simple objects  
+
+### Cons:
+- Loses functions  
+- Loses undefined values  
+- Loses symbols  
+- Converts Dates to strings  
+- Cannot handle recursive structures  
+
+------------------------------------------------------------
+
+### 8.2 Manual Deep Copy (Recursive Approach)
+
+A recursive function walks through every property and copies it.
+
+```javascript
+<script>
+function deepCopy(obj) {
+    if (obj === null || typeof obj !== "object") return obj;
+
+    let copy = Array.isArray(obj) ? [] : {};
+
+    for (let key in obj) {
+        copy[key] = deepCopy(obj[key]);
+    }
+
+    return copy;
+}
+
+let original = { name: "A", nested: { value: 10 } };
+let deep = deepCopy(original);
+
+deep.nested.value = 50;
+
+console.log(original.nested.value); // 10
+</script>
+```
+
+This method fully clones all nested levels.
+
+------------------------------------------------------------
+
+### 8.3 structuredClone() – Modern Native Deep Copy
+
+If supported in your environment:
+
+```javascript
+<script>
+let original = { x: 1, nested: { y: 2 } };
+let deep = structuredClone(original);
+
+deep.nested.y = 200;
+
+console.log(original.nested.y); // 2
+</script>
+```
+
+###V Pros:
+- Handles deep clone natively  
+- Supports cyclic references  
+- Fast and reliable  
+
+#### Cons:
+- Not supported in older browsers  
+- Cannot handle functions  
+
+------------------------------------------------------------
+
+### 9. Comparison Table
+
+| Feature | Shallow Copy | Deep Copy |
+|--------|--------------|-----------|
+| Copies top level | Yes | Yes |
+| Copies nested objects | No | Yes |
+| Same nested references | Yes | No |
+| Risk of accidental mutation | High | None |
+| Use cases | Simple objects | Complex structured objects |
+| Methods | spread, Object.assign | JSON, recursive, structuredClone |
+
+------------------------------------------------------------
+
+## Memory Management: Garbage Collection in JavaScript (In Depth)
+
+------------------------------------------------------------
+
+### 1. Why Memory Management Matters
+
+Every program needs memory to:
+
+- Store variables  
+- Create objects and arrays  
+- Hold functions and closures  
+- Cache data temporarily  
+
+When memory is no longer needed but not released, it leads to:
+- Memory leaks  
+- Slower performance  
+- Possible crashes in long-running apps (SPAs, Node servers)
+
+JavaScript is a **high-level language**, so you do not manually manage memory with functions like malloc/free.  
+Instead, the **JavaScript engine automatically allocates and frees memory** using **garbage collection (GC)**.
+
+Understanding how GC works helps you:
+- Avoid memory leaks  
+- Recognize harmful patterns  
+- Write efficient long-running code  
+
+------------------------------------------------------------
+
+### 2. Allocation and Lifetime of Values
+
+When you create data:
+
+```javascript
+<script>
+let num = 10;                     // primitive
+let user = { name: "Jaswanth" };  // object
+</script>
+```
+
+The engine:
+- Allocates memory for num on the stack (value directly).  
+- Allocates memory for user on the heap and stores a **reference** on the stack.
+
+Lifetime:
+- A value lives as long as it is **reachable** from somewhere in the program.
+
+------------------------------------------------------------
+
+### 3. Core Concept: Reachability
+
+Modern JS engines (like V8) use the concept of **reachability** for garbage collection.
+
+A value is considered **reachable** if it can be accessed in some way from the "roots".
+
+### Common Roots:
+
+1. Global object (window in browsers, global in Node)  
+2. Currently executing function’s local variables  
+3. Variables in the call stack  
+4. Values captured in closures  
+5. Objects referenced from other reachable objects  
+
+If a value is **not reachable from any root**, it is considered **garbage** and can be collected.
+
+------------------------------------------------------------
+
+### 4. Simple Reachability Example
+
+```javascript
+<script>
+let user = { name: "Jaswanth" };  // user points to object
+
+// later
+user = null;
+</script>
+```
+
+Explanation:
+
+- Initially, user references the object → object is reachable.  
+- After setting user = null; nothing references the object.  
+- The object becomes unreachable → GC will eventually free the memory.
+
+Diagram:
+
+Before:
+user → { name: "Jaswanth" }
+
+After:
+user → null  
+{ name: "Jaswanth" } → unreachable → eligible for GC  
+
+------------------------------------------------------------
+
+### 5. Reference Graph and Garbage Collection
+
+Think of your program as a **graph of objects**:
+
+- Nodes = objects / values  
+- Edges = references  
+
+Garbage collection marks all **reachable** nodes starting from roots.  
+Anything not marked is **unreachable** and freed.
+
+This is usually done by a **mark-and-sweep** algorithm.
+
+### Mark-and-Sweep (Conceptual Steps):
+
+1. Start from roots (global, stack, closures).  
+2. Traverse all referenced objects and mark them as reachable.  
+3. After traversal, all **unmarked** objects are unreachable.  
+4. The GC sweeps over memory and frees unmarked objects.
+
+You do not control **when** GC runs; the engine decides based on:
+- Memory pressure  
+- Performance heuristics  
+- Internal thresholds  
+
+------------------------------------------------------------
+
+### 6. Cycles and Garbage Collection
+
+Old naive garbage collectors had problems with cycles:
+
+```javascript
+<script>
+function createCycle() {
+    let a = {};
+    let b = {};
+
+    a.ref = b;
+    b.ref = a;
+}
+createCycle();
+</script>
+```
+
+Here:
+- a references b  
+- b references a  
+
+Even though they reference each other, once createCycle finishes, there is **no reference from outside** to a or b.
+
+Modern GC using reachability:
+
+- Checks from roots; if neither a nor b is reachable from any root,  
+  the cycle is considered garbage and collected safely.
+
+So, cyclic references **by themselves** are not a problem.
+
+------------------------------------------------------------
+
+### 7. Common Memory Leak Patterns
+
+Even with automatic GC, you can **accidentally** keep objects reachable.
+
+### 7.1 Global Variables
+
+Anything stored in global scope remains reachable for the lifetime of the page.
+
+```javascript
+<script>
+let bigData = []; // never cleared
+</script>
+```
+
+If bigData grows and is never reset or released, it leads to memory leaks.
+
+------------------------------------------------------------
+
+### 7.2 Unremoved Event Listeners
+
+```javascript
+<script>
+let button = document.getElementById("click");
+let user = { name: "Jaswanth" };
+
+function handler() {
+    console.log(user.name);
+}
+
+button.addEventListener("click", handler);
+// but later the button is removed, listener is not cleaned properly
+</script>
+```
+
+If the DOM node or the handler reference remains somewhere, both can stay in memory.
+
+Best practice:
+- Remove listeners when elements are removed or no longer needed.
+
+```javascript
+button.removeEventListener("click", handler);
+```
+
+------------------------------------------------------------
+
+### 7.3 Closures Holding References
+
+Closures can keep data alive longer than needed.
+
+```javascript
+<script>
+function createLogger() {
+    let data = new Array(1000000).fill("large");
+    return function() {
+        console.log("Logging");
+    };
+}
+
+let log = createLogger();
+// data is still in memory because the inner function closes over it
+</script>
+```
+
+Even though you no longer use `data`, it stays reachable through the closure scope.
+
+If data is not needed, design your closure differently or explicitly drop references.
+
+------------------------------------------------------------
+
+### 7.4 Caches and Maps
+
+Storing data in caches without invalidation leads to leaks.
+
+```javascript
+<script>
+let cache = {};
+
+function store(key, value) {
+    cache[key] = value;
+}
+</script>
+```
+
+If you never delete keys or reset cache, memory usage grows endlessly.
+
+------------------------------------------------------------
+
+### 8. WeakMap and WeakSet (GC-Friendly References)
+
+WeakMap and WeakSet hold **weak references** to keys.  
+That means: if there are no other strong references to a key object, it can be garbage collected.
+
+### WeakMap Example
+
+```javascript
+<script>
+let wm = new WeakMap();
+
+let obj = { id: 1 };
+wm.set(obj, "Some data");
+
+// later
+obj = null; // object becomes unreachable, entry in WeakMap can be cleaned
+</script>
+```
+
+Use cases:
+- Storing metadata about objects  
+- Avoiding memory leaks when using objects as keys  
+
+WeakMap does not prevent garbage collection of its keys.
+
+------------------------------------------------------------
+
+### 9. You Cannot Manually Force Garbage Collection
+
+JavaScript does not provide a standard API to force GC (like gc()).
+
+Reasons:
+- Engine must decide optimal time based on heuristics.  
+- Forcing GC might hurt performance.  
+- Different platforms implement GC differently.
+
+In some debugging tools (like Chrome DevTools), there are manual **“Collect Garbage”** buttons, but this is only for debugging.
+
+------------------------------------------------------------
+
+### 10. Best Practices to Avoid Memory Issues
+
+1. Avoid unnecessary global variables.  
+2. Clear references when done:
+   - Set large structures to null if no longer needed.  
+3. Remove event listeners when elements or components die.  
+4. Be careful with long-lived closures capturing large data.  
+5. Use local variables where possible (allow auto cleanup when function ends).  
+6. Monitor memory usage in browser dev tools or Node profilers for large apps.  
+7. Design cache strategies with limits and eviction (LRU, time-based expiration).  
+
+------------------------------------------------------------
+
+### 11. Example: Good vs Bad Patterns
+
+### Bad: forgetting to clear timer
+
+```javascript
+<script>
+let bigObject = { data: new Array(1000000).fill("value") };
+
+setInterval(function() {
+    console.log("Still running");
+}, 1000);
+</script>
+```
+
+Even if you stop using bigObject, the program runs forever, global references remain, and GC may not reclaim as expected.
+
+### Better:
+
+```javascript
+<script>
+let bigObject = { data: new Array(1000000).fill("value") };
+
+let id = setInterval(function() {
+    console.log("Running");
+}, 1000);
+
+// later when not needed
+clearInterval(id);
+bigObject = null;
+</script>
+```
+
+------------------------------------------------------------
+
+### 12. Summary of Garbage Collection in JavaScript
+
+1. Memory management is automatic, but you still influence **reachability**.  
+2. GC is based on **reachability**, not reference count.  
+3. Mark-and-sweep is the core algorithm used.  
+4. Cycles are safe if nothing outside references them.  
+5. Memory leaks happen when you unintentionally keep references alive.  
+6. Use best practices to let GC do its job effectively.  
+7. You do not control when GC runs; you only control how you create and drop references.
+
+
+
+### <h1>Summary of Advanced Topics</h1>
+
+- JavaScript runs in an engine with a runtime that includes Web APIs and an event loop.  
+- Execution contexts and the call stack explain how code is run step by step.  
+- Scope and the scope chain control variable visibility.  
+- Hoisting and TDZ explain strange behaviors around variable access.  
+- this depends on how functions are called, not where defined; arrow functions capture lexical this.  
+- Primitives are copied by value, objects by reference.  
+- Shallow vs deep copy is essential when working with complex objects.  
+- Garbage collection automatically frees memory for unreachable objects.
+---
+| Primitive Type | Indexed | Ordered | Iterable | forEach | Mutable |
+|----------------|---------|---------|----------|---------|---------|
+| Number         | No      | No      | No       | No      | No      |
+| String         | Yes     | Yes     | Yes      | No      | No      |
+| Boolean        | No      | No      | No       | No      | No      |
+| Null           | No      | No      | No       | No      | No      |
+| Undefined      | No      | No      | No       | No      | No      |
+| Symbol         | No      | No      | No       | No      | No      |
+| BigInt         | No      | No      | No       | No      | No      |
+---
+---
+| Object Type    | Indexed | Ordered | Iterable | forEach | Mutable |
+|----------------|---------|---------|----------|---------|---------|
+| Object         | No      | Partial | No       | No      | Yes     |
+| Array          | Yes     | Yes     | Yes      | Yes     | Yes     |
+| Function       | No      | No      | No       | No      | Yes     |
+| Map            | No      | Yes     | Yes      | Yes     | Yes     |
+| Set            | No      | Yes     | Yes      | Yes     | Yes     |
+| WeakMap        | No      | No      | No       | No      | Yes     |
+| WeakSet        | No      | No      | No       | No      | Yes     |
+| Date           | No      | No      | No       | No      | Yes     |
+| RegExp         | No      | No      | No       | No      | Yes     |
+| Typed Arrays   | Yes     | Yes     | Yes      | Yes     | Yes     |
+| Promise        | No      | No      | No       | No      | Yes     |
+| Error          | No      | No      | No       | No      | Yes     |
+---

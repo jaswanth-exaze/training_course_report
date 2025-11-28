@@ -45,3 +45,47 @@ const restaurant = {
     },
   },
 };
+const [a, b] = restaurant.categories;
+console.log(a, b);
+
+let aa = 10;
+let bb = 20;
+
+aa=aa+bb;
+bb=aa-bb
+aa=aa-bb
+
+[aa, bb] = [bb, aa];
+
+console.log(aa, bb);
+
+const {name,openingHours,categories}=restaurant;
+console.log(name,categories,openingHours)
+
+const {name: restaurantName,openingHours:hours}=restaurant;
+console.log(restaurantName,hours)
+
+
+let user = { name: "Jaswanth", age: 22 };
+
+let name = user.name;
+let age = user.age;
+
+console.log(name, age);
+
+const a = [1,2,3]
+const b = [4,5,6]
+
+let ab=[...a,...b]
+console.log(ab)
+console.log(a)
+console.log(...a)
+console.log(...a,...b)
+
+
+
+let a = { x: 1 };
+let b = { y: 2 };
+
+let ab = {...a,...b}
+console.log(ab)
