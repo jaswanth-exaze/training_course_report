@@ -1287,3 +1287,33 @@ SELECT e.first_name, e.last_name, d.dept_name, e.salary
 FROM Employees e
 
 JOIN Departments d ON e.dept_id = d.dept_id;
+
+
+====================================================================
+ Summary Table (psql vs pgAdmin vs MySQL)
+====================================================================
+
+ACTION                | PostgreSQL (psql)               | PostgreSQL (pgAdmin)                          | MySQL (mysql CLI)
+--------------------- | -------------------------------- | ---------------------------------------------- | ------------------------------
+Show all databases    | \l                               | Expand "Databases" in left panel               | SHOW DATABASES;
+                      | \list                            |                                                | 
+
+Show current database | SELECT current_database();       | Same query in Query Tool                       | SELECT DATABASE();
+                      | \c                               |                                                | 
+
+Change database       | \c database_name                 | Right-click DB → Query Tool                    | USE database_name;
+
+Show all tables       | \dt                              | Expand: db → Schemas → public → Tables         | SHOW TABLES;
+
+List tables (SQL)     | SELECT table_name FROM           | Run same query in Query Tool                   | SHOW TABLES FROM database_name;
+                      | information_schema.tables        |                                                |
+                      | WHERE table_schema='public';     |                                                |
+
+Describe a table       | \d table_name                    | Right-click table → Properties                  | DESCRIBE table_name;
+                       |                                  |                                                | or SHOW COLUMNS FROM table_name;
+
+Quit shell             | \q                               | Close pgAdmin tab/window                       | EXIT; or \q
+
+Clear screen           | \! clear  (Linux/Mac)            | Not needed (GUI)                               | system clear;  (Linux/Mac)
+                      | \! cls    (Windows)              |                                                | system cls;    (Windows)
+====================================================================
