@@ -167,6 +167,7 @@ database objects visually.
 
 
 
+
 ## SQL Statement Fundamentals
 
 This covers the basic building blocks of SQL queries.

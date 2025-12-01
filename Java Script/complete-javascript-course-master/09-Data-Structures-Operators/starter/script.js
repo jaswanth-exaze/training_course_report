@@ -45,6 +45,7 @@ const restaurant = {
     },
   },
 };
+/*
 const [a, b] = restaurant.categories;
 console.log(a, b);
 
@@ -89,3 +90,51 @@ let b = { y: 2 };
 
 let ab = {...a,...b}
 console.log(ab)
+
+// SHORT CIRCUTING(&& and  ||)
+
+console.log(null || "jk");
+
+const a=10;
+
+// console.log( a===b || "jk" );
+
+const c= a===10 || 21
+
+console.log(c)
+const e = null;
+const d= e ?? 23;
+console.log(d)
+*/
+
+
+const jk={
+  name: 'jaswanth kumar',
+  age: 24,
+  height: 5.5,
+  company: 'EXAZE'
+}
+const mk={
+  name: 'manoj kumar',
+  age :null,
+  height: 5.4,
+}
+
+console.log(mk)      // {name: 'manoj kumar', height: 5.4}
+
+mk.age||= 26         // OR (||) assignment operator //
+mk.age??=26          // nullish assignment operator  ( ?? ) //
+console.log(jk.age)  // 24
+console.log(mk.age)  // 26
+console.log(mk)      // {name: 'manoj kumar', height: 5.4, age: 26}
+
+jk.company= jk.company && '<ANONYMOUS>'
+
+if (jk.company==false){
+  jk.company
+}
+
+mk.company=mk.company && '<ANONYMOUS>'
+
+console.log(jk.company)
+console.log(mk.company)

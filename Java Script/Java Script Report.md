@@ -768,7 +768,9 @@ Used to compare values.
 
 ```javascript
 <script>
-  console.log(true && false); console.log(true || false); console.log(!false);
+  console.log(true && false); 
+  console.log(true || false); 
+  console.log(!false);
 </script>
 ```
 
@@ -782,7 +784,9 @@ Allows variable embedding and multi-line strings using backticks.
 
 ```javascript
 <script>
-  let name = "Jaswanth"; let msg = `Hello ${name}, welcome.`; console.log(msg);
+  let name = "Jaswanth"; 
+  let msg = `Hello ${name}, welcome.`; 
+  console.log(msg);
 </script>
 ```
 

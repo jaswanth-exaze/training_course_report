@@ -1287,3 +1287,16 @@ SELECT e.first_name, e.last_name, d.dept_name, e.salary
 FROM Employees e
 
 JOIN Departments d ON e.dept_id = d.dept_id;
+
+## Summary Table (psql vs pgAdmin vs MySQL)
+
+| ACTION                | PostgreSQL (psql)                                   | PostgreSQL (pgAdmin)                                   | MySQL (mysql CLI)                     |
+|----------------------|------------------------------------------------------|---------------------------------------------------------|----------------------------------------|
+| **Show all databases** | `\l` or `\list`                                      | Expand **Servers → Databases**                          | `SHOW DATABASES;`                      |
+| **Show current database** | `\c` or `SELECT current_database();`                 | Run same query in Query Tool                            | `SELECT DATABASE();`                   |
+| **Change database**   | `\c database_name`                                   | Right-click database → **Query Tool**                   | `USE database_name;`                   |
+| **Show all tables**   | `\dt`                                                | Expand **Schemas → public → Tables**                    | `SHOW TABLES;`                         |
+| **List tables using SQL** | `SELECT table_name FROM information_schema.tables WHERE table_schema='public';` | Run same query in Query Tool | `SHOW TABLES FROM database_name;` |
+| **Describe a table**  | `\d table_name`                                      | Right-click table → **Properties**                      | `DESCRIBE table_name;` or `SHOW COLUMNS FROM table_name;` |
+| **Quit shell**        | `\q`                                                 | Close the Query Tool tab                                | `EXIT;` or `\q`                        |
+| **Clear screen**      | `\! cls` (Windows)<br>`\! clear` (Mac/Linux)         | Not applicable (GUI)                                    | `system cls;` (Windows)<br>`system clear;` (Mac/Linux) |
