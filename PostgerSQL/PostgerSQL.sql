@@ -201,13 +201,13 @@ INSERT INTO Training VALUES
 -- Example Trigger
 -- =============================
 CREATE OR REPLACE FUNCTION log_employee_deletion()
-RETURNS TRIGGER AS
+RETURNS TRIGGER AS $$
 BEGIN
 INSERT INTO Employees_Audit (employee_id, deleted_by)
 VALUES (OLD.employee_id, current_user);
 RETURN OLD;
 END;
-LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql;
 -- ========
 CREATE TRIGGER trg_employee_delete
 AFTER DELETE ON Employees
