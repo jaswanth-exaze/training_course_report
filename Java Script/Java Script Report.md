@@ -287,6 +287,7 @@ Purpose:
 
 ---
 
+
 ## 6. JavaScript Syntax Basics
 
 - JavaScript is case sensitive.
@@ -482,7 +483,9 @@ Output:
 ### Example (reassignment not allowed)
 
 ```javascript
-<script>const x = 5; x = 10; // Error</script>
+<script>
+const x = 5; 
+x = 10; // Error</script>
 ```
 
 ---
@@ -604,8 +607,10 @@ Used for text.
 
 ```javascript
 <script>
-  let firstName = "Jaswanth"; let msg = 'Welcome'; let text = `Template literal
-  example`; console.log(firstName, msg, text);
+  let firstName = "Jaswanth"; 
+  let msg = 'Welcome'; 
+  let text = `Template literal example`; 
+  console.log(firstName, msg, text);
 </script>
 ```
 
@@ -618,7 +623,11 @@ JavaScript uses floating-point numbers for both decimals and integers.
 ### Example
 
 ```javascript
-<script>let age = 23; let price = 99.5; console.log(age, price);</script>
+<script>
+let age = 23; 
+let price = 99.5; 
+console.log(age, price);
+</script>
 ```
 
 ---
@@ -631,8 +640,9 @@ Represents true or false.
 
 ```javascript
 <script>
-  let isLoggedIn = true; let isVerified = false; console.log(isLoggedIn,
-  isVerified);
+  let isLoggedIn = true; 
+  let isVerified = false; 
+  console.log(isLoggedIn,isVerified);
 </script>
 ```
 
@@ -669,7 +679,10 @@ Used for very large integers.
 ### Example
 
 ```javascript
-<script>let big = 123456789123456789n; console.log(big);</script>
+<script>
+let big = 123456789123456789n; 
+console.log(big);
+</script>
 ```
 
 ---
@@ -682,7 +695,9 @@ Used to create unique identifiers.
 
 ```javascript
 <script>
-  let s1 = Symbol("id"); let s2 = Symbol("id"); console.log(s1 === s2);
+  let s1 = Symbol("id"); 
+  let s2 = Symbol("id"); 
+  console.log(s1 === s2);
 </script>
 ```
 
@@ -736,8 +751,12 @@ Operators allow mathematical and logical operations.
 
 ```javascript
 <script>
-  let x = 10; let y = 3; console.log(x + y); console.log(x - y); console.log(x *
-  y); console.log(x % y);
+  let x = 10; 
+  let y = 3; 
+  console.log(x + y); 
+  console.log(x - y); 
+  console.log(x * y); 
+  console.log(x % y);
 </script>
 ```
 
@@ -762,7 +781,9 @@ Used to compare values.
 
 ```javascript
 <script>
-  console.log(10 > 5); console.log(10 === "10"); console.log(10 === 10);
+  console.log(10 > 5); 
+  console.log(10 === "10"); 
+  console.log(10 === 10);
 </script>
 ```
 
@@ -1173,7 +1194,7 @@ Strict mode helps by:
 
 ```javascript
 <script>
-  x = 10; // No error, JS creates a global variable automatically
+  x = 10;             // No error, JS creates a global variable automatically
   console.log(x);
 </script>
 ```
@@ -1189,7 +1210,9 @@ This is risky because mistakes become hidden global variables.
 
 ```javascript
 <script>
-  "use strict"; x = 10; // Error: x is not defined console.log(x);
+  "use strict"; 
+  x = 10; // Error: x is not defined 
+  // console.log(x);
 </script>
 ```
 
