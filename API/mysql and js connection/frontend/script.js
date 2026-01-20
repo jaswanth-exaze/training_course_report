@@ -98,3 +98,69 @@ function searchManager(id) {
     .then((res) => res.json())
     .then(renderUsers);
 }
+
+function addEmpFetch() {
+  console.log("fetch started");
+  const id = document.getElementById("Idinput").value;
+  const name = document.getElementById("nameinput").value;
+  const email = document.getElementById("emailinput").value;
+  const password_hash = document.getElementById("hashInput").value;
+  const designation = document.getElementById("designationInput").value;
+  const manager_id = document.getElementById("managerInput").value || null;
+
+  fetch("http://localhost:3000/api/users/addemp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      id,
+      name,
+      email,
+      password_hash,
+      designation,
+      manager_id,
+    }),
+  })
+    .then(res=>res.json())
+    .then((data) => {
+      if (data.affectedRows) clearResults("Employee Added Successfully");
+    })
+    .catch(() => clearResults("Server error"));
+}
+
+function addEmployee() {
+  console.log("Add Employee Clicked");
+  // document.querySelector(".results-section").classList.toggle('hidden')
+  // clearResults();
+  resultsContainer.innerHTML = `<form class="AddInput controls" onsubmit="addEmpFetch(event)">
+  
+  <input id="Idinput" type="number" placeholder="Enter id" required>
+  
+  <input id="nameinput" type="text" placeholder="Enter name required" required>
+  
+  <input id="emailinput" type="email" placeholder="Enter email required" required>
+  
+  <input id="hashInput" type="text" placeholder="Enter hash password required" required>
+  
+  <input id="designationInput" type="text" placeholder="Enter Designation required" required>
+  
+  <input id="managerInput" type="number" placeholder="Enter Manager Id">
+  
+  <button onclick="addEmpFetch()" type="submit">Add Employee</button>
+
+</form>
+`;
+}
+
+function deleteById() {
+  const id = document.getElementById("idDeleteInput").value;
+
+  fetch("http://localhost:3000/api/users/deleteById", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id }),
+  }).then(res=>res.json())
+    .then((data) => {
+      if (data.affectedRows) {clearResults("Employee Deleted Successfully")}
+      else {clearResults("Employee ID not fount")}})
+    .catch(() => clearResults("Server error"));
+}
