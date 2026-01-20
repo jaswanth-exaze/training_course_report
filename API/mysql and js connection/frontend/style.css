@@ -1,0 +1,105 @@
+/* =========================
+   BASE
+   ========================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #f3f6f9;
+}
+
+.app-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* =========================
+   CONTROLS
+   ========================= */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.controls input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cfd8e3;
+}
+
+.controls button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #bad5eb;
+  cursor: pointer;
+}
+
+
+
+/* =========================
+   RESULTS
+   ========================= */
+.section-title {
+  margin: 30px 0 20px;
+  padding: 12px;
+  background: #dde4eb;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#resultsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* =========================
+   EMPLOYEE CARD
+   ========================= */
+.employee-card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.employee-field {
+  background: #f6f9fc;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.manager-button {
+  margin-left: 8px;
+  padding: 8px 12px;
+  border-radius: 9px;
+  border: none;
+  background: #bad5eb;
+  cursor: pointer;
+}
+
+/* =========================
+   HIDDEN FIELDS
+   ========================= */
+.password_hash,
+.created_at {
+  display: none;
+}
+.manager_id {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.id {
+  font-weight: 700;
+  text-align: center;
+}
+

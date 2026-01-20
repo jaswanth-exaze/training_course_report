@@ -1,9 +1,6 @@
-
- # Flow: Frontend (HTML / JavaScript) → API Request → Backend (Node.js + Express) → Database (MySQL) → API Response → Frontend
+# Flow: Frontend (HTML / JavaScript) → API Request → Backend (Node.js + Express) → Database (MySQL) → API Response → Frontend
 
 ## API FLOW: "ALL EMPLOYEES" BUTTON (STEP-BY-STEP EXPLANATION)
-
-
 
 ## Scenario
 
@@ -19,6 +16,7 @@ HTML button exists on the page:
     <button id="btnEmployees">All Employees</button>
 
 At this stage:
+
 - No backend interaction
 - No database interaction
 - Only UI action
@@ -51,6 +49,7 @@ JavaScript sends an HTTP request to backend using Fetch API:
     }
 
 At this moment:
+
 - Browser creates a GET request
 - Request is sent to backend
 - Frontend waits for response
@@ -76,6 +75,7 @@ Frontend is still waiting.
 ## STEP 5: Middleware Runs (If Any)
 
 Before reaching route logic, middleware may run:
+
 - Authentication
 - Authorization
 - Logging
@@ -88,6 +88,7 @@ Example:
     });
 
 If middleware fails:
+
 - Backend sends error response
 - Flow stops here
 
@@ -102,6 +103,7 @@ Backend communicates with MySQL:
     });
 
 Important:
+
 - Database does NOT know about frontend
 - Database does NOT know about button click
 
@@ -123,6 +125,7 @@ This data goes **only to backend**, never to frontend directly.
 ## STEP 8: Backend Prepares API Response
 
 Backend may:
+
 - Remove sensitive fields
 - Format data
 - Wrap response
@@ -176,11 +179,11 @@ CLICK BUTTON
 → Backend Formats JSON  
 → API Response  
 → Frontend Receives Data  
-→ UI Updated  
+→ UI Updated
 
 ---
 
-CLICK BUTTON 
+CLICK BUTTON
 
 ↓
 
@@ -236,7 +239,7 @@ Frontend
 → Backend  
 → Database  
 → Backend  
-→ Frontend  
+→ Frontend
 
 ---
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Search</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <h1>Employee Search</h1>
+
+    <div class="controls">
+      <input id="nameSearchInput" type="text" placeholder="Search by name">
+      <button onclick="searchByName()">Search</button>
+
+      <input id="idSearchInput" type="number" placeholder="Search by ID">
+      <button onclick="searchById()">Search</button>
+
+      <button onclick="fetchAllEmployees()">All Employees</button>
+      <button onclick="fetchAllSorted()">Sort by Name</button>
+    </div>
+
+    <section class="results-section">
+      <h2 class="section-title">Employees List</h2>
+      <div id="resultsContainer"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
