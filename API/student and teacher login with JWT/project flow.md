@@ -214,3 +214,115 @@ What happens:
 ---
 
 END OF FLOW EXPLANATION
+
+
+┌──────────────────────────────────────────────┐
+│              FRONTEND (BROWSER)               │
+└──────────────────────────────────────────────┘
+
+        User opens index.html
+                 │
+                 ▼
+┌──────────────────────────────────────────────┐
+│ frontend/index.html                           │
+│ - User enters email & password               │
+│ - Clicks LOGIN button                        │
+└──────────────────────────────────────────────┘
+                 │
+                 │ onclick="login()"
+                 ▼
+┌──────────────────────────────────────────────┐
+│ frontend/js/login.js                          │
+│ login() function executes                    │
+│ - Reads email & password                     │
+│ - Sends POST request                         │
+└──────────────────────────────────────────────┘
+                 │
+                 │ POST /login
+                 │ Body: { email, password }
+                 ▼
+┌──────────────────────────────────────────────┐
+│              BACKEND (EXPRESS)                │
+└──────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────┐
+│ routes/authRoutes.js                          │
+│ router.post("/login")                         │
+│ - Validates email & password                 │
+│ - Finds user in DB                           │
+│ - bcrypt.compare()                           │
+│ - jwt.sign() generates token                 │
+└──────────────────────────────────────────────┘
+                 │
+                 │ Response:
+                 │ { message, token }
+                 ▼
+┌──────────────────────────────────────────────┐
+│ frontend/js/login.js                          │
+│ - Receives response                          │
+│ - Saves token in localStorage                │
+│ - Decodes token payload                      │
+│ - Extracts role                              │
+└──────────────────────────────────────────────┘
+                 │
+                 │ Role-based redirect
+                 ▼
+┌──────────────────────────────────────────────┐
+│ Browser navigation                            │
+│ dashboard.html?role=student                  │
+└──────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────┐
+│ frontend/dashboard.html                       │
+│ - Page loads                                 │
+│ - dashboard.js executes automatically        │
+└──────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────┐
+│ frontend/js/dashboard.js                      │
+│ - Reads token from localStorage              │
+│ - Reads role from URL                        │
+│ - Chooses API based on role                  │
+└──────────────────────────────────────────────┘
+                 │
+                 │ GET /student/dashboard
+                 │ Header: Authorization: Bearer TOKEN
+                 ▼
+┌──────────────────────────────────────────────┐
+│ routes/studentRoutes.js                      │
+│ router.get("/student/dashboard")             │
+└──────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────┐
+│ middleware/authMiddleware.js                 │
+│ - Reads Authorization header                 │
+│ - Extracts token                             │
+│ - jwt.verify(token, secretKey)               │
+│ - Attaches decoded data to req.user          │
+└──────────────────────────────────────────────┘
+                 │
+                 │ if token valid
+                 ▼
+┌──────────────────────────────────────────────┐
+│ middleware/roleMiddleware.js                 │
+│ - Checks req.user.role === "student"         │
+└──────────────────────────────────────────────┘
+                 │
+                 │ if role matches
+                 ▼
+┌──────────────────────────────────────────────┐
+│ Student Route Handler                        │
+│ - Sends response                             │
+│   { "message": "Welcome Student" }           │
+└──────────────────────────────────────────────┘
+                 │
+                 ▼
+┌──────────────────────────────────────────────┐
+│ frontend/js/dashboard.js                     │
+│ - Receives response                          │
+│ - Displays "Welcome Student" on UI           │
+└──────────────────────────────────────────────┘
