@@ -155,7 +155,7 @@ function deleteById() {
   const id = document.getElementById("idDeleteInput").value;
 
   fetch("http://localhost:3000/api/users/deleteById", {
-    method: "POST",
+    method: "DELETE",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id }),
   }).then(res=>res.json())

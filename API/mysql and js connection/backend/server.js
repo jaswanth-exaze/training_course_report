@@ -47,15 +47,11 @@ app.get("/api/users", (req, res) => {
   });
 });
 
-
-
-
-
 app.post("/api/users/addemp", (req, res) => {
   const { id } = req.body;
   const { name } = req.body;
   const { email } = req.body;
-  const { password_hash }=req.body;
+  const { password_hash } = req.body;
   const { manager_id } = req.body;
   const { designation } = req.body;
   const sql = `insert into users(id,name,email,password_hash,designation,manager_id)values(${id},'${name}','${email}','${password_hash}','${designation}',${manager_id})`;
@@ -65,20 +61,15 @@ app.post("/api/users/addemp", (req, res) => {
   });
 });
 
-
-app.post("/api/users/deleteById",(req,res)=>{
+app.delete("/api/users/deleteById", (req, res) => {
   const { id } = req.body;
 
-  const sql=`delete from users where id=${id}`;
-  db.query(sql,(err,results)=>{
+  const sql = `delete from users where id=${id}`;
+  db.query(sql, (err, results) => {
     if (err) return res.status(500).json(err);
     res.json(results);
-  })
-})
-
-
-
-
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
