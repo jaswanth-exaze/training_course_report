@@ -10,8 +10,9 @@ router.get(
   roleMiddleware("teacher"),
   (req, res) => {
     res.json({
-      message: "Welcome Teacher",
+      message: `Welcome ${req.user.name.toUpperCase()}`,
       userId: req.user.id,
+      role: req.user.role,
     });
   },
 );

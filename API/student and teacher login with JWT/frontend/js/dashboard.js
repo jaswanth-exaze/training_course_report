@@ -25,7 +25,13 @@ fetch(url, {
   .then(res => res.json())
   .then(data => {
     message.textContent = data.message;
+    return data.role;
+    
   })
+//   .then((x)=>{
+//     console.log(x)
+//     window.location.href = (x=="student"?"Student_demo.html":"Teacher_demo.html")
+//   })
   .catch(() => {
     message.textContent = "Access denied";
   });

@@ -19,6 +19,6 @@ VALUES ('Ravi Kumar', 'ravi@student.com', 'hashed_password', 'student');
 INSERT INTO users (name, email, password, role)
     VALUES ('Anita Sharma', 'anita@teacher.com', 'hashed_password', 'teacher');
 
-SELECT id, name, email, role FROM users;  
+SELECT id, name, email,PASSWORD, role FROM users;  
 
--- delete from users where name = "jaswanth";
+delete from users 

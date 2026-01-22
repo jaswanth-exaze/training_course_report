@@ -57,7 +57,7 @@ router.post("/register", async (req, res) => {
 });
 
 //    ====================LOGIN=================== //
-router.post("/login",  (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   //basic validation
@@ -66,7 +66,7 @@ router.post("/login",  (req, res) => {
   }
   // Check if user exists
   const sql = "SELECT * FROM users WHERE email = ?";
-  db.query(sql, [email], (err, result) => {
+  db.query(sql, [email], async (err, result) => {
     if (err) {
       return res.status(500).json({
         message: "Database error",
@@ -78,12 +78,10 @@ router.post("/login",  (req, res) => {
         message: "Invalid email or password",
       });
     }
-
-
     const user = result[0];
 
     //compare password
-    const isMatch =  bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({
         message: "Invalid email or password",
@@ -91,10 +89,13 @@ router.post("/login",  (req, res) => {
     }
 
     // Generate JWT token
+    // const token = jwt.sign(payload, secretKey, options);
+
     const token = jwt.sign(
       {
         id: user.id,
         role: user.role,
+        name: user.name,
       },
       "secretKey",
       {
