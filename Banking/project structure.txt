@@ -1,0 +1,76 @@
+banking-project/
+│
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   ├── middlewares/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   ├── app.js
+│   │   └── server.js
+│   │
+│   ├── .env
+│   └── package.json
+│
+├── frontend/
+│   ├── public/
+│   │   ├── index.html           # Common home page
+│   │   ├── login.html           # Login page
+│   │   └── assets/
+│   │       └── images/
+│   │
+│   ├── css/
+│   │   ├── common.css
+│   │   ├── login.css
+│   │   ├── customer.css
+│   │   ├── employee.css
+│   │   └── manager.css
+│   │
+│   ├── js/
+│   │   ├── login.js             # Calls /auth/login
+│   │   ├── auth.js              # Token handling
+│   │   ├── customer.js
+│   │   ├── employee.js
+│   │   └── manager.js
+│   │
+│   └── dashboards/
+│       ├── customer.html
+│       ├── employee.html
+│       └── manager.html
+│
+└── README.md
+====================================================================
+====================================================================
+banking-backend/
+│
+├── src/
+│   │
+│   ├── config/
+│   │   ├── db.js                # MySQL connection
+│   │   └── env.js               # Environment variables loader
+│   │
+│   ├── controllers/
+│   │   └── auth.controller.js   # Login logic
+│   │
+│   ├── routes/
+│   │   └── auth.routes.js       # /auth routes
+│   │
+│   ├── middlewares/
+│   │   ├── auth.middleware.js   # JWT verification
+│   │   └── role.middleware.js   # Role-based access
+│   │
+│   ├── services/
+│   │   └── auth.service.js      # Business logic (DB queries)
+│   │
+│   ├── utils/
+│   │   ├── jwt.util.js          # JWT sign/verify helpers
+│   │   └── password.util.js     # bcrypt helpers
+│   │
+│   ├── app.js                   # Express app setup
+│   └── server.js                # Server bootstrap
+│
+├── .env                         # Secrets & config
+├── package.json
+└── README.md

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Manager Dashboard</title>
+
+    <!-- Common + Manager styles -->
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/manager.css" />
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h3>MyBank</h3>
+            <ul>
+                <li onclick="showSection('dashboard')">
+                    <span class="icon">🏠</span> Dashboard
+                </li>
+
+                <li onclick="openEmployees()">
+                    <span class="icon">👤</span> Employees
+                </li>
+
+                <li onclick="openCustomers()">
+                    <span class="icon">👥</span> Customers
+                </li>
+
+                <li onclick="logout()">
+                    <span class="icon">🚪</span> Logout
+                </li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+
+            <!-- DASHBOARD SECTION -->
+            <section id="dashboard" class="section">
+
+                <!-- Welcome / Branch Info -->
+                <div class="welcome-box">
+                    <h2 id="welcomeText">Welcome</h2>
+                    <p id="branchInfo">Branch: -</p>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="cards">
+                    <div class="card">
+                        <h4>Total Employees</h4>
+                        <p id="empCount">-</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Total Customers</h4>
+                        <p id="custCount">-</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Total Accounts</h4>
+                        <p id="accCount">-</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Branch Balance</h4>
+                        <p id="branchBalance">₹ —</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EMPLOYEES SECTION -->
+            <section id="employees" class="section hidden">
+                <h3>Branch Employees</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTable">
+                        <!-- Filled by manager.js -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- CUSTOMERS SECTION -->
+            <section id="customers" class="section hidden">
+                <h3>Branch Customers</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customerTable">
+                        <!-- Filled by manager.js -->
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Scripts (ORDER IS IMPORTANT) -->
+    <script src="../js/auth.js"></script>
+    <script src="../js/manager.js"></script>
+
+    <script>
+        // Role protection + initial load
+        protectPage("MANAGER");
+        loadManagerDashboard();
+    </script>
+
+</body>
+
+</html>
