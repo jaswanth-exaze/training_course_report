@@ -172,3 +172,43 @@ th, td {
   font-size: 12px;
   opacity: 0.75;
 }
+
+/* =========================
+   CUSTOMER ACTION CARDS
+========================= */
+
+.employee-container {
+  padding: 20px;
+}
+
+/* Action cards layout */
+.action-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+/* Individual card */
+.action-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #0a3d62;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Hover effect */
+.action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.12);
+}
+
+/* Logout card */
+.action-card.logout {
+  color: #b91c1c;
+}
