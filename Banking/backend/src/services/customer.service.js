@@ -22,13 +22,24 @@ exports.getAccounts = (userId) => {
 exports.getTransactions = (userId) => {
   return new Promise((resolve, reject) => {
     const sql = `
-      SELECT t.transaction_id, t.transaction_type,
-             t.amount, t.description, t.created_at
-      FROM transactions t
-      JOIN accounts a ON t.account_id = a.account_id
-      JOIN customers c ON a.customer_id = c.customer_id
-      WHERE c.user_id = ?
-      ORDER BY t.created_at DESC
+      SELECT
+    t.transaction_id,
+    t.transaction_type,
+    t.amount,
+    t.description,
+    t.created_at,
+    CASE
+        WHEN t.to_account_id = a.account_id THEN 'CREDIT'
+        WHEN t.from_account_id = a.account_id THEN 'DEBIT'
+    END AS transaction_direction
+FROM transactions t
+JOIN accounts a
+    ON (t.from_account_id = a.account_id OR t.to_account_id = a.account_id)
+JOIN customers c
+    ON a.customer_id = c.customer_id
+WHERE c.user_id = ?
+ORDER BY t.created_at DESC;
+
     `;
 
     db.query(sql, [userId], (err, rows) => {

@@ -4,7 +4,7 @@ console.log("customer.js loaded");
    SECTION HANDLER
 ========================= */
 function showSection(id) {
-  document.querySelectorAll(".section").forEach(section => {
+  document.querySelectorAll(".section").forEach((section) => {
     section.classList.add("hidden");
   });
   document.getElementById(id).classList.remove("hidden");
@@ -20,12 +20,12 @@ function updateDateTime() {
     weekday: "long",
     day: "2-digit",
     month: "short",
-    year: "numeric"
+    year: "numeric",
   });
 
   const timeStr = now.toLocaleTimeString("en-IN", {
     hour: "2-digit",
-    minute: "2-digit"
+    minute: "2-digit",
   });
 
   const timeEl = document.getElementById("welcomeTime");
@@ -48,14 +48,11 @@ async function loadCustomerDashboard() {
   document.getElementById("branchAddress").innerText = "—";
 
   try {
-    const res = await fetch(
-      "http://localhost:3000/customer/profile",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
+    const res = await fetch("http://localhost:3000/customer/profile", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const data = await res.json();
 
@@ -74,13 +71,11 @@ async function loadCustomerDashboard() {
     document.getElementById("branchText").innerText =
       `${data.branch_name} Branch • ${data.branch_code}`;
 
-    document.getElementById("branchAddress").innerText =
-      data.branch_address;
+    document.getElementById("branchAddress").innerText = data.branch_address;
 
     /* Start live clock */
     updateDateTime();
     setInterval(updateDateTime, 60000);
-
   } catch (err) {
     console.error("Customer dashboard load error:", err);
   }
@@ -98,25 +93,21 @@ async function openAccounts() {
   container.innerHTML = `<div class="loader"></div>`;
 
   try {
-    const res = await fetch(
-      "http://localhost:3000/customer/accounts",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
+    const res = await fetch("http://localhost:3000/customer/accounts", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const accounts = await res.json();
     container.innerHTML = "";
 
     if (accounts.length === 0) {
-      container.innerHTML =
-        `<div class="empty-state">No accounts found</div>`;
+      container.innerHTML = `<div class="empty-state">No accounts found</div>`;
       return;
     }
 
-    accounts.forEach(acc => {
+    accounts.forEach((acc) => {
       container.innerHTML += `
         <div class="account-card">
           <h4>${acc.account_type} Account</h4>
@@ -125,10 +116,8 @@ async function openAccounts() {
         </div>
       `;
     });
-
   } catch (err) {
-    container.innerHTML =
-      `<div class="empty-state">Failed to load accounts</div>`;
+    container.innerHTML = `<div class="empty-state">Failed to load accounts</div>`;
   }
 }
 
@@ -141,29 +130,24 @@ async function openTransactions() {
   const token = localStorage.getItem("token");
   const tbody = document.getElementById("txnTable");
 
-  tbody.innerHTML =
-    `<tr><td colspan="4" class="loader"></td></tr>`;
+  tbody.innerHTML = `<tr><td colspan="4" class="loader"></td></tr>`;
 
   try {
-    const res = await fetch(
-      "http://localhost:3000/customer/transactions",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
+    const res = await fetch("http://localhost:3000/customer/transactions", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const txns = await res.json();
     tbody.innerHTML = "";
 
     if (txns.length === 0) {
-      tbody.innerHTML =
-        `<tr><td colspan="4" class="empty-state">No transactions found</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" class="empty-state">No transactions found</td></tr>`;
       return;
     }
 
-    txns.forEach(t => {
+    txns.forEach((t) => {
       tbody.innerHTML += `
         <tr>
           <td>${new Date(t.created_at).toLocaleDateString("en-IN")}</td>
@@ -173,10 +157,8 @@ async function openTransactions() {
         </tr>
       `;
     });
-
   } catch (err) {
-    tbody.innerHTML =
-      `<tr><td colspan="4" class="empty-state">Failed to load transactions</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" class="empty-state">Failed to load transactions</td></tr>`;
   }
 }
 
@@ -197,35 +179,28 @@ async function openProfile() {
   document.getElementById("profBranchAddress").innerText = "—";
 
   try {
-    const res = await fetch(
-      "http://localhost:3000/customer/profile",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
+    const res = await fetch("http://localhost:3000/customer/profile", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const data = await res.json();
 
     document.getElementById("profName").innerText =
       `${data.first_name} ${data.last_name}`;
 
-    document.getElementById("profUsername").innerText =
-      data.username;
+    document.getElementById("profUsername").innerText = data.username;
 
-    document.getElementById("profEmail").innerText =
-      data.email;
+    document.getElementById("profEmail").innerText = data.email;
 
-    document.getElementById("profPhone").innerText =
-      data.phone;
+    document.getElementById("profPhone").innerText = data.phone;
 
     document.getElementById("profBranch").innerText =
       `${data.branch_name} (${data.branch_code})`;
 
     document.getElementById("profBranchAddress").innerText =
       data.branch_address;
-
   } catch (err) {
     console.error("Profile load error:", err);
   }
