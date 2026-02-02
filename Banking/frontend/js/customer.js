@@ -48,7 +48,7 @@ async function loadCustomerDashboard() {
   document.getElementById("branchAddress").innerText = "—";
 
   try {
-    const res = await fetch("http://localhost:3000/customer/profile", {
+    const res = await fetch(getApiUrl("customer/profile"), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -93,7 +93,7 @@ async function openAccounts() {
   container.innerHTML = `<div class="loader"></div>`;
 
   try {
-    const res = await fetch("http://localhost:3000/customer/accounts", {
+    const res = await fetch(getApiUrl("customer/accounts"), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -133,7 +133,7 @@ async function openTransactions() {
   tbody.innerHTML = `<tr><td colspan="4" class="loader"></td></tr>`;
 
   try {
-    const res = await fetch("http://localhost:3000/customer/transactions", {
+    const res = await fetch(getApiUrl("customer/transactions"), {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -179,7 +179,7 @@ async function openProfile() {
   document.getElementById("profBranchAddress").innerText = "—";
 
   try {
-    const res = await fetch("http://localhost:3000/customer/profile", {
+    const res = await fetch(getApiUrl("customer/profile"), {
       headers: {
         Authorization: `Bearer ${token}`,
       },

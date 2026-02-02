@@ -87,6 +87,18 @@ CREATE TABLE `users` (
    PRIMARY KEY (`user_id`),
   CONSTRAINT `username` UNIQUE (`username`)
 )
+
+CREATE TABLE refresh_tokens (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  expires_at DATETIME NOT NULL,
+  is_revoked BOOLEAN DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
 ENGINE = InnoDB;
 INSERT INTO `accounts` (`account_id`, `customer_id`, `account_number`, `account_type`, `balance`, `status`, `updated_at`) VALUES (1, 1, 'ACC1000000002', 'SAVINGS', '27000.00', 'ACTIVE', '2026-01-29 16:21:01');
 INSERT INTO `accounts` (`account_id`, `customer_id`, `account_number`, `account_type`, `balance`, `status`, `updated_at`) VALUES (2, 1, 'ACC1000000003', 'CURRENT', '51000.00', 'ACTIVE', '2026-01-29 16:21:01');

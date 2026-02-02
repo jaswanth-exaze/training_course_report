@@ -10,7 +10,13 @@ const employeeRoutes = require("./routes/employee.routes")
 const managerRoutes= require("./routes/manager.routes")
 
 // Global middlewares
-app.use(cors());
+// CORS configuration - allow frontend domain in production
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*', // Allow all origins in development, specific URL in production
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 

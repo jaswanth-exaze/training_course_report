@@ -62,7 +62,7 @@ function initEmployeeDashboard() {
 
 async function loadEmployeeProfile() {
   try {
-    const res = await fetch("http://localhost:3000/employee/profile", {
+    const res = await fetch(getApiUrl("employee/profile"), {
       headers: getAuthHeader(),
     });
 
@@ -110,7 +110,7 @@ async function loadEmployeeProfile() {
 async function loadBranchSummary() {
   try {
     const res = await fetch(
-      "http://localhost:3000/employee/dashboard-summary",
+      getApiUrl("employee/dashboard-summary"),
       { headers: getAuthHeader() },
     );
 
@@ -138,7 +138,7 @@ async function openCustomers() {
   tbody.innerHTML = `<tr><td colspan="4">Loading...</td></tr>`;
 
   try {
-    const res = await fetch("http://localhost:3000/employee/customers", {
+    const res = await fetch(getApiUrl("employee/customers"), {
       headers: getAuthHeader(),
     });
 
@@ -205,7 +205,7 @@ async function onboardCustomer(e) {
   msg.style.color = "#333";
 
   try {
-    const res = await fetch("http://localhost:3000/employee/onboard-customer", {
+    const res = await fetch(getApiUrl("employee/onboard-customer"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -6,7 +6,7 @@ async function login() {
   msg.innerText = "Logging in...";
   msg.style.color = "#374151";
 
-  const res = await fetch("http://localhost:3000/auth/login", {
+  const res = await fetch(getApiUrl("auth/login"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password })

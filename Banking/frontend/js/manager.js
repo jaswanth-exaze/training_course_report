@@ -25,7 +25,7 @@ async function loadManagerDashboard() {
   /* Fetch dashboard summary */
   try {
     const res = await fetch(
-      "http://localhost:3000/manager/dashboard-summary",
+      getApiUrl("manager/dashboard-summary"),
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -66,7 +66,7 @@ async function loadEmployees() {
 
   try {
     const res = await fetch(
-      "http://localhost:3000/manager/employees",
+      getApiUrl("manager/employees"),
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
@@ -110,7 +110,7 @@ async function loadCustomers() {
 
   try {
     const res = await fetch(
-      "http://localhost:3000/manager/customers",
+      getApiUrl("manager/customers"),
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
