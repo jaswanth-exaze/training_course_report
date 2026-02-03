@@ -127,6 +127,8 @@ button {
 .app-main {
   padding: 26px 30px 40px;
   position: relative;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .app-topbar {
@@ -142,6 +144,9 @@ button {
   position: sticky;
   top: 20px;
   z-index: 10;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .app-topbar h2 {
@@ -260,6 +265,7 @@ button {
 ========================= */
 table {
   width: 100%;
+  max-width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--border);
