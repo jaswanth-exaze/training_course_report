@@ -1061,7 +1061,7 @@ BEGIN
         'SUCCESS',
         CURRENT_TIMESTAMP
     );
-    
+ 
     -- Update balances
     UPDATE accounts
     SET balance = balance - p_amount,
@@ -1079,3 +1079,33 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+   use banking_system
+
+SELECT
+       u.user_id,
+        u.username,
+        u.is_active,
+        
+        e.designation as role_name
+      FROM users u
+      JOIN roles r ON u.role_id = r.role_id join employees e on u.user_id =e.user_id
+      WHERE u.branch_id = 1 AND r.role_name = 'EMPLOYEE';
+
+select * from employees
+
+select * from users;
+
+SELECT
+        e.employee_id,
+        u.user_id,
+        e.first_name,
+        e.last_name,
+        e.email,
+        e.phone,
+        e.designation as role_name
+      FROM users u
+      JOIN roles r ON u.role_id = r.role_id
+      JOIN employees e ON u.user_id = e.user_id
+      WHERE u.branch_id = 2 AND r.role_name = 'EMPLOYEE'
