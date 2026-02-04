@@ -25,6 +25,7 @@
         <button class="nav-item" data-section="accounts" onclick="openAccounts()">Accounts</button>
         <button class="nav-item" data-section="transactions" onclick="openTransactions()">Transactions</button>
         <button class="nav-item" data-section="profile" onclick="openProfile()">Profile</button>
+        <button class="nav-item nav-logout" onclick="logout()">Logout</button>
       </nav>
     </aside>
 
@@ -40,7 +41,6 @@
         </div>
         <div class="topbar-actions">
           <span class="topbar-time" id="welcomeTime"></span>
-          <button class="topbar-btn" onclick="logout()">Logout</button>
         </div>
       </header>
 
@@ -61,17 +61,19 @@
             <p class="section-sub">Latest account activity</p>
           </div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody id="txnTable"></tbody>
-          </table>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody id="txnTable"></tbody>
+            </table>
+          </div>
         </section>
 
         <!-- PROFILE -->
