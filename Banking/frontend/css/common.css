@@ -142,7 +142,6 @@ button {
   border-color: #f3b4b4;
 }
 
-
 .app-main {
   padding: 26px 30px 40px;
   position: relative;
@@ -202,6 +201,7 @@ button {
   margin-top: 28px;
   display: grid;
   gap: 22px;
+  overflow: auto;
 }
 
 /* =========================
