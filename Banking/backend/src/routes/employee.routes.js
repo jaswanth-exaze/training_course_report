@@ -16,22 +16,22 @@ router.post(
   "/accounts",
   verifyToken,
   checkRole("EMPLOYEE", "MANAGER"),
-  employeeController.createAccount
+  employeeController.createAccount,
 );
 
 router.post(
-"/onboard-customer",
-verifyToken,
-checkRole("EMPLOYEE"),
-employeeController.onboardCustomer
+  "/onboard-customer",
+  verifyToken,
+  checkRole("EMPLOYEE"),
+  employeeController.onboardCustomer,
 );
 
 /* DASHBOARD SUMMARY */
 router.get(
-"/dashboard-summary",
-verifyToken,
-checkRole("EMPLOYEE"),
-employeeController.getDashboardSummary
+  "/dashboard-summary",
+  verifyToken,
+  checkRole("EMPLOYEE"),
+  employeeController.getDashboardSummary,
 );
 router.get(
   "/profile",
@@ -39,4 +39,18 @@ router.get(
   checkRole("EMPLOYEE"),
   employeeController.getProfile,
 );
+
+router.post(
+  "/withdrawl",
+  verifyToken,
+  checkRole("EMPLOYEE"),
+  employeeController.withdrawlMoney,
+);
+router.post(
+  "/deposite",
+  verifyToken,
+  checkRole("EMPLOYEE"),
+  employeeController.depositeMoney,
+);
+
 module.exports = router;

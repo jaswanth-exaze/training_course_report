@@ -1079,33 +1079,36 @@ BEGIN
 END$$
 
 DELIMITER ;
-
-
-   use banking_system
-
-SELECT
-       u.user_id,
-        u.username,
-        u.is_active,
-        
-        e.designation as role_name
-      FROM users u
-      JOIN roles r ON u.role_id = r.role_id join employees e on u.user_id =e.user_id
-      WHERE u.branch_id = 1 AND r.role_name = 'EMPLOYEE';
-
-select * from employees
+call transfer_money(2,1,1000,'self transfer');
 
 select * from users;
+select * from accounts;
+select * from transactions;
 
 SELECT
-        e.employee_id,
-        u.user_id,
-        e.first_name,
-        e.last_name,
-        e.email,
-        e.phone,
-        e.designation as role_name
-      FROM users u
-      JOIN roles r ON u.role_id = r.role_id
-      JOIN employees e ON u.user_id = e.user_id
-      WHERE u.branch_id = 2 AND r.role_name = 'EMPLOYEE'
+        t.transaction_id,
+        t.transaction_type,
+        t.amount,
+        t.description,
+        t.created_at,
+        t.from_account_id,
+        t.to_account_id,
+        af.account_number AS from_account_number,
+        at.account_number AS to_account_number,
+        CONCAT(cf.first_name, ' ', cf.last_name) AS from_customer_name,
+        CONCAT(ct.first_name, ' ', ct.last_name) AS to_customer_name,
+        CASE
+            WHEN t.to_account_id = a.account_id THEN 'CREDIT'
+            WHEN t.from_account_id = a.account_id THEN 'DEBIT'
+        END AS transaction_direction
+      FROM transactions t
+      LEFT JOIN accounts af ON t.from_account_id = af.account_id
+      LEFT JOIN customers cf ON af.customer_id = cf.customer_id
+      LEFT JOIN accounts at ON t.to_account_id = at.account_id
+      LEFT JOIN customers ct ON at.customer_id = ct.customer_id
+      JOIN accounts a
+          ON (t.from_account_id = a.account_id OR t.to_account_id = a.account_id)
+      JOIN customers c
+          ON a.customer_id = c.customer_id
+      WHERE c.user_id = 8
+      ORDER BY t.created_at DESC;
