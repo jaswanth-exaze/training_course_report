@@ -88,15 +88,15 @@ CREATE TABLE `users` (
   CONSTRAINT `username` UNIQUE (`username`)
 )
 
-CREATE TABLE refresh_tokens (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  token VARCHAR(255) NOT NULL,
-  expires_at DATETIME NOT NULL,
-  is_revoked BOOLEAN DEFAULT 0,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
+-- CREATE TABLE refresh_tokens (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   user_id INT NOT NULL,
+--   token VARCHAR(255) NOT NULL,
+--   expires_at DATETIME NOT NULL,
+--   is_revoked BOOLEAN DEFAULT 0,
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   FOREIGN KEY (user_id) REFERENCES users(user_id)
+-- );
 
 
 ENGINE = InnoDB;
@@ -1061,7 +1061,7 @@ BEGIN
         'SUCCESS',
         CURRENT_TIMESTAMP
     );
- 
+    
     -- Update balances
     UPDATE accounts
     SET balance = balance - p_amount,
@@ -1079,36 +1079,3 @@ BEGIN
 END$$
 
 DELIMITER ;
-call transfer_money(2,1,1000,'self transfer');
-
-select * from users;
-select * from accounts;
-select * from transactions;
-
-SELECT
-        t.transaction_id,
-        t.transaction_type,
-        t.amount,
-        t.description,
-        t.created_at,
-        t.from_account_id,
-        t.to_account_id,
-        af.account_number AS from_account_number,
-        at.account_number AS to_account_number,
-        CONCAT(cf.first_name, ' ', cf.last_name) AS from_customer_name,
-        CONCAT(ct.first_name, ' ', ct.last_name) AS to_customer_name,
-        CASE
-            WHEN t.to_account_id = a.account_id THEN 'CREDIT'
-            WHEN t.from_account_id = a.account_id THEN 'DEBIT'
-        END AS transaction_direction
-      FROM transactions t
-      LEFT JOIN accounts af ON t.from_account_id = af.account_id
-      LEFT JOIN customers cf ON af.customer_id = cf.customer_id
-      LEFT JOIN accounts at ON t.to_account_id = at.account_id
-      LEFT JOIN customers ct ON at.customer_id = ct.customer_id
-      JOIN accounts a
-          ON (t.from_account_id = a.account_id OR t.to_account_id = a.account_id)
-      JOIN customers c
-          ON a.customer_id = c.customer_id
-      WHERE c.user_id = 8
-      ORDER BY t.created_at DESC;
