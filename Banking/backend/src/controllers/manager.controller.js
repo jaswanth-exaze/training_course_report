@@ -1,4 +1,6 @@
 const managerService = require("../services/manager.service");
+const loanService = require("../services/loan.service")
+
 /* Dashboard Summary */
 exports.getDashboardSummary = async (req, res) => {
   try {
@@ -61,6 +63,48 @@ exports.getTransactions = async (req, res) => {
       limit: perPage,
       total,
     });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+exports.getPendingLoans = async (req, res) => {
+  const loans = await loanService.getLoansByStatus({
+    status: "EMPLOYEE_APPROVED",
+    branchId: req.user.branch_id,
+  });
+  res.json(loans);
+};
+
+exports.decideLoan = async (req, res) => {
+  try {
+    const status =
+      req.body.action === "APPROVE"
+        ? "MANAGER_APPROVED"
+        : "MANAGER_REJECTED";
+
+    await loanService.managerDecision({
+      loanId: req.params.loanId,
+      userId: req.user.user_id,
+      status,
+      comment: req.body.comment,
+    });
+
+    res.json({ message: `Loan ${req.body.action.toLowerCase()}d` });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+exports.getAllLoans = async (req, res) => {
+  try {
+    const { status } = req.query;
+    const loans = await loanService.getLoansByBranch({
+      branchId: req.user.branch_id,
+      status,
+    });
+    res.json(loans);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

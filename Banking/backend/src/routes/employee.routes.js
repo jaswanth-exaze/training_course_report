@@ -59,4 +59,8 @@ router.post(
   employeeController.depositeMoney,
 );
 
+
+router.get("/pendingLoans", verifyToken, checkRole("EMPLOYEE"), employeeController.getPendingLoans);
+router.post("/:loanId/decision", verifyToken, checkRole("EMPLOYEE"), employeeController.decideLoan);
+
 module.exports = router;

@@ -35,5 +35,7 @@ router.get(
   managerController.getTransactions,
 );
 
-
+router.get("/pendingLoans", verifyToken, checkRole("MANAGER"), managerController.getPendingLoans);
+router.post("/:loanId/decision", verifyToken, checkRole("MANAGER"),managerController.decideLoan);
+router.get("/loans", verifyToken, checkRole("MANAGER"), managerController.getAllLoans);
 module.exports = router;
