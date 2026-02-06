@@ -367,6 +367,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+const LOAN_STATUS_META = {
+  REQUESTED: { label: "Pending employee review", cls: "waiting" },
+  EMPLOYEE_APPROVED: { label: "Awaiting manager decision", cls: "info" },
+  EMPLOYEE_REJECTED: { label: "Rejected by employee", cls: "danger" },
+  MANAGER_APPROVED: { label: "Approved", cls: "success" },
+  MANAGER_REJECTED: { label: "Rejected by manager", cls: "danger" },
+};
+
+function formatLoanStatus(status) {
+  const meta = LOAN_STATUS_META[status] || { label: status || "—", cls: "info" };
+  return `<span class="loan-status ${meta.cls}">${meta.label}</span>`;
+}
+
 /* LOANS */
 function setManagerLoanMsg(text, state) {
   const el = document.getElementById("mgrLoanMsg");
@@ -380,6 +393,7 @@ function setManagerLoanMsg(text, state) {
 function openManagerLoans() {
   showSection("loans");
   loadManagerLoans();
+  loadAllManagerLoans();
 }
 
 function renderManagerLoans(loans = []) {
@@ -489,4 +503,71 @@ async function handleManagerLoanDecision(loanId, action) {
   } catch (err) {
     setManagerLoanMsg(err.message || "Unable to update loan", "error");
   }
+}
+
+async function loadAllManagerLoans() {
+  const tbody = document.getElementById("mgrAllLoanTable");
+  if (tbody) {
+    tbody.innerHTML = `<tr><td colspan="7" class="loader"></td></tr>`;
+  }
+
+  try {
+    const res = await fetch(getApiUrl("manager/loans"), {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+
+    const loans = await res.json();
+    if (!res.ok) throw new Error(loans.message || "Failed to load loans");
+
+    renderAllManagerLoans(loans || []);
+  } catch (err) {
+    if (tbody) {
+      tbody.innerHTML = `<tr><td colspan="7" class="empty-state">${err.message || "Unable to load loans"}</td></tr>`;
+    }
+  }
+}
+
+function renderAllManagerLoans(loans = []) {
+  const tbody = document.getElementById("mgrAllLoanTable");
+  if (!tbody) return;
+
+  if (!loans.length) {
+    tbody.innerHTML =
+      `<tr><td colspan="7" class="empty-state">No loans found</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = "";
+  loans.forEach((loan) => {
+    const updated = loan.updated_at
+      ? new Date(loan.updated_at).toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+      : "—";
+
+    const comment =
+      loan.manager_comment ||
+      loan.employee_comment ||
+      (loan.status === "EMPLOYEE_APPROVED"
+        ? "Pending manager decision"
+        : "—");
+
+    const customerName = `${loan.first_name || ""} ${loan.last_name || ""}`.trim() || `Customer ${loan.customer_id}`;
+
+    tbody.innerHTML += `
+      <tr>
+        <td>${loan.loan_id}</td>
+        <td>${customerName} (ID ${loan.customer_id})</td>
+        <td>&#8377; ${Number(loan.amount || 0).toLocaleString("en-IN")}</td>
+        <td>${loan.tenure_months} mo</td>
+        <td>${formatLoanStatus(loan.status)}</td>
+        <td>${updated}</td>
+        <td>${comment}</td>
+      </tr>
+    `;
+  });
 }
