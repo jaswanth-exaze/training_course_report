@@ -730,7 +730,21 @@ const showRecipe = async function() {
         const res = await fetch('https://forkify-api.jonas.io/api/v2/recipes/5ed6604591c37cdc054bc886');
         const data = await res.json();
         // if (!res.ok) throw new Error(`${data.message}`)
-        console.log(res, data);
+        let { recipe } = data.data;
+        let recipe1 = {
+            id: recipe.id,
+            title: recipe.title,
+            publisher: recipe.publisher,
+            sourceUrl: recipe.source_url,
+            image: recipe.image_url,
+            servings: recipe.servings,
+            cookingTime: recipe.cooking_time,
+            ingredients: recipe.ingredients,
+            ...recipe.key && {
+                key: recipe.key
+            }
+        };
+        console.log(recipe1);
     } catch (err) {
         alert(err);
     }

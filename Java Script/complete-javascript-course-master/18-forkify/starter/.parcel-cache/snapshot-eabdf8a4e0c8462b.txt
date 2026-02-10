@@ -1,9 +1,9 @@
-3627
+3651
 192C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\custom-format-mismatch134142289778988108 1
 179C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\error-overlay\src\containers134142289720233135 1
 169C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\picomatch\lib\picomatch.js134142289661420901 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\CN.js134142289759312342 0
-150C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\src\js\controller.js134080895821257584 0
+150C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\src\js\controller.js134150899664667173 0
 156C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\clone\LICENSE134142289648598085 0
 191C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\packager-js\lib\ScopeHoistingPackager.js134142289696688821 0
 172C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\msgpackr-extract\package.json134142289661975527 0
@@ -11,6 +11,17 @@
 141C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\.prettierrc134080895817222110 0
 166C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_type_of134142289787690175 1
 182C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\svg-fonts.js134142289865659069 0
+158C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\forkify-flowchart-part-1.png134080895817977361 0
+153C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\is-extglob134142289647546286 1
+180C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\wasm-gc.js134142289867755238 0
+171C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\type-fest\source\except.d.ts134142289689183406 0
+167C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\escalade\sync\index.d.ts134142289670279947 0
+151C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\src\sass\_upload.scss134080895823724062 0
+134C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist134150914958070728 1
+161C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\utility-types\dist134142289701710795 1
+174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\IT.js134142289854824778 0
+190C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-json\lib\JSONTransformer.js134142289637927681 0
+192C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb\libraries\liblmdb\Doxyfile134142289666445813 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\GG.js134142289851521029 0
 178C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\type-fest\source\tsconfig-json.d.ts134142289728384241 0
 189C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\css-revert-value.js134142289783783366 0
@@ -23,7 +34,6 @@
 190C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb\libraries\liblmdb\midl.c134142289744805186 0
 169C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\forkify-architecture-recipe-loading.png134080895817617640 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\util\set-optional-deps.cjs134142289755017013 0
-158C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\forkify-flowchart-part-1.png134080895817977361 0
 149C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\src\img\favicon.png134080895819768006 0
 157C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\supports-color134142289651047423 1
 150C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\globals134142289662075547 1
@@ -42,19 +52,19 @@
 184C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\error-overlay\src\utils\parser.js134142289705121272 0
 180C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\dist\unpacker\feature.js134142289847642702 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\TT.js134142289866685612 0
-140C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\index.html134080895819308014 0
-198C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lz4\lib\dll\example\fullbench-dll.sln134142289771450263 0
-147C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\package-lock.json134142289917714808 0
-185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\node-gyp-build-optional-packages\README.md134142289662731913 0
+140C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\index.html134142411450227675 0
 180C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-babel\src\flow.js134142289685242938 0
-142C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules134142289914994198 1
+142C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules134150895542768767 1
+198C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lz4\lib\dll\example\fullbench-dll.sln134142289771450263 0
+147C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\package-lock.json134150895546536724 0
+185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\node-gyp-build-optional-packages\README.md134142289662731913 0
 191C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\cjs\_ts_add_disposable_resource.cjs134142289746033814 0
 151C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\get-port134142289653903962 1
 171C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\cache\lib\FSCache.js134142289637642863 0
 180C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\runtime-rsc\lib\RSCRuntime.js134142289640801755 0
 166C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\runtime-rsc\src134142289646388887 1
 193C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\font-variant-numeric.js134142289850878314 0
-142C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\package.json134142295319219416 0
+142C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\package.json134142295654437674 0
 169C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\utility-types\package.json134142289663339620 0
 168C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\optimizer-svg\lib134142289636065596 1
 183C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\reporter-cli\src\bundleReport.js134142289639961254 0
@@ -118,18 +128,11 @@
 169C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\esm\_using.js134142289772719634 0
 202C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb-data-v1\libraries\liblmdb\mdb_copy.c134142289728958044 0
 151C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\src\sass\_recipe.scss134080895822819201 0
-153C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\is-extglob134142289647546286 1
-180C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\wasm-gc.js134142289867755238 0
-171C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\type-fest\source\except.d.ts134142289689183406 0
-167C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\escalade\sync\index.d.ts134142289670279947 0
-151C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\src\sass\_upload.scss134080895823724062 0
-161C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\utility-types\dist134142289701710795 1
-174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\IT.js134142289854824778 0
-190C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-json\lib\JSONTransformer.js134142289637927681 0
-192C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb\libraries\liblmdb\Doxyfile134142289666445813 0
 147C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\src\img\icons.svg134080895820279295 0
 179C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\ordered-binary\assets\powers-dre.png134142289684962928 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\PF.js134142289860154389 0
+165C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\compressor-raw134142289649476496 1
+149C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@iarna134142288972005788 1
 182C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\node_modules\node-addon-api\napi.h134142289684632924 0
 189C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\domcontentloaded.js134142289846321453 0
 184C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\src\_array_without_holes.mjs134142289828993923 0
@@ -138,11 +141,9 @@
 183C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\profiler\src\SamplingProfiler.js134142289662125579 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\BD.js134142289740021709 0
 146C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\src\img\logo.png134080895820594422 0
-165C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\compressor-raw134142289649476496 1
-149C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@iarna134142288972005788 1
 175C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\src\_call_super.mjs134142289829145509 0
 147C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\.bin134142289869715247 1
-161C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\.package-lock.json134142289918875338 0
+161C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\.package-lock.json134150895547717042 0
 196C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\background-position-x-y.js134142289733602493 0
 151C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\escalade134142289667261537 1
 192C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\css-read-only-write.js134142289783463370 0
@@ -175,7 +176,7 @@
 199C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb-data-v1\libraries\liblmdb\tooltag134142289701272359 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\PL.js134142289860371185 0
 176C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\utils\test\config.test.js134142289687886898 0
-148C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@lmdb134142289914982902 1
+148C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@lmdb134150895542797862 1
 164C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\react-refresh\LICENSE134142289627652366 0
 186C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\link-icon-svg.js134142289856208255 0
 152C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@mischnic134142289608755054 1
@@ -186,7 +187,7 @@
 154C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\detect-libc134142289661581645 1
 196C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\document-evaluate-xpath.js134142289845744045 0
 167C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_identity134142289783870005 1
-160C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@msgpackr-extract134142289914975365 1
+160C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@msgpackr-extract134150895542787140 1
 187C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\css-line-clamp.js134142289774332186 0
 187C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_to_property_key\package.json134142289786423235 0
 148C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\clone134142289661540919 1
@@ -200,7 +201,7 @@
 193C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\css-case-insensitive.js134142289769170449 0
 185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\PublicDependency.test.js134142289767745874 0
 170C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\graph\src\BitSet.js134142289669995729 0
-147C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc134142289915001616 1
+147C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc134150895542777084 1
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\GM.js134142289851781014 0
 172C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\update-browserslist-db\cli.js134142289642064196 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\SA.js134142289861925497 0
@@ -210,7 +211,7 @@
 165C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\safe-buffer\index.d.ts134142289656126070 0
 202C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_class_check_private_static_field_descriptor134142289778147056 1
 183C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\source-map\dist\wasm-bindings.js134142289699551447 0
-150C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel134142289915033186 1
+150C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel134150895542787140 1
 181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\types-internal\src\FilePath.js134142289662019519 0
 176C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\cjs\_export_star.cjs134142289729881884 0
 154C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\ansi-styles134142289653614042 1
@@ -454,12 +455,12 @@
 181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\utility-types\dist\mapped-types.js.map134142289670269955 0
 167C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\sass\types\importer.d.ts134142288958462675 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\RU.js134142289861825404 0
+180C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\utility-types\dist\utility-types.d.ts134142289702464495 0
+185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\script-defer.js134142289864426362 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\HT.js134142289852737721 0
 184C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\canvas-text.js134142289754184589 0
 181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\promises.js134142289860741178 0
 219C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\msgpackr-extract\node_modules\.bin\node-gyp-build-optional-packages-test.cmd134142289869820600 0
-180C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\utility-types\dist\utility-types.d.ts134142289702464495 0
-185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\script-defer.js134142289864426362 0
 178C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\utility-types\dist\utility-types.js134142289661835570 0
 160C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\parcel\lib\cli.js134142289653939545 0
 176C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\electron-to-chromium\package.json134142289677348799 0
@@ -542,6 +543,7 @@
 193C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\utils\test\input\sourcemap\no-sourcemap.js134142289732042698 0
 164C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\msgpackr\dist\test.js134142289720768984 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\type-fest\ts41\pascal-case.d.ts134142289720589005 0
+181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\src\legacy.js134142295653518561 0
 159C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\semver\README.md134142289730405109 0
 164C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\sass\sass.default.cjs134142288932749048 0
 200C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb-data-v1\libraries\liblmdb\mtest6.c134142289751559528 0
@@ -558,9 +560,9 @@
 201C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_class_apply_descriptor_update\package.json134142289777379796 0
 170C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\type-fest\source\basic.d.ts134142289664026600 0
 191C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\link-rel-prerender.js134142289856411700 0
+160C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\react-refresh\cjs134142289662314293 1
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\AI.js134142289690544217 0
 159C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\msgpackr\LICENSE134142289628882365 0
-160C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\react-refresh\cjs134142289662314293 1
 183C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\type-fest\source\conditional-except.d.ts134142289667285659 0
 200C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\src\_class_static_private_field_spec_get.mjs134142289831485606 0
 161C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\chokidar\README.md134142288951162703 0
@@ -1289,6 +1291,7 @@
 158C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\caching.js134142289768340200 0
 192C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb\libraries\liblmdb\mtest2.c134142289745646079 0
 160C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies134142289767305903 1
+154C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\starter.62406edb.js134142296976264463 0
 159C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\json5\lib\cli.js134142289634160010 0
 197C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\targets-default-distdir-two134142289783163392 1
 191C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\css-matches-pseudo.js134142289778728063 0
@@ -1444,6 +1447,7 @@
 202C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb-data-v1\libraries\liblmdb\mdb_dump.1134142289714483207 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\regions\GD.js134142289851270993 0
 202C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb-data-v1\libraries\liblmdb\mdb_dump.c134142289729912142 0
+152C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\logo.726d37a8.png134150914948948009 0
 202C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\lmdb\dependencies\lmdb-data-v1\libraries\liblmdb\mdb_load.1134142289720499093 0
 179C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_type_of\package.json134142289787703173 0
 181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\esm\_non_iterable_rest.js134142289769841918 0
@@ -2428,6 +2432,7 @@
 191C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\speech-recognition.js134142289865171183 0
 193C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\spellcheck-attribute.js134142289865241679 0
 184C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\sql-storage.js134142289865271137 0
+155C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\starter.f7626f62.css134150914948925437 0
 194C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\config-extends-not-found134142289694596633 1
 181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\caniuse-lite\data\features\temporal.js134142289866039715 0
 189C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\application-targets134142289777849915 1
@@ -2551,6 +2556,7 @@
 172C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\cjs\_dispose.cjs134142289729597651 0
 185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_apply_decorated_descriptor134142289773509330 1
 183C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_async_generator_delegate134142289774275320 1
+145C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\index.html134150899488599590 0
 173C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_async_iterator134142289774462199 1
 188C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\_\_get_prototype_of\package.json134142289783713355 0
 176C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\public\Target.js134142289771694177 0
@@ -2789,6 +2795,7 @@
 175C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\esm\_export_star.js134142289767295911 0
 172C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\esm\_identity.js134142289767536703 0
 178C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\esm\_inherits_loose.js134142289767636812 0
+155C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\favicon.8b2f57bf.png134150914948976208 0
 190C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\esm\_initializer_warning_helper.js134142289768350105 0
 187C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\esm\_interop_require_default.js134142289768600406 0
 188C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@swc\helpers\esm\_interop_require_wildcard.js134142289768710625 0
@@ -2950,6 +2957,8 @@
 170C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-postcss134142289670120593 1
 171C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-posthtml134142289661848522 1
 181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-react-refresh-wrap134142289666116478 1
+177C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\RequestTracker.js134142289769130534 0
+167C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass134142295654242509 1
 185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\packager-js\src\CJSOutputFormat.js134142289646558905 0
 156C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\types134142289647812500 1
 165C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\types-internal134142289692526163 1
@@ -3011,6 +3020,7 @@
 169C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\watcher\wrapper.js134142289729657550 0
 182C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\src\ParcelConfig.schema.js134142289765493380 0
 173C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\watcher\src\Backend.cc134142289637191282 0
+159C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\starter.f7626f62.css.map134150914949526215 0
 173C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\watcher\src\Backend.hh134142289714073055 0
 173C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\watcher\src\binding.cc134142289644271384 0
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\watcher\src\Debounce.hh134142289720522046 0
@@ -3114,6 +3124,16 @@
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-svg\LICENSE134142289629112407 0
 170C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-svg\src134142289644411385 1
 188C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-svg\src\SVGTransformer.js134142289646209594 0
+171C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\lib134142295653907421 1
+175C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\LICENSE134142295652065576 0
+180C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\package.json134142295654277888 0
+171C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\src134142295653997458 1
+181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\src\modern.js134142295653887559 0
+190C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\src\SassTransformer.js134142295654022811 0
+203C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\main-format-mismatch\package.json134142289782723325 0
+181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\lib\legacy.js134142295653477403 0
+181C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\lib\modern.js134142295653582510 0
+190C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-sass\lib\SassTransformer.js134142295653957418 0
 199C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\package-manager\test\fixtures\has-foo\subpackage134142289728067564 1
 185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-react-refresh-wrap\lib134142289656351278 1
 185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\transformer-react-refresh-wrap\src134142289662796017 1
@@ -3217,6 +3237,7 @@
 168C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\rust\lib\utils.js134142289664516575 0
 177C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\runtime-service-worker\lib134142289636049022 1
 201C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\runtime-service-worker\src\ServiceWorkerRuntime.js134142289646629021 0
+153C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\icons.21bad73c.svg134150914951336495 0
 166C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\runtime-rsc\lib134142289636029681 1
 183C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\default-serve134142289780250834 1
 180C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\runtime-rsc\src\RSCRuntime.js134142289648646298 0
@@ -3485,7 +3506,6 @@
 233C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\plugins\node_modules\parcel-transformer-no-engines\package.json134142289782953365 0
 234C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\plugins\node_modules\parcel-transformer-bad-engines\package.json134142289782903372 0
 185C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\parcel\other.js134142289756052795 0
-203C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\main-format-mismatch\package.json134142289782723325 0
 203C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\local-plugin-config-pkg\.parcelrc134142289687313885 0
 226C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\test\fixtures\local-plugin-config-pkg\node_modules\parcel-config-local134142289782623387 1
 174C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\Environment.js134142289745676677 0
@@ -3515,6 +3535,7 @@
 173C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\src\AssetGraph.js134142289720626399 0
 173C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\src\assetUtils.js134142289727461386 0
 182C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\src\dumpGraphToGraphViz.js134142289745193888 0
+154C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\starter.4a59a05f.js134150914951476039 0
 168C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\src\index.js134142289746543494 0
 168C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\requests134142289774352996 1
 173C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\src\loadDotEnv.js134142289753257901 0
@@ -3548,8 +3569,8 @@
 173C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\loadDotEnv.js134142289752814236 0
 173C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\cache\lib\LMDBCache.js134142289669950297 0
 166C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\public134142289771681780 1
+158C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\starter.3464ddca.js.map134142296976384469 0
 177C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\ReporterRunner.js134142289768823977 0
-177C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\RequestTracker.js134142289769130534 0
 177C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\resolveOptions.js134142289769989502 0
 177C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\serializerCore.js134142289770761976 0
 186C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\@parcel\core\lib\TargetDescriptor.schema.js134142289771983872 0
@@ -3626,3 +3647,6 @@
 158C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\.bin\parcel.ps1134142289869725216 0
 152C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\.bin\sass134142288959386776 0
 158C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\node_modules\.bin\semver.ps1134142289869740854 0
+154C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\starter.3464ddca.js134142296976335895 0
+158C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\starter.4a59a05f.js.map134150914952846130 0
+158C:\Users\Exaze\OneDrive - EXAZEIT\Desktop\training_course_report\Java Script\complete-javascript-course-master\18-forkify\starter\dist\starter.62406edb.js.map134142296976314496 0
