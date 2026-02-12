@@ -88,142 +88,18 @@ CREATE TABLE `users` (
   CONSTRAINT `username` UNIQUE (`username`)
 )
 
--- CREATE TABLE refresh_tokens (
---   id INT AUTO_INCREMENT PRIMARY KEY,
---   user_id INT NOT NULL,
---   token VARCHAR(255) NOT NULL,
---   expires_at DATETIME NOT NULL,
---   is_revoked BOOLEAN DEFAULT 0,
---   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---   FOREIGN KEY (user_id) REFERENCES users(user_id)
--- );
+CREATE TABLE refresh_tokens (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  expires_at DATETIME NOT NULL,
+  is_revoked BOOLEAN DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 
 
 ENGINE = InnoDB;
-
-CREATE TABLE `loan_requests` ( 
-  `loan_id` INT AUTO_INCREMENT NOT NULL,
-  `customer_id` INT NOT NULL,
-  `branch_id` INT NOT NULL,
-  `amount` DECIMAL(12,2) NOT NULL,
-  `tenure_months` INT NOT NULL,
-  `purpose` VARCHAR(255) NULL,
-  `status` ENUM('REQUESTED','EMPLOYEE_APPROVED','EMPLOYEE_REJECTED','MANAGER_APPROVED','MANAGER_REJECTED') NOT NULL DEFAULT 'REQUESTED' ,
-  `employee_id` INT NULL,
-  `manager_id` INT NULL,
-  `employee_comment` TEXT NULL,
-  `manager_comment` TEXT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
-  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
-   PRIMARY KEY (`loan_id`),
-   KEY `idx_loan_customer_branch` (`customer_id`,`branch_id`),
-   KEY `idx_loan_status` (`status`),
-   KEY `idx_loan_employee` (`employee_id`),
-   KEY `idx_loan_manager` (`manager_id`),
-   CONSTRAINT `fk_loan_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
-   CONSTRAINT `fk_loan_branch` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`),
-   CONSTRAINT `fk_loan_employee` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`),
-   CONSTRAINT `fk_loan_manager` FOREIGN KEY (`manager_id`) REFERENCES `employees` (`employee_id`)
-)
-ENGINE = InnoDB;
-
-CREATE TABLE `loan_status_history` ( 
-  `history_id` BIGINT AUTO_INCREMENT NOT NULL,
-  `loan_id` INT NOT NULL,
-  `changed_by_user_id` INT NULL,
-  `changed_by_role` ENUM('CUSTOMER','EMPLOYEE','MANAGER','SYSTEM') NOT NULL DEFAULT 'SYSTEM' ,
-  `from_status` ENUM('REQUESTED','EMPLOYEE_APPROVED','EMPLOYEE_REJECTED','MANAGER_APPROVED','MANAGER_REJECTED') NULL,
-  `to_status` ENUM('REQUESTED','EMPLOYEE_APPROVED','EMPLOYEE_REJECTED','MANAGER_APPROVED','MANAGER_REJECTED') NOT NULL,
-  `comment` TEXT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
-   PRIMARY KEY (`history_id`),
-   KEY `idx_history_loan` (`loan_id`),
-   CONSTRAINT `fk_history_loan` FOREIGN KEY (`loan_id`) REFERENCES `loan_requests` (`loan_id`) ON DELETE CASCADE,
-   CONSTRAINT `fk_history_user` FOREIGN KEY (`changed_by_user_id`) REFERENCES `users` (`user_id`)
-)
-ENGINE = InnoDB;
-
-DELIMITER $$
-
-CREATE TRIGGER `loan_requests_status_guard`
-BEFORE UPDATE ON `loan_requests`
-FOR EACH ROW
-BEGIN
-  IF NEW.status <> OLD.status THEN
-    IF OLD.status = 'REQUESTED' THEN
-      IF NEW.status NOT IN ('EMPLOYEE_APPROVED','EMPLOYEE_REJECTED') THEN
-        SIGNAL SQLSTATE '45000'
-          SET MESSAGE_TEXT = 'Invalid transition from REQUESTED';
-      END IF;
-    ELSEIF OLD.status = 'EMPLOYEE_APPROVED' THEN
-      IF NEW.status NOT IN ('MANAGER_APPROVED','MANAGER_REJECTED') THEN
-        SIGNAL SQLSTATE '45000'
-          SET MESSAGE_TEXT = 'Invalid transition from EMPLOYEE_APPROVED';
-      END IF;
-    ELSE
-      SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Loan request is already finalized';
-    END IF;
-
-    IF NEW.status IN ('EMPLOYEE_APPROVED','EMPLOYEE_REJECTED') AND NEW.employee_id IS NULL THEN
-      SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'employee_id is required when an employee acts on a loan';
-    END IF;
-
-    IF NEW.status IN ('MANAGER_APPROVED','MANAGER_REJECTED') AND NEW.manager_id IS NULL THEN
-      SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'manager_id is required when a manager acts on a loan';
-    END IF;
-  END IF;
-END$$
-
-CREATE TRIGGER `loan_requests_after_insert_history`
-AFTER INSERT ON `loan_requests`
-FOR EACH ROW
-BEGIN
-  DECLARE v_user_id INT;
-  SET v_user_id = (SELECT c.user_id FROM customers c WHERE c.customer_id = NEW.customer_id);
-
-  INSERT INTO loan_status_history (
-    loan_id, changed_by_user_id, changed_by_role, from_status, to_status, comment, created_at
-  ) VALUES (
-    NEW.loan_id, v_user_id, 'CUSTOMER', NULL, NEW.status, NULL, CURRENT_TIMESTAMP
-  );
-END$$
-
-CREATE TRIGGER `loan_requests_after_update_history`
-AFTER UPDATE ON `loan_requests`
-FOR EACH ROW
-BEGIN
-  DECLARE v_user_id INT;
-  DECLARE v_role VARCHAR(10);
-  DECLARE v_comment TEXT;
-
-  IF NEW.status <> OLD.status THEN
-    IF NEW.status IN ('EMPLOYEE_APPROVED','EMPLOYEE_REJECTED') THEN
-      SET v_user_id = (SELECT e.user_id FROM employees e WHERE e.employee_id = NEW.employee_id);
-      SET v_role = 'EMPLOYEE';
-      SET v_comment = NEW.employee_comment;
-    ELSEIF NEW.status IN ('MANAGER_APPROVED','MANAGER_REJECTED') THEN
-      SET v_user_id = (SELECT e.user_id FROM employees e WHERE e.employee_id = NEW.manager_id);
-      SET v_role = 'MANAGER';
-      SET v_comment = NEW.manager_comment;
-    ELSE
-      SET v_user_id = (SELECT c.user_id FROM customers c WHERE c.customer_id = NEW.customer_id);
-      SET v_role = 'CUSTOMER';
-      SET v_comment = NULL;
-    END IF;
-
-    INSERT INTO loan_status_history (
-      loan_id, changed_by_user_id, changed_by_role, from_status, to_status, comment, created_at
-    ) VALUES (
-      NEW.loan_id, v_user_id, v_role, OLD.status, NEW.status, v_comment, CURRENT_TIMESTAMP
-    );
-  END IF;
-END$$
-
-DELIMITER ;
-
 INSERT INTO `accounts` (`account_id`, `customer_id`, `account_number`, `account_type`, `balance`, `status`, `updated_at`) VALUES (1, 1, 'ACC1000000002', 'SAVINGS', '27000.00', 'ACTIVE', '2026-01-29 16:21:01');
 INSERT INTO `accounts` (`account_id`, `customer_id`, `account_number`, `account_type`, `balance`, `status`, `updated_at`) VALUES (2, 1, 'ACC1000000003', 'CURRENT', '51000.00', 'ACTIVE', '2026-01-29 16:21:01');
 INSERT INTO `accounts` (`account_id`, `customer_id`, `account_number`, `account_type`, `balance`, `status`, `updated_at`) VALUES (3, 2, 'ACC1000000004', 'SAVINGS', '35000.00', 'ACTIVE', '2026-01-29 15:52:38');
@@ -1200,6 +1076,133 @@ BEGIN
     COMMIT;
     
     SELECT 'SUCCESS' as status, v_ref as reference_number;
+END$$
+
+DELIMITER ;
+
+
+
+
+
+CREATE TABLE `loan_requests` ( 
+  `loan_id` INT AUTO_INCREMENT NOT NULL,
+  `customer_id` INT NOT NULL,
+  `branch_id` INT NOT NULL,
+  `amount` DECIMAL(12,2) NOT NULL,
+  `tenure_months` INT NOT NULL,
+  `purpose` VARCHAR(255) NULL,
+  `status` ENUM('REQUESTED','EMPLOYEE_APPROVED','EMPLOYEE_REJECTED','MANAGER_APPROVED','MANAGER_REJECTED') NOT NULL DEFAULT 'REQUESTED' ,
+  `employee_id` INT NULL,
+  `manager_id` INT NULL,
+  `employee_comment` TEXT NULL,
+  `manager_comment` TEXT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
+   PRIMARY KEY (`loan_id`),
+   KEY `idx_loan_customer_branch` (`customer_id`,`branch_id`),
+   KEY `idx_loan_status` (`status`),
+   KEY `idx_loan_employee` (`employee_id`),
+   KEY `idx_loan_manager` (`manager_id`),
+   CONSTRAINT `fk_loan_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
+   CONSTRAINT `fk_loan_branch` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`branch_id`),
+   CONSTRAINT `fk_loan_employee` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`),
+   CONSTRAINT `fk_loan_manager` FOREIGN KEY (`manager_id`) REFERENCES `employees` (`employee_id`)
+)
+ENGINE = InnoDB;
+
+CREATE TABLE `loan_status_history` ( 
+  `history_id` BIGINT AUTO_INCREMENT NOT NULL,
+  `loan_id` INT NOT NULL,
+  `changed_by_user_id` INT NULL,
+  `changed_by_role` ENUM('CUSTOMER','EMPLOYEE','MANAGER','SYSTEM') NOT NULL DEFAULT 'SYSTEM' ,
+  `from_status` ENUM('REQUESTED','EMPLOYEE_APPROVED','EMPLOYEE_REJECTED','MANAGER_APPROVED','MANAGER_REJECTED') NULL,
+  `to_status` ENUM('REQUESTED','EMPLOYEE_APPROVED','EMPLOYEE_REJECTED','MANAGER_APPROVED','MANAGER_REJECTED') NOT NULL,
+  `comment` TEXT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+   PRIMARY KEY (`history_id`),
+   KEY `idx_history_loan` (`loan_id`),
+   CONSTRAINT `fk_history_loan` FOREIGN KEY (`loan_id`) REFERENCES `loan_requests` (`loan_id`) ON DELETE CASCADE,
+   CONSTRAINT `fk_history_user` FOREIGN KEY (`changed_by_user_id`) REFERENCES `users` (`user_id`)
+)
+ENGINE = InnoDB;
+
+DELIMITER $$
+
+CREATE TRIGGER `loan_requests_status_guard`
+BEFORE UPDATE ON `loan_requests`
+FOR EACH ROW
+BEGIN
+  IF NEW.status <> OLD.status THEN
+    IF OLD.status = 'REQUESTED' THEN
+      IF NEW.status NOT IN ('EMPLOYEE_APPROVED','EMPLOYEE_REJECTED') THEN
+        SIGNAL SQLSTATE '45000'
+          SET MESSAGE_TEXT = 'Invalid transition from REQUESTED';
+      END IF;
+    ELSEIF OLD.status = 'EMPLOYEE_APPROVED' THEN
+      IF NEW.status NOT IN ('MANAGER_APPROVED','MANAGER_REJECTED') THEN
+        SIGNAL SQLSTATE '45000'
+          SET MESSAGE_TEXT = 'Invalid transition from EMPLOYEE_APPROVED';
+      END IF;
+    ELSE
+      SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Loan request is already finalized';
+    END IF;
+
+    IF NEW.status IN ('EMPLOYEE_APPROVED','EMPLOYEE_REJECTED') AND NEW.employee_id IS NULL THEN
+      SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'employee_id is required when an employee acts on a loan';
+    END IF;
+
+    IF NEW.status IN ('MANAGER_APPROVED','MANAGER_REJECTED') AND NEW.manager_id IS NULL THEN
+      SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'manager_id is required when a manager acts on a loan';
+    END IF;
+  END IF;
+END$$
+
+CREATE TRIGGER `loan_requests_after_insert_history`
+AFTER INSERT ON `loan_requests`
+FOR EACH ROW
+BEGIN
+  DECLARE v_user_id INT;
+  SET v_user_id = (SELECT c.user_id FROM customers c WHERE c.customer_id = NEW.customer_id);
+
+  INSERT INTO loan_status_history (
+    loan_id, changed_by_user_id, changed_by_role, from_status, to_status, comment, created_at
+  ) VALUES (
+    NEW.loan_id, v_user_id, 'CUSTOMER', NULL, NEW.status, NULL, CURRENT_TIMESTAMP
+  );
+END$$
+
+CREATE TRIGGER `loan_requests_after_update_history`
+AFTER UPDATE ON `loan_requests`
+FOR EACH ROW
+BEGIN
+  DECLARE v_user_id INT;
+  DECLARE v_role VARCHAR(10);
+  DECLARE v_comment TEXT;
+
+  IF NEW.status <> OLD.status THEN
+    IF NEW.status IN ('EMPLOYEE_APPROVED','EMPLOYEE_REJECTED') THEN
+      SET v_user_id = (SELECT e.user_id FROM employees e WHERE e.employee_id = NEW.employee_id);
+      SET v_role = 'EMPLOYEE';
+      SET v_comment = NEW.employee_comment;
+    ELSEIF NEW.status IN ('MANAGER_APPROVED','MANAGER_REJECTED') THEN
+      SET v_user_id = (SELECT e.user_id FROM employees e WHERE e.employee_id = NEW.manager_id);
+      SET v_role = 'MANAGER';
+      SET v_comment = NEW.manager_comment;
+    ELSE
+      SET v_user_id = (SELECT c.user_id FROM customers c WHERE c.customer_id = NEW.customer_id);
+      SET v_role = 'CUSTOMER';
+      SET v_comment = NULL;
+    END IF;
+
+    INSERT INTO loan_status_history (
+      loan_id, changed_by_user_id, changed_by_role, from_status, to_status, comment, created_at
+    ) VALUES (
+      NEW.loan_id, v_user_id, v_role, OLD.status, NEW.status, v_comment, CURRENT_TIMESTAMP
+    );
+  END IF;
 END$$
 
 DELIMITER ;

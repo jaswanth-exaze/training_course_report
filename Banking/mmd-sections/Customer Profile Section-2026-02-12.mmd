@@ -1,0 +1,29 @@
+﻿sequenceDiagram
+    autonumber
+    participant U as Customer (Browser)
+    participant API as Customer API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over U, DB: CUSTOMER PROFILE SECTION
+
+    rect rgb(240, 248, 255)
+        note right of API: 1. Authenticated Request
+        U->>API: GET /customer/profile (Authorization: Bearer token)
+        API->>API: verifyToken + checkRole(CUSTOMER)
+    end
+
+    rect rgb(255, 250, 240)
+        note right of API: 2. Profile Query
+        API->>DB: SELECT u.username, c.first_name, c.last_name, c.email, c.phone,<br/>b.branch_name, b.branch_code, CONCAT(b.city, ',', b.state) AS branch_address<br/>FROM users u JOIN customers c ON u.user_id=c.user_id<br/>JOIN branches b ON u.branch_id=b.branch_id WHERE u.user_id=?
+        alt Query error
+            DB-->>API: SQL error
+            API-->>U: 500 { message }
+        else Query success
+            DB-->>API: Single profile row
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of API: 3. API Response
+        API-->>U: 200 OK { profile }
+    end

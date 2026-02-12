@@ -1,0 +1,44 @@
+﻿sequenceDiagram
+    autonumber
+    participant U as User (Dashboard)
+    participant FE as Frontend auth.js wrapper
+    participant API as Backend API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over U, DB: SESSION EXPIRY AND RETRY SECTION
+
+    rect rgb(240, 248, 255)
+        note right of FE: 1. Initial Protected API Call
+        U->>FE: Trigger protected API request
+        FE->>API: Request with Authorization: Bearer token
+        API->>API: verifyToken(jwt)
+    end
+
+    rect rgb(255, 250, 240)
+        note right of API: 2. Expiry Handling + Refresh Attempt
+        alt Access token expired or invalid
+            API-->>FE: 401 { message }
+            FE->>API: POST /auth/refresh (Cookie: refreshToken)
+            API->>DB: Validate/lock refresh token row and rotate token pair
+            alt Refresh succeeds
+                API-->>FE: 200 { token, role } + Set-Cookie(new refreshToken)
+            else Refresh fails
+                API-->>FE: 401 { message }
+            end
+        else Access token valid
+            API-->>FE: 200 Protected resource
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of FE: 3. Frontend Outcome
+        alt Refresh succeeded
+            FE->>FE: Save new token + role in localStorage
+            FE->>API: Retry original request with new token
+            API-->>FE: 200 Protected resource
+            FE-->>U: Continue on same page
+        else Refresh failed
+            FE->>FE: Clear token and role, save one-time message
+            FE-->>U: Redirect to /login.html
+        end
+    end

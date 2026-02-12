@@ -1,0 +1,69 @@
+﻿sequenceDiagram
+    autonumber
+    participant U as Browser (Client)
+    participant API as Auth Service (Node.js)
+    participant DB as MySQL Database
+
+    note over U, DB: AUTH SESSION FLOW (LOGIN -> REFRESH ROTATION -> LOGOUT)
+
+    rect rgb(240, 248, 255)
+        note right of API: 1. Initial Login
+        U->>API: POST /auth/login (credentials)
+        API->>API: Validate username/password
+        API->>API: Generate access token + refresh token
+        API->>API: Hash refresh token (SHA-256)
+        API->>DB: INSERT refresh_tokens(user_id, token, expires_at, is_revoked=false)
+        API-->>U: 200 OK { token, role } + Set-Cookie: refreshToken
+    end
+
+    note over U, DB: ... Access Token Expires ...
+
+    rect rgb(240, 248, 255)
+        note right of API: 2. Refresh Request Validation
+        U->>API: POST /auth/refresh (Cookie: refreshToken)
+        API->>API: Check cookie exists
+        API->>API: verifyRefreshToken(token) (JWT signature)
+        API->>API: Hash incoming token (SHA-256)
+    end
+
+    rect rgb(255, 250, 240)
+        note right of API: 3. Refresh Token Rotation Transaction
+        API->>DB: connection.beginTransaction()
+        API->>DB: SELECT id, expires_at FROM refresh_tokens<br/>WHERE token=? AND user_id=? AND is_revoked=false<br/>LIMIT 1 FOR UPDATE
+
+        alt Token not found or revoked
+            DB-->>API: Empty result
+            API->>DB: connection.rollback()
+            API-->>U: 401 "Refresh token not recognized"
+        else Token found
+            DB-->>API: { id, expires_at }
+            alt Token expired
+                API->>DB: connection.rollback()
+                API-->>U: 401 "Refresh token expired"
+            else Token valid
+                API->>DB: SELECT u.user_id, u.branch_id, r.role_name<br/>FROM users u JOIN roles r ON u.role_id=r.role_id<br/>WHERE u.user_id=? AND u.is_active=1
+                alt User not found or inactive
+                    DB-->>API: Empty result
+                    API->>DB: connection.rollback()
+                    API-->>U: 401 "User not found"
+                else User active
+                    API->>API: Generate next access token + next refresh token
+                    API->>API: Hash next refresh token
+                    API->>DB: UPDATE refresh_tokens SET is_revoked=true WHERE id=?
+                    API->>DB: INSERT refresh_tokens(user_id, token, expires_at, is_revoked=false)
+                    API->>DB: connection.commit()
+                    API-->>U: 200 OK { token, role } + Set-Cookie: newRefreshToken
+                end
+            end
+        end
+
+        API->>DB: connection.release()
+    end
+
+    rect rgb(245, 255, 245)
+        note right of API: 4. Logout / Revocation
+        U->>API: POST /auth/logout (Cookie: refreshToken)
+        API->>API: Hash incoming token (SHA-256)
+        API->>DB: UPDATE refresh_tokens SET is_revoked=true WHERE token=?
+        API-->>U: 200 OK { message } + Clear-Cookie: refreshToken
+    end

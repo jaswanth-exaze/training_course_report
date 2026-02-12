@@ -1,0 +1,50 @@
+﻿sequenceDiagram
+    autonumber
+    participant U as Customer (Browser)
+    participant FE as Customer Dashboard JS
+    participant API as Loan API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over U, DB: CUSTOMER LOANS SECTION
+
+    note over U, DB: 1. APPLY LOAN
+    rect rgb(240, 248, 255)
+        U->>FE: Submit loan form (amount, tenure_months, purpose)
+        FE->>FE: Validate amount > 0 and tenure_months present
+        FE->>API: POST /customer/applyLoan (Authorization: Bearer token)
+        API->>API: verifyToken + checkRole(CUSTOMER)
+        alt Missing amount or tenure_months
+            API-->>FE: 400 { message }
+            FE-->>U: Show validation error
+        end
+    end
+
+    rect rgb(255, 250, 240)
+        note right of DB: Loan Creation + History Trigger
+        API->>DB: INSERT INTO loan_requests (...) SELECT customer_id FROM customers WHERE user_id=?
+        DB->>DB: Trigger loan_requests_after_insert_history
+        DB->>DB: INSERT loan_status_history (to_status=REQUESTED)
+        DB-->>API: loan_id
+    end
+
+    rect rgb(245, 255, 245)
+        API-->>FE: 201 { message: "Loan request submitted", loan_id }
+        FE-->>U: Show submit success
+    end
+
+    note over U, DB: 2. VIEW MY LOANS
+    rect rgb(240, 248, 255)
+        U->>FE: Open loans tab
+        FE->>API: GET /customer/getLoans (Authorization: Bearer token)
+        API->>API: verifyToken + checkRole(CUSTOMER)
+    end
+
+    rect rgb(255, 250, 240)
+        API->>DB: SELECT lr.* FROM loan_requests lr JOIN customers c ON lr.customer_id=c.customer_id WHERE c.user_id=?
+        DB-->>API: Loan rows
+    end
+
+    rect rgb(245, 255, 245)
+        API-->>FE: 200 [loans]
+        FE-->>U: Render loan statuses and comments
+    end

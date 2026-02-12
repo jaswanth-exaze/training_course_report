@@ -1,0 +1,73 @@
+sequenceDiagram
+    autonumber
+    participant U as User/Browser
+    participant API as Auth Service (Node.js)
+    participant DB as Database (MySQL)
+
+    note over U, DB: 1. INITIAL LOGIN FLOW
+    U->>API: POST /auth/login (credentials)
+    API->>API: Generate Access Token (1h)
+    API->>API: Generate Refresh Token (7d)
+    API->>API: Hash Refresh Token (SHA-256)
+    API->>DB: INSERT INTO refresh_tokens (hash, user_id, expires_at, is_revoked=0)
+    API-->>U: 200 OK { accessToken } + Set-Cookie: refreshToken (HttpOnly)
+
+    note over U, DB: ... Time Passes (Access Token Expires) ...
+
+    note over U, DB: 2. DETAILED REFRESH ROTATION FLOW (Transaction)
+    U->>API: POST /auth/refresh (Cookie: refreshToken)
+    
+    note right of API: Step A: Input Validation
+    API->>API: Check if cookie exists
+    API->>API: verifyRefreshToken(token) (Check JWT Signature)
+    API->>API: Hash incoming token (SHA-256)
+
+    note right of API: Step B: DB Transaction Start
+    API->>DB: connection.beginTransaction()
+    
+    note right of API: Step C: Lock Row
+    API->>DB: SELECT id, expires_at FROM refresh_tokens<br/>WHERE token=? AND user=? AND revoked=0<br/>LIMIT 1 FOR UPDATE
+    
+    alt Token Not Found or Already Revoked
+        DB-->>API: Empty Result
+        API->>DB: connection.rollback()
+        API-->>U: Error: "Refresh token not recognized"
+    else Token Found
+        DB-->>API: Returns { id, expires_at }
+    end
+
+    note right of API: Step D: Logic Checks
+    alt Token Expired (expires_at <= NOW)
+        API->>DB: connection.rollback()
+        API-->>U: Error: "Refresh token expired"
+    end
+
+    API->>DB: SELECT user_id, role, branch FROM users<br/>WHERE id=? AND is_active=1
+    
+    alt User Not Found or Inactive
+        DB-->>API: Empty Result
+        API->>DB: connection.rollback()
+        API-->>U: Error: "User not found"
+    end
+
+    note right of API: Step E: Generate & Rotate
+    API->>API: Generate NEW Access Token
+    API->>API: Generate NEW Refresh Token
+    API->>API: Hash NEW Refresh Token
+
+    API->>DB: UPDATE refresh_tokens SET is_revoked=true WHERE id=old_token_id
+    API->>DB: INSERT INTO refresh_tokens (new_hash, ... is_revoked=0)
+    
+    API->>DB: connection.commit()
+    API->>DB: connection.release()
+
+    API-->>U: 200 OK { newAccessToken } + Set-Cookie: newRefreshToken
+
+    note over U, DB: ... User Clicks Logout ...
+
+    note over U, DB: 3. LOGOUT FLOW (Revocation)
+    U->>API: POST /auth/logout (Cookie: refreshToken)
+    API->>API: Hash incoming token (SHA-256)
+    API->>DB: UPDATE refresh_tokens SET is_revoked=true WHERE token=?
+    API-->>U: 200 OK (Clear Cookie)
+    U->>U: Clear localStorage (Access Token)

@@ -1,0 +1,28 @@
+﻿sequenceDiagram
+    autonumber
+    participant U as Customer (Browser)
+    participant API as Customer API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over U, DB: CUSTOMER ACCOUNTS SECTION
+
+    rect rgb(240, 248, 255)
+        note right of API: 1. Authenticated Request
+        U->>API: GET /customer/accounts (Authorization: Bearer token)
+        API->>API: verifyToken + checkRole(CUSTOMER)
+    end
+
+    rect rgb(255, 250, 240)
+        note right of API: 2. Account Query
+        API->>DB: SELECT a.account_id, a.account_number, a.account_type, a.balance, a.status<br/>FROM accounts a JOIN customers c ON a.customer_id=c.customer_id<br/>WHERE c.user_id=?
+        DB-->>API: Account rows
+    end
+
+    rect rgb(245, 255, 245)
+        note right of API: 3. API Response
+        alt Accounts exist
+            API-->>U: 200 OK [accounts]
+        else No mapped account
+            API-->>U: 200 OK []
+        end
+    end

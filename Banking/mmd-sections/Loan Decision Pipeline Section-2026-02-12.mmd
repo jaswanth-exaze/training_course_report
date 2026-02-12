@@ -1,0 +1,107 @@
+﻿sequenceDiagram
+    autonumber
+    participant C as Customer
+    participant E as Employee
+    participant M as Manager
+    participant API as Loan API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over C, DB: LOAN DECISION PIPELINE SECTION
+
+    note over C, DB: 1. Customer Creates Loan Request
+    rect rgb(240, 248, 255)
+        C->>API: POST /customer/applyLoan
+        API->>API: verifyToken + checkRole(CUSTOMER)
+    end
+
+    rect rgb(255, 250, 240)
+        API->>DB: INSERT loan_requests (status=REQUESTED)
+        DB->>DB: Trigger loan_requests_after_insert_history
+        DB->>DB: Insert loan_status_history (NULL -> REQUESTED)
+    end
+
+    rect rgb(245, 255, 245)
+        API-->>C: 201 { loan_id, message }
+    end
+
+    note over E, DB: 2. Employee Review Stage
+    rect rgb(240, 248, 255)
+        E->>API: GET /employee/pendingLoans
+        API->>API: verifyToken + checkRole(EMPLOYEE)
+    end
+
+    rect rgb(255, 250, 240)
+        API->>DB: SELECT * FROM loan_requests WHERE status='REQUESTED' AND branch_id=?
+        DB-->>API: Pending rows
+    end
+
+    rect rgb(245, 255, 245)
+        API-->>E: 200 [loans]
+    end
+
+    rect rgb(240, 248, 255)
+        E->>API: POST /employee/:loanId/decision { action, comment }
+        API->>API: Map action to EMPLOYEE_APPROVED / EMPLOYEE_REJECTED
+    end
+
+    rect rgb(255, 250, 240)
+        API->>DB: UPDATE loan_requests SET status, employee_id, employee_comment
+        DB->>DB: Trigger loan_requests_status_guard validates transition + employee_id
+        DB->>DB: Trigger loan_requests_after_update_history inserts history row
+    end
+
+    rect rgb(245, 255, 245)
+        alt Employee rejects
+            API-->>E: 200 { message: "Loan rejected" }
+            API-->>C: Final status EMPLOYEE_REJECTED
+        else Employee approves
+            API-->>E: 200 { message: "Loan approved" }
+        end
+    end
+
+    note over M, DB: 3. Manager Final Stage (only for EMPLOYEE_APPROVED)
+    rect rgb(240, 248, 255)
+        M->>API: GET /manager/pendingLoans
+        API->>API: verifyToken + checkRole(MANAGER)
+    end
+
+    rect rgb(255, 250, 240)
+        API->>DB: SELECT * FROM loan_requests WHERE status='EMPLOYEE_APPROVED' AND branch_id=?
+        DB-->>API: Pending rows
+    end
+
+    rect rgb(245, 255, 245)
+        API-->>M: 200 [loans]
+    end
+
+    rect rgb(240, 248, 255)
+        M->>API: POST /manager/:loanId/decision { action, comment }
+        API->>API: Map action to MANAGER_APPROVED / MANAGER_REJECTED
+    end
+
+    rect rgb(255, 250, 240)
+        API->>DB: START TRANSACTION
+        API->>DB: SELECT customer_id, amount FROM loan_requests WHERE loan_id=? FOR UPDATE
+        API->>DB: UPDATE loan_requests SET status, manager_id, manager_comment
+        DB->>DB: Trigger loan_requests_status_guard validates transition + manager_id
+        DB->>DB: Trigger loan_requests_after_update_history inserts history row
+
+        alt Manager approves
+            API->>DB: SELECT active customer account (prefer SAVINGS)
+            API->>DB: INSERT CREDIT transaction ('loan amount credited')
+            API->>DB: UPDATE accounts SET balance = balance + loan_amount
+            API->>DB: COMMIT
+        else Manager rejects
+            API->>DB: COMMIT
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        alt Manager approves
+            API-->>M: 200 { message: "Loan approved" }
+            API-->>C: Final status MANAGER_APPROVED + funds credited
+        else Manager rejects
+            API-->>M: 200 { message: "Loan rejected" }
+            API-->>C: Final status MANAGER_REJECTED
+        end
+    end

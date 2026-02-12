@@ -1,0 +1,48 @@
+﻿sequenceDiagram
+    autonumber
+    participant E as Employee (Browser)
+    participant API as Employee API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over E, DB: EMPLOYEE ONBOARD-CUSTOMER SECTION
+
+    rect rgb(240, 248, 255)
+        note right of API: 1. Input Validation and Auth
+        E->>API: POST /employee/onboard-customer (Bearer token + payload)
+        API->>API: verifyToken + checkRole(EMPLOYEE)
+        API->>API: Validate required fields
+        alt Missing required fields
+            API-->>E: 400 { message: "Missing required fields" }
+        end
+    end
+
+    rect rgb(255, 250, 240)
+        note right of DB: 2. Atomic Onboarding Transaction
+        API->>DB: BEGIN TRANSACTION
+        API->>DB: SELECT user_id FROM users WHERE username=?
+        alt Username exists
+            API->>DB: ROLLBACK
+            API-->>E: 400 { message: "Username already exists" }
+        else Username available
+            API->>DB: SELECT customer_id FROM customers WHERE email=?
+            alt Email exists
+                API->>DB: ROLLBACK
+                API-->>E: 400 { message: "Customer already exists" }
+            else Email available
+                API->>API: bcrypt hash(password)
+                API->>DB: INSERT users(role_id=1, branch_id=employee branch)
+                API->>DB: INSERT customers(user_id, profile fields)
+                opt create_account == true
+                    API->>DB: SELECT latest account_number
+                    API->>API: Generate next ACC##########
+                    API->>DB: INSERT accounts(customer_id, account_number, account_type, opening_balance, status='ACTIVE')
+                end
+                API->>DB: COMMIT
+            end
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of API: 3. API Response
+        API-->>E: 201 { message, customer_id, username, account_number? }
+    end

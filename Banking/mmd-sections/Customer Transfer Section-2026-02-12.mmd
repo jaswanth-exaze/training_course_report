@@ -1,0 +1,46 @@
+﻿sequenceDiagram
+    autonumber
+    participant U as Customer (Browser)
+    participant FE as Customer Dashboard JS
+    participant API as Customer API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over U, DB: CUSTOMER TRANSFER SECTION
+
+    rect rgb(240, 248, 255)
+        note right of FE: 1. Client Validation
+        U->>FE: Submit transfer form (fromId, toId, amount, desc)
+        FE->>FE: Validate fields, positive amount, different accounts, balance guard
+        alt Invalid input
+            FE-->>U: Show validation error
+        else Valid input
+            FE->>API: POST /customer/transfer (Authorization: Bearer token)
+            API->>API: verifyToken + checkRole(CUSTOMER)
+        end
+    end
+
+    rect rgb(255, 250, 240)
+        note right of DB: 2. transfer_money Procedure Execution
+        API->>DB: CALL transfer_money(fromId, toId, amount, desc)
+        DB->>DB: SELECT sender balance FOR UPDATE
+        alt Insufficient balance or same account
+            DB-->>API: SQLSTATE 45000 error
+            API-->>FE: 500 { message }
+            FE-->>U: Show transfer failure
+        else Valid transfer
+            DB->>DB: START TRANSACTION
+            DB->>DB: INSERT DEBIT transaction (sender)
+            DB->>DB: INSERT CREDIT transaction (receiver)
+            DB->>DB: UPDATE sender and receiver balances
+            DB->>DB: COMMIT
+            DB-->>API: Procedure success
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of FE: 3. Success Response + UI Refresh
+        API-->>FE: 201 { message: "Amount transferred successfully" }
+        FE->>API: GET /customer/accounts (refresh balances)
+        API-->>FE: 200 [updated accounts]
+        FE-->>U: Show success and updated balance hint
+    end

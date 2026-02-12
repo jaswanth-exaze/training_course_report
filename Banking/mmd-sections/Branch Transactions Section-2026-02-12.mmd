@@ -1,0 +1,33 @@
+﻿sequenceDiagram
+    autonumber
+    participant S as Staff (Employee/Manager UI)
+    participant API as Branch API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over S, DB: BRANCH TRANSACTIONS SECTION
+
+    rect rgb(240, 248, 255)
+        note right of API: 1. Request and Parameter Handling
+        S->>API: GET /employee/transactions or /manager/transactions?page=&limit=&customerId=&userId=
+        API->>API: verifyToken + checkRole(EMPLOYEE or MANAGER)
+        API->>API: Parse page/limit and optional filters
+        API->>API: Compute offset
+    end
+
+    rect rgb(255, 250, 240)
+        note right of DB: 2. Branch-Scoped Data Queries
+        API->>DB: COUNT query with branch-scoped EXISTS filters
+        alt COUNT query fails
+            DB-->>API: SQL error
+            API-->>S: 500 { message }
+        else COUNT query success
+            DB-->>API: total row count
+            API->>DB: SELECT paged rows ORDER BY created_at DESC LIMIT ? OFFSET ?
+            DB-->>API: data rows
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of API: 3. API Response
+        API-->>S: 200 { data, page, limit, total }
+    end

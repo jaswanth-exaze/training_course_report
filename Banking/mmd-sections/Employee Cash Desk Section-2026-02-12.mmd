@@ -1,0 +1,46 @@
+﻿sequenceDiagram
+    autonumber
+    participant E as Employee (Browser)
+    participant API as Employee API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over E, DB: EMPLOYEE CASH DESK SECTION
+
+    rect rgb(240, 248, 255)
+        note right of API: 1. Authenticated Cash Desk Request
+        E->>API: POST /employee/deposit or /employee/withdrawal (Bearer token)
+        API->>API: verifyToken + checkRole(EMPLOYEE)
+    end
+
+    rect rgb(255, 250, 240)
+        note right of DB: 2. Procedure Execution
+        alt Deposit (/employee/deposit)
+            API->>DB: CALL add_money(toId, amount, desc)
+            DB->>DB: START TRANSACTION
+            DB->>DB: INSERT CREDIT transaction row
+            DB->>DB: UPDATE account balance = balance + amount
+            DB->>DB: COMMIT
+            DB-->>API: Procedure success
+        else Withdrawal (/employee/withdrawal)
+            API->>DB: CALL remove_money(fromId, amount, desc)
+            DB->>DB: SELECT balance FOR UPDATE
+            alt Insufficient balance
+                DB-->>API: SQLSTATE 45000 "Insufficient balance"
+            else Sufficient balance
+                DB->>DB: START TRANSACTION
+                DB->>DB: INSERT DEBIT transaction row
+                DB->>DB: UPDATE account balance = balance - amount
+                DB->>DB: COMMIT
+                DB-->>API: Procedure success
+            end
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of API: 3. API Response
+        alt Procedure failed
+            API-->>E: 500 { message }
+        else Procedure succeeded
+            API-->>E: 201 { message }
+        end
+    end

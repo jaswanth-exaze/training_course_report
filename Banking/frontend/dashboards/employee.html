@@ -77,8 +77,7 @@
             <p class="section-sub">All customers linked to your branch</p>
           </div>
 
-          <div class="table-scroll">
-            <table>
+          <table>
             <thead>
               <tr>
                 <th>ID</th>
@@ -94,8 +93,7 @@
                 </td>
               </tr>
             </tbody>
-            </table>
-          </div>
+          </table>
         </section>
 
         <!-- BRANCH TRANSACTIONS -->
@@ -135,7 +133,9 @@
                 </tr>
               </thead>
               <tbody id="txnTable">
-                <tr><td colspan="6" class="empty-state">Use filters then Search</td></tr>
+                <tr>
+                  <td colspan="6" class="empty-state">Use filters then Search</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -205,7 +205,8 @@
 
                 <div class="form-row">
                   <label class="label" for="depositAmount">Amount (INR)</label>
-                  <input id="depositAmount" type="number" min="1" step="0.01" placeholder="Enter amount to credit" required />
+                  <input id="depositAmount" type="number" min="1" step="0.01" placeholder="Enter amount to credit"
+                    required />
                 </div>
 
                 <div class="form-row">
@@ -236,7 +237,8 @@
 
                 <div class="form-row">
                   <label class="label" for="withdrawAmount">Amount (INR)</label>
-                  <input id="withdrawAmount" type="number" min="1" step="0.01" placeholder="Enter amount to debit" required />
+                  <input id="withdrawAmount" type="number" min="1" step="0.01" placeholder="Enter amount to debit"
+                    required />
                 </div>
 
                 <div class="form-row">
@@ -341,9 +343,9 @@
     </div>
   </div>
 
-  <script src="../js/config.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/employee.js"></script>
+  <script src="./../js/config.js"></script>
+  <script src="./../js/auth.js"></script>
+  <script src="./../js/employee.js"></script>
 
   <script>
     protectPage("EMPLOYEE");

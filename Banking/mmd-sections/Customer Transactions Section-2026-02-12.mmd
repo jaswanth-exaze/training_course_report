@@ -1,0 +1,38 @@
+﻿sequenceDiagram
+    autonumber
+    participant U as Customer (Browser)
+    participant FE as Customer Dashboard JS
+    participant API as Customer API (Node.js)
+    participant DB as Database (MySQL)
+
+    note over U, DB: CUSTOMER TRANSACTIONS SECTION
+
+    rect rgb(240, 248, 255)
+        note right of FE: 1. Open Section and Request Data
+        U->>FE: Open transactions tab
+        FE->>API: GET /customer/accounts (Authorization: Bearer token)
+        API->>API: verifyToken + checkRole(CUSTOMER)
+    end
+
+    rect rgb(255, 250, 240)
+        note right of DB: 2. Accounts + Transaction Queries
+        API->>DB: SELECT customer accounts by req.user.user_id
+        DB-->>API: Account rows
+        API-->>FE: 200 [accounts]
+
+        FE->>API: GET /customer/transactions (Authorization: Bearer token)
+        API->>API: verifyToken + checkRole(CUSTOMER)
+        API->>DB: SELECT transaction rows with account/counterparty joins ORDER BY created_at DESC
+        DB-->>API: Transaction rows
+        API-->>FE: 200 [transactions]
+    end
+
+    rect rgb(245, 255, 245)
+        note right of FE: 3. UI Rendering
+        alt No transactions
+            FE-->>U: Render "No transactions found"
+        else Transactions available
+            FE->>FE: Compute direction and running balance per account
+            FE-->>U: Render transaction table (credit/debit styling)
+        end
+    end
