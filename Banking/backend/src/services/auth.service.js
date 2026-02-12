@@ -12,6 +12,10 @@ const {
 } = require("../utils/jwt.util");
 const crypto = require("crypto");
 
+function hashRefreshToken(token) {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
+
 function refreshExpiryDate() {
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + 7);
@@ -60,13 +64,8 @@ exports.login = async ({ username, password }) => {
     branch_id: user.branch_id,
   });
   const refreshToken = generateRefreshToken({ user_id: user.user_id });
+  const hashedRefreshToken = hashRefreshToken(refreshToken);
 
-
-
-  const hashedRefreshToken = crypto
-    .createHash("sha256")
-    .update(refreshToken)
-    .digest("hex");
   await db.promise().query(
     `
     INSERT INTO refresh_tokens (user_id, token, expires_at, is_revoked, created_at)
@@ -96,10 +95,7 @@ exports.refreshAccessToken = async (refreshToken) => {
     throw new Error("Invalid refresh token");
   }
 
-  const hashedIncomingToken = crypto
-    .createHash("sha256")
-    .update(refreshToken)
-    .digest("hex");
+  const hashedIncomingToken = hashRefreshToken(refreshToken);
   const connection = await db.promise().getConnection();
 
   try {
@@ -148,10 +144,7 @@ exports.refreshAccessToken = async (refreshToken) => {
       branch_id: user.branch_id,
     });
     const nextRefreshToken = generateRefreshToken({ user_id: user.user_id });
-    const hashedNextRefreshToken = crypto
-      .createHash("sha256")
-      .update(nextRefreshToken)
-      .digest("hex");
+    const hashedNextRefreshToken = hashRefreshToken(nextRefreshToken);
 
     await connection.query(
       `
@@ -190,10 +183,7 @@ exports.refreshAccessToken = async (refreshToken) => {
 exports.revokeRefreshToken = async (refreshToken) => {
   if (!refreshToken) return;
 
-  const hashedRefreshToken = crypto
-    .createHash("sha256")
-    .update(refreshToken)
-    .digest("hex");
+  const hashedRefreshToken = hashRefreshToken(refreshToken);
 
   await db.promise().query(
     `
