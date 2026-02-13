@@ -7,13 +7,12 @@
 const API_BASE_URL =
   window.API_BASE_URL ||
   (window.location.hostname === "localhost" ||
-   window.location.hostname === "127.0.0.1"
-    ? "https://bankingapplication-production.up.railway.app"
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:3000"
     : "https://bankingapplication-production.up.railway.app");
 
 // Makes the resolved base URL available globally.
 window.API_BASE_URL = API_BASE_URL;
-
 // Builds a full API URL while safely handling leading slashes.
 function getApiUrl(endpoint) {
   // Normalize endpoint so `/auth/login` and `auth/login` both work.

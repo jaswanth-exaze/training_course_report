@@ -100,12 +100,9 @@ function installAuthWrapper() {
     const requestOptions = apiCall
       ? buildRequestOptions(init, !authCall)
       : init;
-      console.log(originalFetch)
-    console.log(requestUrl);
-    console.log(apiCall);
-    console.log(authCall);
+
     let response = await originalFetch(input, requestOptions);
-    console.log(response)
+
 
     if (!apiCall || response.status !== 401 || authCall) {
       return response;

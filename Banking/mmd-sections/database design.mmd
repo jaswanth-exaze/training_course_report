@@ -1,0 +1,149 @@
+erDiagram
+    %% ==========================================
+    %% 1. CORE ACCESS & IDENTITY
+    %% ==========================================
+    ROLES {
+        int role_id PK
+        enum role_name UK "CUSTOMER, EMPLOYEE, MANAGER"
+    }
+
+    BRANCHES {
+        int branch_id PK
+        string branch_code UK
+        string branch_name
+        string city
+        string state
+    }
+
+    USERS {
+        int user_id PK
+        string username UK
+        string password_hash
+        int role_id FK
+        int branch_id FK
+        tinyint is_active "Default: 1"
+    }
+
+    REFRESH_TOKENS {
+        int id PK
+        int user_id FK
+        string token
+        datetime expires_at
+        boolean is_revoked "Default: 0"
+        timestamp created_at
+    }
+
+    %% ==========================================
+    %% 2. USER PROFILES (Extended from Users)
+    %% ==========================================
+    CUSTOMERS {
+        int customer_id PK
+        int user_id FK, UK "1-to-1 with Users"
+        string first_name
+        string last_name
+        string email
+        string phone
+    }
+
+    EMPLOYEES {
+        int employee_id PK
+        int user_id FK, UK "1-to-1 with Users"
+        string designation
+        date joined_date
+        string first_name
+        string last_name
+        string email UK
+        string phone
+        enum gender "MALE, FEMALE, OTHER"
+        text address
+        decimal salary
+        int manager_id FK "Self-Reference"
+    }
+
+    %% ==========================================
+    %% 3. BANKING OPERATIONS
+    %% ==========================================
+    ACCOUNTS {
+        int account_id PK
+        int customer_id FK
+        string account_number UK
+        enum account_type "SAVINGS, CURRENT"
+        decimal balance "Default: 0.00"
+        enum status "ACTIVE, BLOCKED, CLOSED"
+        timestamp updated_at
+    }
+
+    TRANSACTIONS {
+        int transaction_id PK
+        int from_account_id FK "Nullable (e.g. Deposit)"
+        int to_account_id FK "Nullable (e.g. Withdraw)"
+        enum transaction_type "CREDIT, DEBIT, DEPOSIT..."
+        decimal amount
+        string description
+        string reference_number UK
+        enum status "PENDING, SUCCESS, FAILED"
+        timestamp created_at
+    }
+
+    %% ==========================================
+    %% 4. LOAN MANAGEMENT
+    %% ==========================================
+    LOAN_REQUESTS {
+        int loan_id PK
+        int customer_id FK
+        int branch_id FK
+        decimal amount
+        int tenure_months
+        string purpose
+        enum status "REQUESTED, APPROVED, REJECTED..."
+        int employee_id FK "Nullable (Processor)"
+        int manager_id FK "Nullable (Approver)"
+        text employee_comment
+        text manager_comment
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    LOAN_STATUS_HISTORY {
+        bigint history_id PK
+        int loan_id FK
+        int changed_by_user_id FK
+        enum changed_by_role "CUSTOMER, EMPLOYEE..."
+        enum from_status
+        enum to_status
+        text comment
+        timestamp created_at
+    }
+
+    %% ==========================================
+    %% RELATIONSHIPS
+    %% ==========================================
+
+    %% User & Role Management
+    ROLES ||--|{ USERS : "assigned_to"
+    BRANCHES ||--|{ USERS : "belongs_to"
+    USERS ||--o{ REFRESH_TOKENS : "owns"
+
+    %% User Extensions (1-to-1 via Unique constraint)
+    USERS ||--|| CUSTOMERS : "profile_details"
+    USERS ||--|| EMPLOYEES : "profile_details"
+
+    %% Employee Hierarchy
+    EMPLOYEES |{--o| EMPLOYEES : "reports_to_manager"
+
+    %% Account Management
+    CUSTOMERS ||--o{ ACCOUNTS : "holds"
+    
+    %% Transactions (Links to Accounts)
+    ACCOUNTS ||--o{ TRANSACTIONS : "sends_funds_from"
+    ACCOUNTS ||--o{ TRANSACTIONS : "receives_funds_to"
+
+    %% Loan System
+    CUSTOMERS ||--o{ LOAN_REQUESTS : "initiates"
+    BRANCHES ||--o{ LOAN_REQUESTS : "processes_at"
+    EMPLOYEES ||--o{ LOAN_REQUESTS : "reviews_as_staff"
+    EMPLOYEES ||--o{ LOAN_REQUESTS : "approves_as_manager"
+
+    %% Loan Audit Trail
+    LOAN_REQUESTS ||--|{ LOAN_STATUS_HISTORY : "logs_changes"
+    USERS ||--o{ LOAN_STATUS_HISTORY : "performed_action"
