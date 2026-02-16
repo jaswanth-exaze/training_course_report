@@ -1,0 +1,90 @@
+sequenceDiagram
+    autonumber
+    participant U as Manager (Browser)
+    participant HTML as manager.html
+    participant AUTH as auth.js
+    participant APP as manager.js
+    participant API as Backend API (Node.js)
+
+    note over U, API: MANAGER FULL FRONTEND LIFECYCLE SECTION
+
+    rect rgb(240, 248, 255)
+        note right of HTML: 1. Initial Page Load + Dashboard Summary
+        U->>HTML: Open /dashboards/manager.html
+        HTML->>AUTH: protectPage("MANAGER")
+        alt Invalid token or wrong role
+            AUTH-->>U: Redirect to ../login.html
+        else Valid session
+            HTML->>APP: loadManagerDashboard()
+            APP->>APP: showSection("dashboard")
+            APP->>APP: Fill fallback header from JWT branch_id
+            APP->>APP: updateDateTime() + setInterval(60000)
+            APP->>API: GET /manager/dashboard-summary
+            API-->>APP: 200 { branch + summary metrics }
+            APP->>APP: Update branchName/branchId/branchAddress
+            APP->>APP: Update empCount/custCount/accCount/branchBalance
+        end
+    end
+
+    rect rgb(255, 250, 240)
+        note right of APP: 2. Employees + Customers + Transactions
+        U->>APP: Click Employees nav
+        APP->>APP: openEmployees() + showSection("employees")
+        APP->>APP: employeeTable.innerHTML = loader row
+        APP->>API: GET /manager/employees
+        API-->>APP: 200 [employees]
+        APP->>APP: employeeTable.innerHTML = ""
+        loop Each employee
+            APP->>APP: employeeTable.innerHTML += employee row
+        end
+
+        U->>APP: Click Customers nav
+        APP->>APP: openCustomers() + showSection("customers")
+        APP->>APP: customerTable.innerHTML = loader row
+        APP->>API: GET /manager/customers
+        API-->>APP: 200 [customers]
+        APP->>APP: customerTable.innerHTML = ""
+        loop Each customer
+            APP->>APP: customerTable.innerHTML += customer row
+        end
+
+        U->>APP: Click Transactions nav
+        APP->>APP: openTransactions() + showSection("transactions")
+        APP->>APP: loadManagerTransactions(1)
+        APP->>APP: mgrTxnTable.innerHTML = loader row
+        APP->>API: GET /manager/transactions?page&limit&filters
+        API-->>APP: 200 { data, page, total }
+        APP->>APP: Render rows + update pager
+        U->>APP: Filter/Search/Clear/Prev/Next
+        APP->>APP: loadManagerTransactions(page) and re-render
+    end
+
+    rect rgb(245, 255, 245)
+        note right of APP: 3. Loans Section (Pending + All Loans)
+        U->>APP: Click Loans nav
+        APP->>APP: openManagerLoans() + showSection("loans")
+        par Pending queue
+            APP->>APP: mgrLoanTable.innerHTML = loader row
+            APP->>API: GET /manager/pendingLoans
+            API-->>APP: 200 [pending loans]
+            APP->>APP: Render pending rows with action buttons
+        and All branch loans
+            APP->>APP: mgrAllLoanTable.innerHTML = loader row
+            APP->>API: GET /manager/loans
+            API-->>APP: 200 [all loans]
+            APP->>APP: Render full loan history rows
+        end
+        U->>APP: Click Approve/Reject on pending loan
+        APP->>API: POST /manager/{loanId}/decision
+        API-->>APP: 200 { message }
+        APP->>APP: Refresh pending loans
+    end
+
+    rect rgb(255, 245, 245)
+        note right of AUTH: 4. Logout
+        U->>AUTH: Click Logout nav
+        AUTH->>API: POST /auth/logout (credentials include)
+        API-->>AUTH: 200/204 (or failure ignored)
+        AUTH->>AUTH: Clear localStorage token + role
+        AUTH-->>U: Redirect to ../login.html
+    end

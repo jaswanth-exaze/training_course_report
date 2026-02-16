@@ -1,0 +1,98 @@
+sequenceDiagram
+    autonumber
+    participant U as Employee (Browser)
+    participant HTML as employee.html
+    participant AUTH as auth.js
+    participant APP as employee.js
+    participant API as Backend API (Node.js)
+
+    note over U, API: EMPLOYEE FULL FRONTEND LIFECYCLE SECTION
+
+    rect rgb(240, 248, 255)
+        note right of HTML: 1. Initial Page Load + Summary Default
+        U->>HTML: Open /dashboards/employee.html
+        HTML->>AUTH: protectPage("EMPLOYEE")
+        alt Invalid token or wrong role
+            AUTH-->>U: Redirect to ../login.html
+        else Valid session
+            HTML->>APP: DOMContentLoaded
+            APP->>APP: initEmployeeDashboard()
+            APP->>APP: showSection("dashboardSection")
+            APP->>APP: updateDateTime() + setInterval(60000)
+            APP->>API: GET /employee/profile
+            API-->>APP: 200 { employee profile }
+            APP->>APP: Fill welcome + branch + profile fields
+            APP->>API: GET /employee/dashboard-summary
+            API-->>APP: 200 { totalCustomers, branchBalance }
+            APP->>APP: Update summary cards
+        end
+    end
+
+    rect rgb(255, 250, 240)
+        note right of APP: 2. Customers + Transactions
+        U->>APP: Click Customers nav
+        APP->>APP: openCustomers() + showSection("customersSection")
+        APP->>APP: customerTable.innerHTML = loading row
+        APP->>API: GET /employee/customers
+        API-->>APP: 200 [customers]
+        APP->>APP: customerTable.innerHTML = ""
+        loop Each customer
+            APP->>APP: customerTable.innerHTML += customer row
+        end
+
+        U->>APP: Click Transactions nav
+        APP->>APP: openTransactions() + showSection("transactionsSection")
+        APP->>APP: loadTransactions(1)
+        APP->>APP: txnTable.innerHTML = loader row
+        APP->>API: GET /employee/transactions?page&limit&filters
+        API-->>APP: 200 { data, page, total }
+        APP->>APP: Render rows + update pager
+        U->>APP: Filter/Search/Clear/Prev/Next
+        APP->>APP: loadTransactions(page) and re-render
+    end
+
+    rect rgb(245, 255, 245)
+        note right of APP: 3. Loans Queue + Cash Desk
+        U->>APP: Click Loans nav
+        APP->>APP: openLoanQueue() + showSection("loansSection")
+        APP->>APP: empLoanTable.innerHTML = loader row
+        APP->>API: GET /employee/pendingLoans
+        API-->>APP: 200 [pending loans]
+        APP->>APP: Render loan rows + action buttons
+        U->>APP: Click Approve/Reject
+        APP->>API: POST /employee/{loanId}/decision
+        API-->>APP: 200 { message }
+        APP->>APP: Refresh pending loans list
+
+        U->>APP: Click Cash Desk nav
+        APP->>APP: openCashDesk() + showSection("cashSection")
+        U->>APP: Submit deposit form
+        APP->>API: POST /employee/deposit
+        API-->>APP: 201 { message } or error
+        APP-->>U: depositMsg success/failure
+        U->>APP: Submit withdrawal form
+        APP->>API: POST /employee/withdrawal
+        API-->>APP: 201 { message } or error
+        APP-->>U: withdrawMsg success/failure
+    end
+
+    rect rgb(255, 245, 245)
+        note right of APP: 4. Onboard + Profile + Logout
+        U->>APP: Click Onboard nav
+        APP->>APP: showSection("onboardSection")
+        U->>APP: Submit onboard form
+        APP->>API: POST /employee/onboard-customer
+        API-->>APP: 201 { message } or error
+        APP-->>U: onboardMsg success/failure
+
+        U->>APP: Click Profile nav
+        APP->>APP: showSection("profileSection")
+        APP->>APP: Profile fields already hydrated by loadEmployeeProfile()
+
+        U->>APP: Click Logout button
+        APP->>AUTH: logout()
+        AUTH->>API: POST /auth/logout (credentials include)
+        API-->>AUTH: 200/204 (or failure ignored)
+        AUTH->>AUTH: Clear localStorage token + role
+        AUTH-->>U: Redirect to ../login.html
+    end

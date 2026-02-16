@@ -1,0 +1,118 @@
+sequenceDiagram
+    autonumber
+    participant U as Customer (Browser)
+    participant HTML as customer.html
+    participant AUTH as auth.js
+    participant APP as customer.js
+    participant API as Backend API (Node.js)
+
+    note over U, API: CUSTOMER FULL FRONTEND LIFECYCLE SECTION
+
+    rect rgb(240, 248, 255)
+        note right of HTML: 1. Initial Page Load + Default Section
+        U->>HTML: Open /dashboards/customer.html
+        HTML->>AUTH: protectPage("CUSTOMER")
+        alt Invalid token or wrong role
+            AUTH-->>U: Redirect to ../login.html
+        else Valid session
+            HTML->>APP: loadCustomerDashboard()
+            APP->>APP: openAccounts()
+            APP->>APP: accountsContainer.innerHTML = loader
+            APP->>API: GET /customer/accounts
+            API-->>APP: 200 [accounts]
+            APP->>APP: accountsContainer.innerHTML = ""
+            loop For each account
+                APP->>APP: accountsContainer.innerHTML += account card HTML
+            end
+            APP->>API: GET /customer/profile
+            API-->>APP: 200 { profile + branch }
+            APP->>APP: Update welcome header + branch + time
+        end
+    end
+
+    rect rgb(255, 250, 240)
+        note right of APP: 2. Transfer Section (openTransfer + submitTransfer)
+        U->>APP: Click Transfer nav
+        APP->>APP: openTransfer() + showSection("transferSection")
+        APP->>API: GET /customer/accounts (cached or fresh)
+        API-->>APP: 200 [accounts]
+        APP->>APP: fromAccount.innerHTML = default option
+        loop Each account
+            APP->>APP: fromAccount.innerHTML += option HTML
+        end
+        U->>APP: Submit transfer form
+        APP->>APP: Validate input + balance
+        alt Validation fails
+            APP-->>U: transferMsg error
+        else Valid
+            APP->>API: POST /customer/transfer
+            API-->>APP: 201 { message } or error
+            alt Success
+                APP-->>U: transferMsg success + form reset
+                APP->>API: GET /customer/accounts (force refresh)
+                API-->>APP: 200 [updated accounts]
+            else Failure
+                APP-->>U: transferMsg failure
+            end
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of APP: 3. Transactions Section (openTransactions)
+        U->>APP: Click Transactions nav
+        APP->>APP: showSection("transactionsSection")
+        APP->>APP: txnTable.innerHTML = loader row
+        APP->>API: GET /customer/accounts
+        API-->>APP: 200 [accounts]
+        APP->>APP: Calculate total balance chip
+        APP->>API: GET /customer/transactions
+        API-->>APP: 200 [transactions]
+        alt No transactions
+            APP->>APP: txnTable.innerHTML = empty-state row
+        else Transactions exist
+            APP->>APP: txnTable.innerHTML = ""
+            loop Each transaction
+                APP->>APP: txnTable.innerHTML += rendered row
+            end
+        end
+    end
+
+    rect rgb(250, 245, 255)
+        note right of APP: 4. Loans Section (openLoans + submitLoanApplication)
+        U->>APP: Click Loans nav
+        APP->>APP: openLoans() + showSection("loansSection")
+        APP->>APP: loanTable.innerHTML = loader row
+        APP->>API: GET /customer/getLoans
+        API-->>APP: 200 [loans]
+        APP->>APP: Render loan rows/status badges
+        U->>APP: Submit loan form
+        APP->>APP: Validate amount + tenure
+        alt Invalid
+            APP-->>U: loanFormMsg error
+        else Valid
+            APP->>API: POST /customer/applyLoan
+            API-->>APP: 201 { message } or error
+            alt Success
+                APP-->>U: loanFormMsg success + form reset
+                APP->>API: GET /customer/getLoans
+                API-->>APP: 200 [updated loans]
+            else Failure
+                APP-->>U: loanFormMsg failure
+            end
+        end
+    end
+
+    rect rgb(255, 245, 245)
+        note right of APP: 5. Profile + Logout
+        U->>APP: Click Profile nav
+        APP->>APP: openProfile() + showSection("profileSection")
+        APP->>API: GET /customer/profile
+        API-->>APP: 200 { user + branch fields }
+        APP->>APP: Fill profName/profUsername/profEmail/profPhone
+
+        U->>AUTH: Click Logout nav
+        AUTH->>API: POST /auth/logout (credentials include)
+        API-->>AUTH: 200/204 (or failure ignored)
+        AUTH->>AUTH: Clear localStorage token + role
+        AUTH-->>U: Redirect to ../login.html
+    end

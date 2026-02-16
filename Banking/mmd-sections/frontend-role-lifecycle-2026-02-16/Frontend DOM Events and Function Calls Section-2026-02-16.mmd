@@ -1,0 +1,57 @@
+sequenceDiagram
+    autonumber
+    participant U as User (Browser)
+    participant DOM as DOM Elements
+    participant APP as customer.js
+    participant API as Backend API (Node.js)
+
+    note over U, API: FRONTEND DOM EVENTS AND FUNCTION CALLS SECTION
+
+    rect rgb(240, 248, 255)
+        note right of APP: 1. Event Registration After Page Parse
+        DOM->>APP: DOMContentLoaded
+        APP->>DOM: transferForm.addEventListener("submit", submitTransfer)
+        APP->>DOM: fromAccount.addEventListener("change", updateBalanceHint)
+        APP->>DOM: loanForm.addEventListener("submit", submitLoanApplication)
+    end
+
+    rect rgb(255, 250, 240)
+        note right of APP: 2. Navigation Click -> Function Call
+        U->>DOM: Click "Transfer" nav button (onclick="openTransfer()")
+        DOM->>APP: openTransfer()
+        APP->>APP: showSection("transferSection")
+        APP->>APP: fetchCustomerAccounts()
+        alt Accounts available
+            APP->>APP: populateFromAccounts(accounts)
+            APP->>DOM: fromAccount.innerHTML = default option
+            loop For each account
+                APP->>DOM: fromAccount.innerHTML += option HTML
+            end
+        else No accounts or error
+            APP->>DOM: setTransferStatus("No accounts / load error", "error")
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of APP: 3. Change + Submit Event Handling
+        U->>DOM: Change sender account dropdown
+        DOM->>APP: updateBalanceHint()
+        APP->>DOM: balanceHint.innerText = available balance
+
+        U->>DOM: Submit transfer form
+        DOM->>APP: submitTransfer(e)
+        APP->>APP: e.preventDefault() + client validation
+        alt Invalid input
+            APP->>DOM: setTransferStatus(validation message, "error")
+        else Valid input
+            APP->>API: POST /customer/transfer
+            API-->>APP: 201 { message } or error
+            alt Transfer success
+                APP->>DOM: setTransferStatus(success message, "success")
+                APP->>DOM: transferForm.reset()
+                APP->>APP: fetchCustomerAccounts(true) and repopulate dropdown
+            else Transfer failed
+                APP->>DOM: setTransferStatus(error message, "error")
+            end
+        end
+    end

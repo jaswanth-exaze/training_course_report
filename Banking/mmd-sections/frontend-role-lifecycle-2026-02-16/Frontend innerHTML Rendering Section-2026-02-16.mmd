@@ -1,0 +1,60 @@
+sequenceDiagram
+    autonumber
+    participant U as User (Browser)
+    participant APP as customer.js
+    participant DOM as HTML Containers
+    participant API as Backend API (Node.js)
+
+    note over U, API: FRONTEND innerHTML RENDERING SECTION
+
+    rect rgb(240, 248, 255)
+        note right of DOM: 1. Accounts Card Rendering Pattern
+        APP->>DOM: accountsContainer.innerHTML = loader
+        APP->>API: GET /customer/accounts
+        API-->>APP: 200 [accounts]
+        alt No accounts
+            APP->>DOM: accountsContainer.innerHTML = "No accounts found"
+        else Accounts exist
+            APP->>DOM: accountsContainer.innerHTML = ""
+            loop Each account row
+                APP->>DOM: accountsContainer.innerHTML += account card HTML
+            end
+        end
+    end
+
+    rect rgb(255, 250, 240)
+        note right of DOM: 2. Transactions Table Rendering Pattern
+        APP->>DOM: txnTable.innerHTML = loader row
+        APP->>API: GET /customer/transactions
+        API-->>APP: 200 [transactions]
+        alt No transactions
+            APP->>DOM: txnTable.innerHTML = empty-state row
+        else Transactions exist
+            APP->>DOM: txnTable.innerHTML = ""
+            loop Each transaction
+                APP->>DOM: txnTable.innerHTML += table row HTML
+            end
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of DOM: 3. Select + Loan Table Rendering Pattern
+        APP->>DOM: fromAccount.innerHTML = default option
+        loop Each account
+            APP->>DOM: fromAccount.innerHTML += option HTML
+        end
+
+        APP->>DOM: loanTable.innerHTML = loader row
+        APP->>API: GET /customer/getLoans
+        API-->>APP: 200 [loans]
+        APP->>DOM: loanTable.innerHTML = ""
+        loop Each loan
+            APP->>DOM: loanTable.innerHTML += loan row HTML
+        end
+    end
+
+    rect rgb(255, 245, 245)
+        note right of DOM: 4. Error Fallback Rendering
+        API-->>APP: Network/API error
+        APP->>DOM: container.innerHTML = failed-state message
+    end

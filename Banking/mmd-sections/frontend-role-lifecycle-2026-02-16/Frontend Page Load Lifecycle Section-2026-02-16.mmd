@@ -1,0 +1,36 @@
+sequenceDiagram
+    autonumber
+    participant R as Report Reader
+    participant IDX as Frontend Page Load Lifecycle (Index)
+    participant C as Customer Full Lifecycle File
+    participant E as Employee Full Lifecycle File
+    participant M as Manager Full Lifecycle File
+
+    note over R, M: FRONTEND PAGE LOAD LIFECYCLE INDEX SECTION
+
+    rect rgb(240, 248, 255)
+        note right of IDX: 1. This file now acts as a pointer/index
+        R->>IDX: Open Frontend Page Load Lifecycle Section-2026-02-16.mmd
+        IDX-->>R: Use role-wise lifecycle files for complete flows
+    end
+
+    rect rgb(255, 250, 240)
+        note right of C: 2. Customer Full Lifecycle (all sections + logout)
+        IDX->>C: Open customer role lifecycle
+        note right of C: File: mmd-sections/frontend-role-lifecycle-2026-02-16/Customer Full Lifecycle Section-2026-02-16.mmd
+        C-->>R: Accounts, Transfer, Transactions, Loans, Profile, Logout
+    end
+
+    rect rgb(245, 255, 245)
+        note right of E: 3. Employee Full Lifecycle (all sections + logout)
+        IDX->>E: Open employee role lifecycle
+        note right of E: File: mmd-sections/frontend-role-lifecycle-2026-02-16/Employee Full Lifecycle Section-2026-02-16.mmd
+        E-->>R: Summary, Customers, Transactions, Loans, Cash Desk, Onboard, Profile, Logout
+    end
+
+    rect rgb(255, 245, 245)
+        note right of M: 4. Manager Full Lifecycle (all sections + logout)
+        IDX->>M: Open manager role lifecycle
+        note right of M: File: mmd-sections/frontend-role-lifecycle-2026-02-16/Manager Full Lifecycle Section-2026-02-16.mmd
+        M-->>R: Summary, Employees, Customers, Transactions, Loans, Logout
+    end

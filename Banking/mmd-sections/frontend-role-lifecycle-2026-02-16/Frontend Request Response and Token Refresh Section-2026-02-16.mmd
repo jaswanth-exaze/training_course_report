@@ -1,0 +1,48 @@
+sequenceDiagram
+    autonumber
+    participant U as User (Browser)
+    participant APP as login.js / customer.js
+    participant AUTH as auth.js fetch wrapper
+    participant LS as localStorage
+    participant API as Backend API (Node.js)
+
+    note over U, API: FRONTEND REQUEST RESPONSE AND TOKEN REFRESH SECTION
+
+    rect rgb(240, 248, 255)
+        note right of APP: 1. Feature Function Sends Request
+        U->>APP: Trigger action (login, load accounts, submit form)
+        APP->>AUTH: fetch(getApiUrl(endpoint), init)
+        AUTH->>AUTH: Detect API request and endpoint type
+        AUTH->>AUTH: Attach credentials: include
+        AUTH->>AUTH: Attach Authorization: Bearer token (for protected endpoints)
+        AUTH->>API: HTTP request
+    end
+
+    rect rgb(255, 250, 240)
+        note right of AUTH: 2. Normal Response Path
+        API-->>AUTH: 2xx / 4xx / 5xx response
+        alt Not 401 or auth endpoint
+            AUTH-->>APP: Return response directly
+            APP->>APP: await res.json()
+            APP->>APP: Update DOM message/table/cards from response payload
+        end
+    end
+
+    rect rgb(245, 255, 245)
+        note right of AUTH: 3. 401 Auto-Refresh Retry Path
+        API-->>AUTH: 401 on protected endpoint
+        AUTH->>API: POST /auth/refresh (cookie-based)
+        alt Refresh success
+            API-->>AUTH: 200 { token, role }
+            AUTH->>LS: localStorage.setItem("token", token)
+            AUTH->>LS: localStorage.setItem("role", role)
+            AUTH->>API: Retry original request with new bearer token
+            API-->>AUTH: Retried response
+            AUTH-->>APP: Return retried response
+            APP->>APP: Parse JSON and continue normal UI update
+        else Refresh failed
+            AUTH->>LS: Save sessionExpiredMessage
+            AUTH->>LS: Clear token + role
+            AUTH-->>U: Redirect to ../login.html
+        end
+    end
