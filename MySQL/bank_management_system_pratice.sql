@@ -3,7 +3,7 @@
   
 
 
-use bank_management_system
+use bank_management_system;
 
 
   -- ========================================
